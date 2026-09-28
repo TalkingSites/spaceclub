@@ -1,28 +1,20 @@
 ---
 layout: base.njk
 ---
-<div class="h-100 card card-body p-4 border-primary border-opacity-50">
-<div>
-<h1>{{title}}</h1>
-<p class="mb-1 text-muted">{{postDate | formatDate}}</p>
-<p class="text-primary text-opacity-75 mb-1">{{author}}</p>
-<br>
-{{ content | safe }}
+<article class="prose">
+<h1>{{ title }}</h1>
+<div class="post-meta">
+{{ postDate | formatDate }}{% if author %} &nbsp;&middot;&nbsp; {{ author }}{% endif %}
+</div>
 
-{%- if eventPage %}
-<p class="mt-4">Go to <a href="{{eventPage}}">event page</a></p>
-{%- endif %}
+{{ content | safe }}
 
 {%- if gallery and not (content | hasGallery) %}
 {% set path = gallery | stripLeadingSlash %}
 {% include "partials/gallery.njk" %}
 {%- endif %}
-</div>
-<div class="d-flex justify-content-center gap-3 my-4">
-{% include "partials/btn.njk" %}
-<a href="/posts/" class="btn btn-outline-primary">
-<i class="bi bi-stickies-fill me-2"></i>All Posts
-</a>
-</div>
-</div>
 
+<div class="mt-5 pt-3">
+<a href="/posts/" class="btn btn-outline-primary">All posts</a>
+</div>
+</article>

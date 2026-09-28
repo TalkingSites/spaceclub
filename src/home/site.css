@@ -1,0 +1,191 @@
+﻿body {
+    background-color: #23003E;
+    margin: 0px;
+    overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, a {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 500;
+    color: #FFF;
+    text-align: center;
+}
+
+.title {
+    font-size: 700%;
+    margin-top: 0;
+}
+
+.repository {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    background-color: rgb(255 255 255 / 10%);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    transition: background-color 0.25s ease;
+    font-size: 24px;
+}
+
+.repository:hover {
+    background-color: rgb(255 255 255 / 25%);
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.section-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    transition: width 0.5s ease;
+}
+
+.block-name-text {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.block-name-bkg {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 80%;
+    z-index: -1;
+    transition: width 0.5s ease;
+}
+
+.section-planet,
+.section-satellite {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+#saturn, #satellite {
+    width: 100%;
+    animation: bop 2.5s infinite ease-in-out;
+}
+
+#satellite {
+    animation-delay: 0.9s;
+}
+
+#saturn svg,
+#satellite svg,
+#stars-1 svg,
+#stars-2 svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.block-name-bkg svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#stars-1, #stars-2 {
+    width: 50%;
+    max-height: 40vh;
+    overflow: hidden;
+}
+
+.stars {
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+#Path_51,
+#Path_54,
+#Path_55,
+#Path_65,
+#Path_66,
+#Path_157,
+#Path_158,
+#Path_171,
+#Path_181 {
+    animation-delay: 0.9s;
+}
+
+@media screen and (min-width: 1024px) {
+    .section-name {
+        width: 60%;
+    }
+
+    .section-planet,
+    .section-satellite {
+        width: 30%;
+        padding: 0rem 2rem;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .section-name {
+        width: 10%;
+    }
+
+    .section-planet,
+    .section-satellite {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .section-name {
+        width: 0%;
+    }
+
+    .section-planet,
+    .section-satellite {
+        width: 50%;
+        padding: 0rem 0rem;
+    }
+}
+
+@keyframes bop {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 5px 5px #FFF;
+    }
+
+    50% {
+        opacity: 0.5;
+        box-shadow: 0 0 15px 15px #FFF;
+    }
+}
+
+.sophia-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.3s ease;
+}
+
+.sophia-link:hover {
+    opacity: 0.72;
+}

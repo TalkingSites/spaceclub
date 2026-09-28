@@ -1,11 +1,14 @@
 {
-  "title": "Space Club!",
-  "description": "Space Club! is our way of putting content for this web template. Check out the pages, posts, events and search. Whats it built with? Great question, it is 11ty, Nunjucks",
+  "title": "sophie.tech",
+  "description": "Sophie Allen, software engineer. Space, philosophy, quantum weirdness, octopus cognition, and whatever else has hold of me this week.",
   "logo": "/assets/images/logo.svg",
-  "favicon": "/assets/images/favicon.svg",
+  "favicon": "/favicon.ico",
   "baseUrl": "/",
   "timezone": "Australia/Sydney",
-  "dateFormat": "dddd, Do MMMM YYYY",
+  "dateFormat": "Do MMMM YYYY",
   "searchTitle": "Search",
-  "searchPlaceholder": "Search events, posts and pages..."
+  "searchPlaceholder": "Search posts and pages...",
+  "url": "https://sophie.tech",
+  "author": "Sophie Allen",
+  "feedPath": "/feed.xml"
 }

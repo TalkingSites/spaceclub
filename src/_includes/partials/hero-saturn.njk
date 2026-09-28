@@ -1,0 +1,71 @@
+<svg viewBox="0 0 320 250" fill="none" role="img" aria-label="Saturn">
+<defs>
+<linearGradient id="ring" x1="30" y1="60" x2="290" y2="200" gradientUnits="userSpaceOnUse">
+<stop stop-color="#3BC7F6" stop-opacity="0.45"/><stop offset="0.16" stop-color="#5bb6f0" stop-opacity="0.9"/>
+<stop offset="0.298" stop-color="#A855F7" stop-opacity="0.7"/><stop offset="0.48" stop-color="#b06ef5" stop-opacity="0.95"/>
+<stop offset="0.693" stop-color="#CC4D9E" stop-opacity="0.6"/><stop offset="0.86" stop-color="#e05a7a" stop-opacity="0.9"/>
+<stop offset="1" stop-color="#EF4444" stop-opacity="0.42"/>
+</linearGradient>
+<radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+<stop stop-color="#A855F7" stop-opacity="0.45"/><stop offset="1" stop-color="#A855F7" stop-opacity="0"/>
+</radialGradient>
+<!-- watercolour: light in the middle, pigment settling darker at the edge -->
+<radialGradient id="wash" cx="0.38" cy="0.3" r="0.78">
+<stop offset="0" stop-color="#efe2ff"/><stop offset="0.34" stop-color="#c08bff"/>
+<stop offset="0.72" stop-color="#8b3fe0"/><stop offset="1" stop-color="#4a1a8f"/>
+</radialGradient>
+<radialGradient id="poolCyan" cx="0.5" cy="0.5" r="0.5">
+<stop offset="0" stop-color="#3BC7F6" stop-opacity="0.75"/><stop offset="1" stop-color="#3BC7F6" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="poolLight" cx="0.5" cy="0.5" r="0.5">
+<stop offset="0" stop-color="#f3e8ff" stop-opacity="0.34"/><stop offset="1" stop-color="#f3e8ff" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="poolMag" cx="0.5" cy="0.5" r="0.5">
+<stop offset="0" stop-color="#CC4D9E" stop-opacity="0.7"/><stop offset="1" stop-color="#CC4D9E" stop-opacity="0"/>
+</radialGradient>
+<!-- ragged wet edge: noise pushes the outline around -->
+<filter id="wcRing" x="-20%" y="-20%" width="140%" height="140%">
+<feTurbulence type="fractalNoise" baseFrequency="0.014 0.032" numOctaves="3" seed="23" result="rn"/>
+<feDisplacementMap in="SourceGraphic" in2="rn" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="0.65"/>
+</filter>
+<filter id="wcHero" x="-25%" y="-25%" width="150%" height="150%">
+<feTurbulence type="fractalNoise" baseFrequency="0.018 0.024" numOctaves="4" seed="11" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<!-- granulation, the speckle pigment leaves in the paper -->
+<filter id="grainHero">
+<feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="5"/>
+<feColorMatrix type="saturate" values="0"/>
+<feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+</filter>
+<clipPath id="lower"><rect x="0" y="125" width="320" height="125"/></clipPath>
+<clipPath id="dropClip">
+<path d="M160 63C186 61 218 84 221 118C224 150 202 184 168 188C134 192 101 170 98 137C95 105 122 66 160 63Z"/>
+</clipPath>
+</defs>
+<ellipse cx="160" cy="125" rx="118" ry="112" fill="url(#halo)" opacity="0.5"/>
+<g filter="url(#wcRing)" transform="rotate(-18 160 125)">
+<ellipse cx="160" cy="125" rx="132" ry="34" stroke="url(#ring)" stroke-width="9" opacity="0.85"/>
+<ellipse cx="160" cy="125" rx="112" ry="27" stroke="url(#ring)" stroke-width="4.5" opacity="0.42"/>
+<ellipse cx="160" cy="125" rx="150" ry="41" stroke="url(#ring)" stroke-width="2.6" opacity="0.3"/>
+</g>
+<g filter="url(#wcHero)">
+<path d="M160 63C186 61 218 84 221 118C224 150 202 184 168 188C134 192 101 170 98 137C95 105 122 66 160 63Z" fill="url(#wash)"/>
+<g clip-path="url(#dropClip)">
+<ellipse cx="127" cy="99" rx="52" ry="44" fill="url(#poolCyan)"/>
+<ellipse cx="192" cy="158" rx="54" ry="46" fill="url(#poolMag)"/>
+<ellipse cx="176" cy="112" rx="46" ry="40" fill="url(#poolLight)"/>
+<rect x="90" y="55" width="140" height="140" filter="url(#grainHero)" opacity="0.22"/>
+</g>
+<path d="M160 63C186 61 218 84 221 118C224 150 202 184 168 188C134 192 101 170 98 137C95 105 122 66 160 63Z"
+fill="none" stroke="#4a1a8f" stroke-width="2.6" opacity="0.55"/>
+</g>
+<g filter="url(#wcRing)" clip-path="url(#lower)" transform="rotate(-18 160 125)">
+<ellipse cx="160" cy="125" rx="132" ry="34" stroke="url(#ring)" stroke-width="9"/>
+<ellipse cx="160" cy="125" rx="112" ry="27" stroke="url(#ring)" stroke-width="3" opacity="0.6"/>
+<ellipse cx="160" cy="125" rx="150" ry="41" stroke="url(#ring)" stroke-width="1.6" opacity="0.45"/>
+</g>
+<circle cx="272" cy="58" r="4" fill="#9de3ff"/>
+<circle cx="46" cy="196" r="2.6" fill="#f5d0fe"/>
+</svg>

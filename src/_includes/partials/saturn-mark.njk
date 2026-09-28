@@ -1,0 +1,35 @@
+<svg class="wordmark-dot" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+<defs>
+<linearGradient id="scg" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+<stop stop-color="#3BC7F6" stop-opacity="0.5"/><stop offset="0.18" stop-color="#5bb6f0" stop-opacity="0.95"/>
+<stop offset="0.42" stop-color="#A855F7" stop-opacity="0.72"/><stop offset="0.68" stop-color="#CC4D9E" stop-opacity="0.95"/>
+<stop offset="1" stop-color="#EF4444" stop-opacity="0.5"/>
+</linearGradient>
+<radialGradient id="scWash" cx="0.38" cy="0.3" r="0.78">
+<stop offset="0" stop-color="#efe2ff"/><stop offset="0.36" stop-color="#c08bff"/>
+<stop offset="0.74" stop-color="#8b3fe0"/><stop offset="1" stop-color="#4a1a8f"/>
+</radialGradient>
+<filter id="wcRingMark" x="-25%" y="-25%" width="150%" height="150%">
+<feTurbulence type="fractalNoise" baseFrequency="0.07 0.14" numOctaves="3" seed="23" result="rn"/>
+<feDisplacementMap in="SourceGraphic" in2="rn" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="0.16"/>
+</filter>
+<filter id="wcMark" x="-30%" y="-30%" width="160%" height="160%">
+<feTurbulence type="fractalNoise" baseFrequency="0.09 0.12" numOctaves="3" seed="11" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<clipPath id="markLower"><rect x="0" y="24" width="48" height="24"/></clipPath>
+</defs>
+<g filter="url(#wcRingMark)">
+<ellipse cx="24" cy="24" rx="21" ry="7" fill="none" stroke="url(#scg)" stroke-width="2.6" transform="rotate(-18 24 24)"/>
+<ellipse cx="24" cy="24" rx="16" ry="5" fill="none" stroke="url(#scg)" stroke-width="1.4" opacity="0.5" transform="rotate(-18 24 24)"/>
+</g>
+<g filter="url(#wcMark)">
+<path d="M24 13.4c4.4-.3 9.9 3 10.4 8.8.5 5.5-3.2 10.6-8.9 11.1-5.7.5-11.2-3.2-11.7-8.7-.5-5.6 5-10.9 10.2-11.2Z" fill="url(#scWash)"/>
+<path d="M24 13.4c4.4-.3 9.9 3 10.4 8.8.5 5.5-3.2 10.6-8.9 11.1-5.7.5-11.2-3.2-11.7-8.7-.5-5.6 5-10.9 10.2-11.2Z" fill="none" stroke="#4a1a8f" stroke-width="0.9" opacity="0.55"/>
+</g>
+<g filter="url(#wcRingMark)" clip-path="url(#markLower)">
+<ellipse cx="24" cy="24" rx="21" ry="7" fill="none" stroke="url(#scg)" stroke-width="2.6" transform="rotate(-18 24 24)"/>
+<ellipse cx="24" cy="24" rx="16" ry="5" fill="none" stroke="url(#scg)" stroke-width="1.4" opacity="0.5" transform="rotate(-18 24 24)"/>
+</g>
+</svg>

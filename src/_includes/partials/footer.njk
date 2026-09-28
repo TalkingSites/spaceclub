@@ -1,23 +1,20 @@
-<div class="footer-wrapper">
-<div class="divider" aria-hidden="true"></div>
-
-<footer class="border-top py-4 mt-auto bg-black" id="footer-main">
-<br>
-<br>
-<div class="container d-flex flex-wrap justify-content-between align-items-center gap-4 text-light fs-5 fw-semibold">
-<div class="">
-© {{ global.currentYear }}
-<a href="/" class="text-decoration-none text-light">{{ site.title }}</a>
+<footer class="site-footer">
+<div class="container">
+<div class="footer-rule" aria-hidden="true"></div>
+<div class="footer-grid">
+<div class="footer-mark">
+<button type="button" class="egg-btn" onclick="openOrbit()" aria-label="Something is hiding here">
+{% include "partials/octopus-mark.njk" %}
+</button>
+<div>
+<div class="footer-note">&copy; {{ global.currentYear }} sophie.tech</div>
+<div class="footer-note" style="opacity:.65">built with eleventy, held together by curiosity</div>
 </div>
-<div class="d-flex gap-3 flex-wrap">
-{% for item in navbar %}
-{% if item.footer %}
-<a href="{{ item.href }}" class="text-decoration-none text-light nav-link">
-{{ item.title }}
-</a>
-{% endif %}
-{% endfor %}
+</div>
+<nav class="footer-links" aria-label="Footer">
+{% for item in navbar %}{% if item.footer %}<a href="{{ item.href }}">{{ item.title }}</a>{% endif %}{% endfor %}
+<a href="{{ site.feedPath | default('/feed.xml') }}">RSS</a>
+</nav>
 </div>
 </div>
 </footer>
-</div>

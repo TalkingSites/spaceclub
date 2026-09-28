@@ -1,0 +1,33 @@
+---
+permalink: "{{ site.feedPath | default('/feed.xml') }}"
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>{{ site.title }}</title>
+    <link>{{ "/octopus/" | absoluteUrl }}</link>
+    <description>{{ site.description }}</description>
+    <language>en</language>
+    <lastBuildDate>{{ collections.posts | publishedOnly | newestDate | dateToRfc822 }}</lastBuildDate>
+    <generator>Eleventy</generator>
+    <atom:link href="{{ (site.feedPath | default('/feed.xml')) | absoluteUrl }}" rel="self" type="application/rss+xml"/>
+{%- for post in collections.posts | publishedOnly %}
+{%- if loop.index <= 20 %}
+    <item>
+      <title>{{ post.data.title }}</title>
+      <link>{{ (post.data.permalink or post.url) | absoluteUrl }}</link>
+      <guid isPermaLink="true">{{ (post.data.permalink or post.url) | absoluteUrl }}</guid>
+      <pubDate>{{ post.data.postDate | dateToRfc822 }}</pubDate>
+{%- if post.data.author or site.author %}
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">{{ post.data.author | default(site.author) }}</dc:creator>
+{%- endif %}
+{%- if post.data.description %}
+      <description><![CDATA[{{ post.data.description }}]]></description>
+{%- endif %}
+      <content:encoded><![CDATA[{{ post.templateContent | default("") }}]]></content:encoded>
+    </item>
+{%- endif %}
+{%- endfor %}
+  </channel>
+</rss>

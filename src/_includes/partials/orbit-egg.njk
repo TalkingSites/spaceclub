@@ -1,0 +1,24 @@
+<div class="modal fade" id="orbitModal" tabindex="-1" aria-labelledby="orbitModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+<div class="modal-content border-0">
+<div class="modal-header border-0 pb-0 align-items-start">
+<div>
+<h5 class="modal-title" id="orbitModalLabel">What I keep circling back to</h5>
+<p class="egg-found">You found the octopus. It was hiding, which is the whole point of an octopus.</p>
+</div>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body pt-2 pb-4">
+<div class="orbit-readout">
+{% for item in orbit %}
+<div class="orbit-row">
+<span class="orbit-idx">{{ "00" + (loop.index | string) }}</span>
+<span class="orbit-name">{{ item.name }}</span>
+<span class="orbit-note">{{ item.note }}</span>
+</div>
+{% endfor %}
+</div>
+</div>
+</div>
+</div>
+</div>

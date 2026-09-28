@@ -1,16 +1,5 @@
-<section class="mt-5 mb-5">
-{# <div class="mb-5">
-<h2 class="text-secondary">Featured</h2>
-{% include "partials/featured.njk" %}
-</div> #}
-<div>
-<h2>Latest Posts</h2>
+<section class="mt-5">
+<h2>Latest posts</h2>
 {% set type = "preview" %}
 {% include "partials/postsList.njk" %}
-</div>
-<div>
-<h2>What's on</h2>
-{% set type = "upcoming" %}
-{% include "partials/eventsList.njk" %}
-</div>
 </section>

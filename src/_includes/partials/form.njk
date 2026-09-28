@@ -1,74 +1,45 @@
-<section class="bg-body mt-5">
-
-<div class="text-center text-md-start bg-body-tertiary px-5 py-4 rounded-3 shadow-sm border border-primary border-opacity-25 shadow-sm mb-4 col-md-6">
-<h2 class="mb-3 text-primary">{{ formTitle }}</h2>
-<p class="text-muted small mb-3">{{ formDescription }}</p>
-<form class="needs-validation" 
-name="{{ formName }}" 
-id="{{ formName }}" 
-method="post" 
-netlify 
-novalidate>
-{# Loop through fields defined in front matter #}
+<form class="panel site-form needs-validation" name="{{ formName }}" id="{{ formName }}" method="post"
+data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+<input type="hidden" name="form-name" value="{{ formName }}"/>
+<p class="d-none"><label>Leave this empty if you are a person <input name="bot-field"/></label></p>
+{% if formTitle %}<h2 class="site-form-title">{{ formTitle }}</h2>{% endif %}
+{% if formDescription %}<p class="site-form-desc">{{ formDescription }}</p>{% endif %}
 {% for field in formFields %}
 {% set fieldName = field.name if field is mapping else field %}
+{% set fieldLabel = field.label if field is mapping and field.label else fieldName | capitalize %}
 {% set fieldType = field.type if field is mapping and field.type else ("email" if fieldName == "email" else "text") %}
-<div class="mb-3">
-<label for="{{ formName }}{{ fieldName | capitalize }}" class="form-label">
-{{ fieldName | capitalize }}
-</label>
-{% if fieldName == "message" %}
-<textarea class="form-control" 
-id="{{ formName }}{{ fieldName | capitalize }}" 
-name="{{ fieldName }}" 
-rows="4" 
-required></textarea>
-<div class="invalid-feedback">Please enter your {{ fieldName }}.</div>
+{% set isRequired = false if field is mapping and field.required == false else true %}
+{% set rows = field.rows if field is mapping and field.rows else 5 %}
+<div class="mb-4">
+<label for="{{ formName }}{{ fieldName | capitalize }}" class="form-label">{{ fieldLabel }}{% if not isRequired %} <span class="optional">(optional)</span>{% endif %}</label>
+{% if fieldName == "message" or (field is mapping and field.type == "textarea") %}
+<textarea class="form-control" id="{{ formName }}{{ fieldName | capitalize }}" name="{{ fieldName }}" rows="{{ rows }}"{% if isRequired %} required{% endif %}></textarea>
+<div class="invalid-feedback">Something here would help.</div>
 {% else %}
-<input type="{{ fieldType }}" 
-class="form-control" 
-id="{{ formName }}{{ fieldName | capitalize }}" 
-name="{{ fieldName }}" 
-required>
-<div class="invalid-feedback">Please enter a valid {{ fieldName }}.</div>
+<input type="{{ fieldType }}" class="form-control" id="{{ formName }}{{ fieldName | capitalize }}" name="{{ fieldName }}"{% if isRequired %} required{% endif %}>
+<div class="invalid-feedback">That does not look right yet.</div>
 {% endif %}
 </div>
 {% endfor %}
-<button type="submit" class="btn btn-outline-primary">Send Message</button>
+<button type="submit" class="btn btn-primary">{{ formButton | default("Send") }}</button>
 </form>
-</div>
-</section>
-{# --- Bootstrap validation --- #}
 <script>
 (() => {
 'use strict';
-const forms = document.querySelectorAll('.needs-validation');
-Array.from(forms).forEach(form => {
+document.querySelectorAll('.needs-validation').forEach(form => {
 form.addEventListener('submit', (event) => {
-if (!form.checkValidity()) {
-event.preventDefault();
-event.stopPropagation();
-}
+if (!form.checkValidity()) { event.preventDefault(); event.stopPropagation(); }
 form.classList.add('was-validated');
 }, false);
 });
-})();
-</script>
-{# --- Prefill fields from URL params --- #}
-<script>
-(function () {
 const params = new URLSearchParams(window.location.search);
-const setFieldFromParams = (selector, keys) => {
-const el = document.querySelector(selector);
-if (!el) return;
-for (const k of keys) {
-const v = params.get(k);
-if (v !== null && v !== undefined && v !== "") { el.value = v; return; }
-}
-};
 {% for field in formFields %}
 {% set fieldName = field.name if field is mapping else field %}
-setFieldFromParams('#{{ formName }}{{ fieldName | capitalize }}', ['{{ fieldName }}']);
+(() => {
+const el = document.querySelector('#{{ formName }}{{ fieldName | capitalize }}');
+const v = params.get('{{ fieldName }}');
+if (el && v) el.value = v;
+})();
 {% endfor %}
 })();
 </script>

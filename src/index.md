@@ -1,23 +1,23 @@
 ---
 layout: index.njk
-title: Welcome to Space Club!
-description: Check out this home page
-permalink: "/"
+title: sophie.tech
+description: Sophie Allen. Software engineer. Writing about space, philosophy, quantum weirdness, octopus cognition and whatever else has hold of me this week.
+permalink: "/octopus/"
 ---
 
-# Hello World!
-
-Located on Dione, one of the largest moon's of Saturn, our club hosts regular get togethers.   
-Join us as we share our passion for our space home, whether gathering for meetings, contributing to the wiki and docs, reaching out to other moons, the possibilites are endless!
-
+<section class="hero">
+<div>
+<h1 class="hero-name gradient-text" aria-label="Sophie Allen"><span id="hero-name-text" aria-hidden="true">Sophie Allen</span></h1>
+<script src="/assets/js/hero-name.js" defer></script>
+<!-- your intro goes here -->
+</div>
+<div class="hero-saturn">
+{% include "partials/hero-saturn.njk" %}
+</div>
+</section>
 
 <div>
 {% include "partials/homeCards.njk" %}
 </div>
 
-
-{% set text = "Register Now" %}
-{% set link = "https://example.com/register" %}
-{% set icon = "ticket-perforated" %}
-{% set style = "primary" %}
-{% include "partials/btn.njk" %}
+{% include "partials/graph.njk" %}

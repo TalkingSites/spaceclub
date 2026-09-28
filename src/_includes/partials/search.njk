@@ -1,0 +1,17 @@
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content border-0">
+<div class="modal-header border-0 pb-0">
+<h5 class="modal-title" id="searchModalLabel">{{ site.searchTitle | default("Search") }}</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body pt-3">
+<div class="mb-3">
+<input type="text" class="form-control form-control-lg" id="searchInput"
+placeholder="{{ site.searchPlaceholder | default('Search posts and pages...') }}" oninput="performSearch()"/>
+</div>
+<div id="searchResults" class="search-results" style="max-height: 420px; overflow-y: auto"></div>
+</div>
+</div>
+</div>
+</div>

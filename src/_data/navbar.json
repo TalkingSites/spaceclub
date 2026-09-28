@@ -1,17 +1,17 @@
 [
   {
     "title": "Home",
-    "href": "/",
+    "href": "/octopus",
+    "footer": true
+  },
+  {
+    "title": "Posts",
+    "href": "/posts/",
     "footer": true
   },
   {
     "title": "About",
     "href": "/about",
-    "footer": true
-  },
-  {
-    "title": "Contact",
-    "href": "/contact",
     "footer": true
   }
 ]

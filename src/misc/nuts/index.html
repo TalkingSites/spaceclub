@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nut, Actually — a field guide to what is and isn't a botanical nut</title>
+<style>
+:root{
+  --paper:#f7f2e7; --paper2:#efe7d5; --card:#fffdf7;
+  --ink:#241d14; --ink2:#5d4e3c; --ink3:#8a7860;
+  --rule:#ddd0b6; --rule2:#c9b894;
+  --gold:#b8862b; --sage:#66793f; --rust:#a8492a; --slate:#4f6570;
+  --yes:#3d6b3a; --no:#a8492a; --maybe:#a97a12;
+  --shadow:0 1px 2px rgba(60,45,20,.08), 0 8px 24px -12px rgba(60,45,20,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font:16px/1.6 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  background-image:
+    radial-gradient(circle at 15% 12%, rgba(184,134,43,.05), transparent 45%),
+    radial-gradient(circle at 85% 70%, rgba(102,121,63,.05), transparent 45%);
+}
+.ui{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+h1,h2,h3{font-weight:600;line-height:1.15;margin:0}
+a{color:var(--rust)}
+
+/* ---------- header ---------- */
+header.hero{padding:64px 0 40px;border-bottom:1px solid var(--rule);background:linear-gradient(180deg,#fbf7ee,transparent)}
+.kicker{font:600 11px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+h1{font-size:clamp(38px,7vw,72px);letter-spacing:-.02em;margin:14px 0 0}
+h1 em{font-style:italic;color:var(--rust)}
+.lede{max-width:62ch;font-size:clamp(17px,2.2vw,20px);color:var(--ink2);margin:18px 0 0}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.stat{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:10px 16px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font:600 10px/1.4 ui-sans-serif,system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+
+/* ---------- generic section ---------- */
+section{padding:56px 0;border-bottom:1px solid var(--rule)}
+.sec-head{max-width:70ch;margin-bottom:30px}
+.sec-head h2{font-size:clamp(26px,4vw,38px);letter-spacing:-.01em}
+.sec-head p{color:var(--ink2);margin:12px 0 0}
+.num{font:600 11px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:10px}
+
+/* ---------- five tests ---------- */
+.tests{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.test{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.test::after{content:attr(data-n);position:absolute;right:10px;top:-8px;font-size:64px;color:rgba(184,134,43,.11);font-weight:700}
+.test h3{font-size:17px;margin-bottom:6px}
+.test p{margin:0;font-size:14px;color:var(--ink2);line-height:1.5}
+.test .fail{display:block;margin-top:10px;font:500 12.5px/1.45 ui-sans-serif,system-ui,sans-serif;color:var(--rust)}
+
+/* ---------- legend ---------- */
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px 22px;margin-top:8px}
+.lg{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.4}
+.sw{width:16px;height:16px;border-radius:4px;border:1px solid rgba(0,0,0,.3);flex:none;margin-top:3px}
+.lg small{display:block;color:var(--ink3);font-size:12.5px}
+
+/* ---------- spotlight ---------- */
+.spot{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;margin:6px 0 30px}
+.spot figure{margin:0;text-align:center}
+.spot svg{width:100%;max-width:170px;height:auto}
+.spot figcaption{font-size:13.5px;color:var(--ink2);margin-top:8px;line-height:1.45}
+.spot figcaption .fname{display:block;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.callout{background:#fdf9ef;border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:22px 26px;box-shadow:var(--shadow)}
+.callout h3{font-size:21px;margin-bottom:10px}
+.callout p{margin:0 0 12px;color:var(--ink2)}
+.callout p:last-child{margin-bottom:0}
+.callout strong{color:var(--ink)}
+
+/* ---------- controls ---------- */
+.controls{position:sticky;top:0;z-index:30;background:rgba(247,242,231,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);padding:12px 0;margin-bottom:26px}
+.ctl-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+input[type=search]{font:14px/1 ui-sans-serif,system-ui,sans-serif;padding:9px 12px;border:1px solid var(--rule2);border-radius:8px;background:#fff;color:var(--ink);min-width:210px;flex:1 1 210px;max-width:320px}
+input[type=search]:focus{outline:2px solid rgba(184,134,43,.45);outline-offset:1px}
+.chip{font:600 12.5px/1 ui-sans-serif,system-ui,sans-serif;padding:8px 13px;border-radius:99px;border:1px solid var(--rule2);background:#fff;color:var(--ink2);cursor:pointer;white-space:nowrap;transition:.12s}
+.chip:hover{border-color:var(--gold);color:var(--ink)}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#f7f2e7}
+.chip.yes[aria-pressed=true]{background:var(--yes);border-color:var(--yes)}
+.chip.no[aria-pressed=true]{background:var(--no);border-color:var(--no)}
+.chip.maybe[aria-pressed=true]{background:var(--maybe);border-color:var(--maybe)}
+.count{font:13px/1 ui-sans-serif,system-ui,sans-serif;color:var(--ink3);margin-left:auto}
+
+/* ---------- grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:16px}
+.nut{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:16px 16px 14px;text-align:left;cursor:pointer;box-shadow:var(--shadow);transition:transform .14s,box-shadow .14s,border-color .14s;font:inherit;color:inherit;display:flex;flex-direction:column;gap:2px}
+.nut:hover{transform:translateY(-3px);border-color:var(--rule2);box-shadow:0 2px 4px rgba(60,45,20,.1),0 18px 34px -16px rgba(60,45,20,.4)}
+.nut:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.nut svg{width:100%;height:auto;display:block;margin-bottom:8px}
+.nut .nm{font-size:17px;line-height:1.25;letter-spacing:-.01em}
+.nut .sci{font-style:italic;font-size:12.5px;color:var(--ink3);margin-top:1px}
+.nut .real{font:500 12.5px/1.35 ui-sans-serif,system-ui,sans-serif;color:var(--ink2);margin-top:8px}
+.badge{display:inline-flex;align-items:center;gap:5px;font:700 10px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;border-radius:99px;align-self:flex-start;margin-top:10px}
+.b-yes{background:rgba(61,107,58,.13);color:var(--yes)}
+.b-no{background:rgba(168,73,42,.12);color:var(--no)}
+.b-maybe{background:rgba(169,122,18,.14);color:var(--maybe)}
+.dots{display:flex;gap:4px;margin-top:10px}
+.dot{width:100%;height:5px;border-radius:3px;background:var(--rule)}
+.dot.p{background:var(--yes)}.dot.f{background:var(--no)}.dot.h{background:var(--maybe)}.dot.n{background:var(--rule2)}
+
+/* ---------- table ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:12px;background:var(--card);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:720px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule)}
+th{font:600 10.5px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);background:var(--paper2);position:sticky;top:0}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:#fbf6ea}
+td .sci{font-style:italic;color:var(--ink3);font-size:12.5px}
+td.v-yes{color:var(--yes);font-weight:600}td.v-no{color:var(--no)}td.v-maybe{color:var(--maybe);font-weight:600}
+.hidden{display:none !important}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(36,29,20,.55);backdrop-filter:blur(3px)}
+.modal[hidden]{display:none}
+.sheet{background:var(--card);border-radius:16px;max-width:760px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 30px 70px -20px rgba(0,0,0,.5);border:1px solid var(--rule2)}
+.sheet-in{padding:26px 30px 30px}
+.close{position:sticky;top:0;float:right;background:var(--card);border:1px solid var(--rule);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1;color:var(--ink2)}
+.close:hover{background:var(--paper2)}
+.m-top{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.m-top svg{width:180px;height:180px;flex:none}
+.m-head{flex:1 1 260px;min-width:230px}
+.m-head h3{font-size:30px;letter-spacing:-.02em}
+.m-head .sci{font-style:italic;color:var(--ink3);font-size:15px;margin-top:2px}
+.m-head .fam{font:500 12px/1 ui-sans-serif,system-ui,sans-serif;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-top:9px}
+.m-layers{margin-top:14px;display:flex;flex-direction:column;gap:5px}
+.m-layers div{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--ink2)}
+.m-body h4{font:600 11px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:22px 0 7px}
+.m-body p{margin:0;color:var(--ink2)}
+.checklist{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:7px}
+.checklist li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.45}
+.mark{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;font:700 12px/1 ui-sans-serif,system-ui,sans-serif;color:#fff;margin-top:1px}
+.mark.p{background:var(--yes)}.mark.f{background:var(--no)}.mark.h{background:var(--maybe)}.mark.n{background:var(--rule2);color:var(--ink2)}
+.fixbox{background:#f4f7ee;border:1px solid #dbe4c9;border-radius:12px;padding:16px 18px;margin-top:8px}
+.fixbox p{color:#41522f}
+
+/* ---------- quiz ---------- */
+.quiz{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:26px;box-shadow:var(--shadow);max-width:640px}
+.quiz svg{width:130px;height:130px;display:block;margin:0 auto}
+.q-name{text-align:center;font-size:26px;margin-top:6px}
+.q-sci{text-align:center;font-style:italic;color:var(--ink3);font-size:14px}
+.q-ask{text-align:center;color:var(--ink2);margin:16px 0 14px}
+.q-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{font:600 15px/1 ui-sans-serif,system-ui,sans-serif;padding:12px 24px;border-radius:10px;border:1px solid var(--rule2);background:#fff;cursor:pointer;color:var(--ink);transition:.12s}
+.btn:hover{border-color:var(--ink);transform:translateY(-1px)}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.q-feed{margin-top:16px;padding:15px 17px;border-radius:12px;font-size:14.5px;line-height:1.55}
+.q-feed.right{background:rgba(61,107,58,.1);color:#2f5430}
+.q-feed.wrong{background:rgba(168,73,42,.1);color:#7d3620}
+.q-score{text-align:center;font:600 12px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+footer{padding:44px 0 70px;color:var(--ink3);font-size:14px}
+footer p{max-width:70ch}
+@media (max-width:640px){
+  header.hero{padding:40px 0 30px}
+  section{padding:40px 0}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .nut{padding:12px}
+  .nut .nm{font-size:15px}
+  .sheet-in{padding:20px}
+  .m-top svg{width:130px;height:130px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">A field guide to a very leaky word</span>
+    <h1>Nut, <em>Actually</em></h1>
+    <p class="lede">Almost nothing you buy in a bag labelled &ldquo;mixed nuts&rdquo; is a nut. Peanuts are peas. Cashews are stone&nbsp;fruit. Brazil nuts are seeds rattling in a coconut-sized pot. Macadamias &mdash; hard, round, single, shelled &mdash; fail on a technicality so specific it is worth the whole page. Here are <b id="statTotal">70</b> so-called nuts, X-rayed and judged.</p>
+    <div class="stats">
+      <div class="stat"><b id="s1">0</b><span>specimens</span></div>
+      <div class="stat"><b id="s2" style="color:var(--yes)">0</b><span>true botanical nuts</span></div>
+      <div class="stat"><b id="s3" style="color:var(--no)">0</b><span>impostors</span></div>
+      <div class="stat"><b id="s4" style="color:var(--maybe)">0</b><span>borderline cases</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">01 &mdash; The rule</span>
+      <h2>Five questions. All five must be yes.</h2>
+      <p>A botanical nut is a specific kind of <em>fruit</em>: a dry, one-seeded fruit whose own wall goes hard and stays shut. That is the entire definition &mdash; and it says nothing about being crunchy, oily, roasted or sold at cricket matches. Every impostor below fails at least one of these.</p>
+    </div>
+    <div class="tests">
+      <div class="test" data-n="1"><h3>It's a whole fruit</h3><p>What you crack is the entire fruit &mdash; ovary wall included &mdash; not just a seed that was sitting inside something else.</p><span class="fail">Fails: almond, Brazil nut, macadamia, pine nut</span></div>
+      <div class="test" data-n="2"><h3>It's dry</h3><p>The fruit wall is dry and woody at maturity. No flesh, no pulp, nothing juicy to wipe off.</p><span class="fail">Fails: walnut, coconut, pistachio</span></div>
+      <div class="test" data-n="3"><h3>It stays shut</h3><p><em>Indehiscent:</em> the fruit never splits itself open to release the seed. It has to be broken into by an animal, or rot.</p><span class="fail">Fails: macadamia, pecan, sesame, Brazil nut</span></div>
+      <div class="test" data-n="4"><h3>One seed inside</h3><p>Exactly one seed per fruit. (Most nut ancestors start with several ovules and abort all but one.)</p><span class="fail">Fails: peanut, Brazil nut, cocoa</span></div>
+      <div class="test" data-n="5"><h3>The wall is stony</h3><p>That single dry wall is thick and hard. If it's a thin papery skin instead, you have an achene; if it's fused to the seed, a grain.</p><span class="fail">Fails: sunflower, hemp, peanut, quinoa</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="anatomy">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">02 &mdash; How to read the diagrams</span>
+      <h2>Colour tells you what a shell really is.</h2>
+      <p>Every specimen is drawn in cross-section, with each layer coloured by what it <em>is</em>, not by what it looks like. Two shells can look identical and be completely different organs &mdash; that is the whole trick. <strong>Only a gold shell can make something a nut.</strong></p>
+    </div>
+    <div class="legend" id="legend"></div>
+  </div>
+</section>
+
+<section id="macadamia">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">03 &mdash; The case of the macadamia</span>
+      <h2>Hard shell, one kernel, and still not a nut.</h2>
+      <p>The macadamia is the best possible test of the rule, because by eye it is <em>more</em> nut-like than a hazelnut. Here is what the cross-sections show.</p>
+    </div>
+    <div class="spot" id="spotlight"></div>
+    <div class="callout">
+      <h3>Why the macadamia loses on two counts</h3>
+      <p><strong>1. Its fruit opens itself.</strong> The macadamia fruit is a <em>follicle</em> &mdash; a leathery green husk built from a single carpel that dries and splits along one seam to drop what's inside. A nut, by definition, is indehiscent: it never opens on its own. The moment that husk splits, the fruit is disqualified, the same way a pea pod is.</p>
+      <p><strong>2. The famous shell isn't fruit at all.</strong> Peel the green husk away and the rock-hard brown sphere left in your hand is the <em>seed coat</em> &mdash; the testa, part of the seed. Botanically it is the same organ as the papery red skin on a peanut or the thin brown film on an almond; it has simply lignified to an absurd degree (macadamia shells crush at around 2,000&nbsp;newtons, the hardest of any commercial crop). In a hazelnut, the hard shell is the <em>fruit wall</em> and the seed inside it is soft and free. In a macadamia, the fruit wall was the green thing you threw away.</p>
+      <p><strong>So what would have to change?</strong> The green husk would need to stop splitting and instead go woody itself, hardening into the shell while the seed inside it stayed thin-skinned and loose. Then macadamia would be a nut &mdash; and the brown shell you know would have to become an unremarkable brown skin. In other words: it isn't that the macadamia lacks a hard shell. It has one shell too many, in the wrong layer.</p>
+      <p style="font-size:14.5px;color:var(--ink3)">The same logic convicts the Brazil nut (hard brown shell = seed coat, inside a woody pot that holds a dozen more) and acquits nothing. Meanwhile the coconut &mdash; sealed, single-seeded, stony-walled &mdash; misses out only because of a fibrous layer of flesh.</p>
+    </div>
+  </div>
+</section>
+
+<section id="guide" style="padding-top:36px">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">04 &mdash; The specimens</span>
+      <h2>Every &ldquo;nut&rdquo; we could find.</h2>
+      <p>Click any specimen for its anatomy, its verdict, and exactly what would have to change for it to qualify. The five bars under each name are the five tests, in order.</p>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="wrap">
+      <div class="ctl-row ui">
+        <input type="search" id="q" placeholder="Search 70 specimens&hellip;" aria-label="Search specimens">
+        <button class="chip yes" data-v="yes" aria-pressed="false">True nuts</button>
+        <button class="chip maybe" data-v="maybe" aria-pressed="false">Borderline</button>
+        <button class="chip no" data-v="no" aria-pressed="false">Not nuts</button>
+        <button class="chip" id="viewToggle" aria-pressed="false">Table view</button>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="ctl-row ui" id="cats" style="margin-top:8px"></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="grid" id="grid"></div>
+    <div class="tablewrap hidden" id="tablewrap">
+      <table><thead><tr><th>Specimen</th><th>What it actually is</th><th>Verdict</th><th>Where it fails</th></tr></thead><tbody id="tbody"></tbody></table>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="num">05 &mdash; The test</span>
+      <h2>Nut or not?</h2>
+      <p>Ten specimens, drawn at random. Trust the rule, not your instincts &mdash; instincts are what got the word into this mess.</p>
+    </div>
+    <div class="quiz ui" id="quizbox"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>A note on disagreement.</strong> Botanists argue at the edges. &ldquo;Nut&rdquo; in the strictest sense is reserved for the Fagales &mdash; oaks, beeches, hazels and their relatives &mdash; where the fruit comes from a compound (multi-chambered) ovary sitting below the flower, and all but one ovule aborts. Under that strict rule even a hard, dry, sealed, one-seeded fruit like the baru can't be a nut, because it descends from a single-carpel pea pod. Looser definitions let it in. Cases marked <b style="color:var(--maybe)">borderline</b> are where the sources genuinely differ, or where a fruit sits on a boundary &mdash; usually the fuzzy line between a nut and an achene, which is nothing more than how thick the wall got.</p>
+    <p style="margin-top:14px">Diagrams are schematic cross-sections, drawn to show organ identity rather than true proportion. Culinary categories are noted where they differ from botanical ones &mdash; which is most of the time.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modal" hidden><div class="sheet" id="sheet"></div></div>
+
+<script>
+/* ============================================================
+   SHAPES — normalised outlines in a 100x100 box, centred at 50,50
+   ============================================================ */
+const SHAPES = {
+  round:  "M50 8C73 8 92 27 92 50C92 73 73 92 50 92C27 92 8 73 8 50C8 27 27 8 50 8Z",
+  oval:   "M50 5C70 5 86 25 86 50C86 75 70 95 50 95C30 95 14 75 14 50C14 25 30 5 50 5Z",
+  almond: "M50 3C66 19 83 36 83 55C83 77 67 96 50 96C33 96 17 77 17 55C17 36 34 19 50 3Z",
+  acorn:  "M50 17C73 17 87 40 87 60C87 80 71 95 50 95C29 95 13 80 13 60C13 40 27 17 50 17Z",
+  chest:  "M50 5C58 26 89 35 89 62C89 82 72 93 50 93C28 93 11 82 11 62C11 35 42 26 50 5Z",
+  tear:   "M50 5C74 30 88 47 88 62C88 80 71 95 50 95C29 95 12 80 12 62C12 47 26 30 50 5Z",
+  kidney: "M72 12C86 22 92 45 82 66C72 87 45 97 28 89C13 82 11 65 22 58C39 48 47 41 45 29C43 15 58 2 72 12Z",
+  tri:    "M50 5C52 5 54 6 55 9L89 79C92 86 88 94 81 94L19 94C12 94 8 86 11 79L45 9C46 6 48 5 50 5Z",
+  pod:    "M50 3C64 3 73 13 73 26C73 34 66 40 66 50C66 60 73 66 73 74C73 87 64 97 50 97C36 97 27 87 27 74C27 66 34 60 34 50C34 40 27 34 27 26C27 13 36 3 50 3Z",
+  slim:   "M50 3C61 3 69 18 69 45C69 73 61 97 50 97C39 97 31 73 31 45C31 18 39 3 50 3Z",
+  disc:   "M50 18C79 18 95 32 95 50C95 68 79 82 50 82C21 82 5 68 5 50C5 32 21 18 50 18Z",
+  drop:   "M50 6C68 6 84 24 84 48C84 74 69 94 50 94C31 94 16 74 16 48C16 24 32 6 50 6Z",
+  lump:   "M50 7C70 4 90 22 91 45C92 70 74 93 51 93C28 93 9 73 9 49C9 27 30 10 50 7Z",
+  seedy:  "M50 8C64 8 76 20 79 38C82 58 70 92 50 92C30 92 18 58 21 38C24 20 36 8 50 8Z"
+};
+
+/* ============================================================
+   LAYERS — colour is keyed to what the tissue IS
+   ============================================================ */
+const LAYER = {
+  husk:     {c:"#7d9a4e", n:"Husk / outer fruit wall", d:"Outer skin of the fruit (exocarp), often stripped at harvest", g:"fruit"},
+  flesh:    {c:"#c9803c", n:"Flesh (mesocarp)", d:"Juicy or fibrous middle of the fruit wall", g:"fruit"},
+  pericarp: {c:"#d8a13c", n:"Hardened fruit wall &mdash; a true nut shell", d:"The whole fruit wall goes woody and stays shut. This, and only this, makes a nut.", g:"fruit"},
+  endocarp: {c:"#b0782a", n:"Stone (endocarp)", d:"Only the inner fruit wall hardens, around flesh &mdash; the mark of a drupe", g:"fruit"},
+  pod:      {c:"#a9a05f", n:"Pod wall (legume)", d:"A fruit wall, but papery and built from a single carpel", g:"fruit"},
+  capsule:  {c:"#8d8478", n:"Capsule wall", d:"A dry fruit that splits or lids open to shed many seeds", g:"fruit"},
+  follicle: {c:"#6f8f4a", n:"Follicle wall", d:"A dry fruit that splits along one seam &mdash; the macadamia's husk", g:"fruit"},
+  aril:     {c:"#b8422f", n:"Aril / sarcotesta", d:"A fleshy extra coat grown by the seed itself, not the fruit", g:"seed"},
+  testa:    {c:"#6b4a2f", n:"Seed coat (testa)", d:"Part of the SEED. May be paper-thin or rock-hard &mdash; either way it can never make a nut.", g:"seed"},
+  kernel:   {c:"#f0e0bd", n:"Kernel", d:"Embryo and food store &mdash; the bit you actually eat", g:"seed"},
+  storage:  {c:"#e6d2ae", n:"Storage tissue", d:"Swollen stem or root. Not a seed, not a fruit, not remotely a nut.", g:"none"},
+  skin:     {c:"#8a6b4a", n:"Skin", d:"Outer skin of a tuber or corm", g:"none"}
+};
+
+const P = {
+  truenut:  [["husk",.085],["pericarp",.15],["testa",.035],["kernel"]],
+  nutbare:  [["pericarp",.17],["testa",.04],["kernel"]],
+  drupe:    [["husk",.055],["flesh",.10],["endocarp",.115],["testa",.03],["kernel"]],
+  drupedry: [["husk",.10],["endocarp",.12],["testa",.03],["kernel"]],
+  legume:   [["pod",.115],["testa",.04],["kernel"]],
+  capsule:  [["capsule",.10],["testa",.085],["kernel"]],
+  follicle: [["follicle",.11],["testa",.12],["kernel"]],
+  gymnoflesh:[["aril",.09],["testa",.10],["kernel"]],
+  gymno:    [["testa",.13],["kernel"]],
+  achene:   [["pericarp",.075],["testa",.025],["kernel"]],
+  berry:    [["flesh",.155],["testa",.05],["kernel"]],
+  tuber:    [["skin",.05],["storage"]],
+  seed:     [["testa",.085],["kernel"]]
+};
+
+/* ---------- cross-section renderer ---------- */
+function extras(x, sh){
+  let o = "";
+  if(!x) return o;
+  if(x.includes("cap"))
+    o += '<path d="M14 46C14 30 30 18 50 18C70 18 86 30 86 46C86 46 72 40 50 40C28 40 14 46 14 46Z" fill="#8a6b4a" stroke="rgba(0,0,0,.35)" stroke-width="1.1"/>'+
+         '<path d="M50 14 L50 20" stroke="#6b4a2f" stroke-width="3.5" stroke-linecap="round"/>';
+  if(x.includes("spines")){
+    for(let i=0;i<22;i++){const a=i/22*Math.PI*2, r1=44,r2=53;
+      o += `<line x1="${(50+Math.cos(a)*r1).toFixed(1)}" y1="${(50+Math.sin(a)*r1).toFixed(1)}" x2="${(50+Math.cos(a)*r2).toFixed(1)}" y2="${(50+Math.sin(a)*r2).toFixed(1)}" stroke="#6f8f4a" stroke-width="1.6" stroke-linecap="round" opacity=".85"/>`;}
+  }
+  if(x.includes("split"))
+    /* the seam belongs to the OUTER wall only, so mark it there and nowhere else */
+    o += '<g stroke="#fdfaf0" stroke-width="2.4" stroke-dasharray="3.5 3" stroke-linecap="round">'+
+         '<path d="M50 9 L50 27"/><path d="M50 73 L50 91"/></g>'+
+         '<g stroke="rgba(40,25,5,.5)" stroke-width="4" stroke-dasharray="3.5 3" opacity=".4" stroke-linecap="round">'+
+         '<path d="M50 9 L50 27"/><path d="M50 73 L50 91"/></g>';
+  if(x.includes("lid"))
+    o += '<path d="M38 40 Q50 34 62 40" stroke="rgba(0,0,0,.4)" stroke-width="2" fill="none" stroke-dasharray="4 3"/>';
+  if(x.includes("wrinkle"))
+    o += '<g stroke="#c9ad78" stroke-width="1.5" fill="none" opacity=".9" stroke-linecap="round">'+
+         '<path d="M50 34 C42 42 58 50 50 58 C42 64 52 68 50 70"/><path d="M40 40 C34 46 40 52 36 58"/><path d="M60 40 C66 46 60 52 64 58"/></g>';
+  if(x.includes("pores"))
+    o += '<g fill="#4a3520"><circle cx="50" cy="18" r="3"/><circle cx="41" cy="22" r="2.6"/><circle cx="59" cy="22" r="2.6"/></g>';
+  if(x.includes("fibre")){
+    for(let i=0;i<26;i++){const a=i/26*Math.PI*2;
+      o += `<line x1="${(50+Math.cos(a)*32).toFixed(1)}" y1="${(50+Math.sin(a)*32).toFixed(1)}" x2="${(50+Math.cos(a)*40).toFixed(1)}" y2="${(50+Math.sin(a)*40).toFixed(1)}" stroke="#8d5b2c" stroke-width="1.3" opacity=".55"/>`;}
+  }
+  if(x.includes("ribs"))
+    /* surface ridges, kept out near the rim so they read as shell texture */
+    o += '<g stroke="rgba(40,25,5,.22)" stroke-width="1.1" fill="none" stroke-linecap="round">'+
+         '<path d="M26 34 C21 52 23 68 29 82"/><path d="M74 34 C79 52 77 68 71 82"/></g>';
+  if(x.includes("cone"))
+    o += '<g fill="none" stroke="#5a6a72" stroke-width="1.6" opacity=".75"><path d="M18 30 Q50 20 82 30"/><path d="M16 46 Q50 36 84 46"/></g>';
+  if(x.includes("scar"))
+    o += '<ellipse cx="50" cy="86" rx="13" ry="5" fill="#3d2b18" opacity=".8"/>';
+  if(x.includes("hairs"))
+    o += '<g stroke="#c9ad78" stroke-width="1" opacity=".8"><path d="M50 6 L48 0"/><path d="M53 7 L55 1"/><path d="M47 7 L44 2"/></g>';
+  return o;
+}
+
+function svgFor(n, size){
+  const d = SHAPES[n.sh] || SHAPES.round;
+  const layers = (n.layers || P[n.p] || P.nutbare);
+  let s = n.nofruit ? .84 : 1, body = "";
+  layers.forEach(L => {
+    const info = LAYER[L[0]];
+    body += `<g transform="translate(50 50) scale(${s.toFixed(3)}) translate(-50 -50)">`+
+            `<path d="${d}" fill="${info.c}" stroke="rgba(50,35,15,.45)" stroke-width="${(1.3/s).toFixed(2)}">`+
+            `<title>${info.n.replace(/&mdash;/g,"—")}</title></path></g>`;
+    s -= (L[1] || 0);
+  });
+  const dashed = n.nofruit
+    ? '<g><circle cx="50" cy="50" r="47" fill="none" stroke="#a8492a" stroke-width="1.4" stroke-dasharray="4 5" opacity=".8"/>'+
+      '<text x="50" y="7" text-anchor="middle" font-size="7.5" fill="#a8492a" stroke="#fffdf7" stroke-width="2.4" paint-order="stroke" font-family="ui-sans-serif,system-ui,sans-serif">no fruit exists</text></g>'
+    : "";
+  const gloss = '<ellipse cx="38" cy="34" rx="9" ry="6" fill="#fff" opacity=".18" transform="rotate(-28 38 34)"/>';
+  return `<svg viewBox="-4 -4 108 108" width="${size||"100%"}" role="img" aria-label="Cross-section of ${n.n}">`+
+         dashed + body + gloss + extras(n.x, n.sh) + `</svg>`;
+}
+
+/* ============================================================
+   THE SPECIMENS
+   t = the five tests, in order: whole fruit / dry / sealed / one seed / stony wall
+   Y = pass   N = fail   ~ = partial or disputed   - = not applicable
+   ============================================================ */
+const NUTS = [
+
+/* ---------- TRUE NUTS ---------- */
+{n:"Hazelnut", s:"Corylus avellana", f:"Betulaceae", c:"True nut", v:"yes", sh:"round", p:"truenut", x:["hairs"], t:"YYYYY",
+ eat:"The kernel (the seed) inside the shell",
+ what:"The reference specimen. The gold-brown shell is the fruit wall itself, so shell plus kernel together are one entire fruit that happens to have gone woody.",
+ why:"Dry at maturity, never splits itself open, exactly one seed, and the wall is thick and stony. Five out of five. The ragged leafy collar it sits in is a cupule of fused bracts, not part of the fruit.",
+ fix:"Nothing at all. Every other entry on this page is measured against this one."},
+
+{n:"Acorn", s:"Quercus spp.", f:"Fagaceae", c:"True nut", v:"yes", sh:"acorn", p:"nutbare", x:["cap"], t:"YYYYY",
+ eat:"The kernel, after leaching out the tannins",
+ what:"A one-seeded fruit sheathed in its own hardened wall. The cap is a cupule &mdash; a cup of fused, scaly bracts the flower sat in &mdash; and is no more part of the fruit than an egg cup is part of the egg.",
+ why:"Textbook. Dry, sealed, single-seeded, hard-walled. Oaks are the family the strict definition of nut was practically written around.",
+ fix:"Nothing botanically. Culinarily it needs hours of leaching, because acorn tannin is astringent enough to tan leather &mdash; which is literally what it is used for."},
+
+{n:"Sweet chestnut", s:"Castanea sativa", f:"Fagaceae", c:"True nut", v:"yes", sh:"chest", p:"truenut", x:["spines","scar"], t:"YYY Y~".replace(/ /g,""),
+ eat:"The starchy kernel, roasted",
+ what:"Two or three nuts packed inside a viciously spiny burr. The burr is the cupule; the glossy brown skin around each chestnut is the fruit wall.",
+ why:"It passes every test, with one asterisk: the chestnut's fruit wall is leathery-tough rather than truly stony, which is exactly why you can cut it with a knife and why it perishes fast. Everyone still counts it as a nut.",
+ fix:"Nothing. But note that its wall is soft enough that if it went any thinner, the chestnut would slide towards being an achene."},
+
+{n:"Beechnut", s:"Fagus sylvatica", f:"Fagaceae", c:"True nut", v:"yes", sh:"tri", p:"truenut", x:["ribs"], t:"YYYYY",
+ eat:"The small triangular kernels (mast)",
+ what:"Sharply three-sided little nuts, borne in twos inside a bristly four-valved cupule.",
+ why:"Dry, sealed, one seed, hard wall &mdash; a nut in every particular, just a small and fiddly one.",
+ fix:"Nothing. Eat them sparingly though; raw beechnuts contain enough saponin-like fagin to upset a stomach in quantity."},
+
+{n:"Chinquapin", s:"Castanea pumila", f:"Fagaceae", c:"True nut", v:"yes", sh:"chest", p:"truenut", x:["spines"], t:"YYYYY",
+ eat:"A single sweet kernel per burr",
+ what:"A dwarf American chestnut relative that packs just one nut per spiny burr instead of the usual three.",
+ why:"Same anatomy as the chestnut, with the single-seed test passed even more emphatically.",
+ fix:"Nothing."},
+
+{n:"Tanoak acorn", s:"Notholithocarpus densiflorus", f:"Fagaceae", c:"True nut", v:"yes", sh:"acorn", p:"nutbare", x:["cap"], t:"YYYYY",
+ eat:"The leached kernel &mdash; a staple food of California's Indigenous peoples",
+ what:"An acorn from a tree that is not actually an oak, borne in a bristly cup that takes two years to ripen.",
+ why:"A true nut on the same terms as any acorn: dry, indehiscent, one seed, hard pericarp.",
+ fix:"Nothing."},
+
+{n:"Hornbeam nutlet", s:"Carpinus betulus", f:"Betulaceae", c:"True nut", v:"yes", sh:"tri", p:"nutbare", x:["ribs"], t:"YYY Y~".replace(/ /g,""),
+ eat:"The tiny ribbed nutlet &mdash; edible, but barely worth the labour",
+ what:"A hard little ribbed nut carried under a three-lobed papery bract that spins it away from the tree like a rotor.",
+ why:"It is a genuine nut, just miniaturised. Botanists usually say nutlet purely as a size word &mdash; the anatomy is unchanged.",
+ fix:"Nothing, except scale. Grow it to hazelnut size and nobody would question it."},
+
+{n:"Hop hornbeam nut", s:"Ostrya virginiana", f:"Betulaceae", c:"True nut", v:"yes", sh:"oval", p:"nutbare", t:"YYYY~",
+ eat:"Rarely eaten; the nutlets are wildlife food",
+ what:"Small flattened nutlets, each sealed inside an inflated papery bladder that hangs in hop-like clusters.",
+ why:"Passes all five tests. The papery bladder is a bract, not fruit tissue, so it doesn't count against the seal.",
+ fix:"Nothing botanical &mdash; only its size keeps it out of the supermarket."},
+
+{n:"Lotus seed", s:"Nelumbo nucifera", f:"Nelumbonaceae", c:"True nut", v:"yes", sh:"oval", p:"nutbare", x:["scar"], t:"YYYYY",
+ eat:"The white kernel, fresh, dried or candied &mdash; the green germ is bitter and removed",
+ what:"Each &ldquo;seed&rdquo; sunk into that shower-head receptacle is a complete one-seeded fruit. The hard dark casing is the fruit wall, not a seed coat.",
+ why:"Dry, indehiscent, one seed, stony wall. A genuine nut, and an astonishingly durable one &mdash; lotus fruits have been germinated after more than a thousand years in a lake bed.",
+ fix:"Nothing. This is the surprise pass of the whole list."},
+
+{n:"Water caltrop", s:"Trapa natans", f:"Lythraceae", c:"True nut", v:"maybe", sh:"tri", p:"nutbare", x:["ribs"], t:"YYYY Y".replace(/ /g,""),
+ eat:"The starchy white kernel, boiled",
+ what:"The horned, bat-shaped &ldquo;water chestnut&rdquo; of the ponds &mdash; unrelated to the crunchy white water chestnut of stir-fries, which is a corm.",
+ why:"Ripens into a hard, dry, sealed, one-seeded fruit, which is the definition of a nut. Some texts prefer to call it a drupe because the young fruit passes through a briefly fleshy stage.",
+ fix:"Nothing, if you accept the mature state. The dispute is about which moment in its life you judge it on."},
+
+{n:"Chilean hazelnut", s:"Gevuina avellana", f:"Proteaceae", c:"True nut", v:"maybe", sh:"round", p:"nutbare", t:"YYYYY",
+ eat:"The roasted kernel &mdash; sold as avellana chilena",
+ what:"Macadamia's South American cousin, and the family's counter-example: here the fruit wall itself hardens around a single seed.",
+ why:"Depending on the source it is called a nut or a nut-like drupe, because the young fruit is briefly fleshy-coated. Unlike macadamia, though, it does not split itself open.",
+ fix:"Nothing, on the looser reading. It is the strongest evidence that macadamia's failure is a quirk of its own fruit type, not of its family."},
+
+{n:"Buckwheat groat", s:"Fagopyrum esculentum", f:"Polygonaceae", c:"Achene / nutlet", v:"maybe", sh:"tri", p:"achene", x:["ribs"], t:"YYYY~",
+ eat:"The dehulled groat &mdash; kasha, soba, galettes",
+ what:"A sharply three-cornered dry fruit. The dark hull you mill off is the fruit wall, and the pale groat inside is the seed.",
+ why:"Whole fruit, dry, sealed, one seed &mdash; four clean passes. It hangs on the fifth: the hull is hard but thin, which puts it in the grey zone between a nut and an achene. Many botanists happily call it a nut.",
+ fix:"Thicken that hull into something you need a nutcracker for, and buckwheat is unambiguously a nut. The line really is that arbitrary."},
+
+/* ---------- DRUPES: the shell is a stone, the nut is a seed ---------- */
+{n:"Almond", s:"Prunus dulcis", f:"Rosaceae", c:"Drupe (stone fruit)", v:"no", sh:"almond", p:"drupedry", x:["ribs"], t:"NYNYY",
+ eat:"The seed &mdash; the same organ as the kernel inside a peach stone",
+ what:"A stone fruit whose flesh never becomes worth eating: it dries into a leathery grey hull that splits open on the tree at harvest. The pitted shell you crack is the stone (endocarp); the almond is the seed inside it.",
+ why:"Two failures. The whole fruit is not what you buy &mdash; the outer flesh was discarded &mdash; and that outer layer splits itself open, so the fruit is dehiscent. A nut has to be the entire package, sealed.",
+ fix:"The hull would have to stay shut and fuse with the stone, so that the entire fruit wall dried into one continuous shell around one loose seed. That fruit would be a nut &mdash; and it would look almost exactly like a hazelnut."},
+
+{n:"Apricot kernel", s:"Prunus armeniaca", f:"Rosaceae", c:"Drupe (stone fruit)", v:"no", sh:"almond", p:"drupe", t:"NNNYY",
+ eat:"The bitter kernel, used for noyau, amaretto flavouring and persipan",
+ what:"Exactly the same anatomy as an almond, but with the flesh left juicy and the seed left bitter. Crack a peach or apricot stone and the almond-shaped thing inside is a first cousin of an almond.",
+ why:"The fruit is fleshy, so it fails the dry test outright, and the part eaten is only a seed.",
+ fix:"Lose the flesh entirely. Almonds are what happens when apricots do that &mdash; and even they don't get all the way to nut."},
+
+{n:"Walnut", s:"Juglans regia", f:"Juglandaceae", c:"Drupe (drupaceous nut)", v:"no", sh:"lump", p:"drupe", x:["wrinkle"], t:"NN~YY",
+ eat:"The brain-like kernel &mdash; two folded cotyledons",
+ what:"Three layers, all misread. The green tennis ball is a fleshy husk; the wrinkled shell inside it is the stony endocarp; the kernel is the seed. What is sold as a walnut is the middle layer plus contents.",
+ why:"The fruit is fleshy, which is disqualifying on its own, and you never receive the whole fruit. Botanists sometimes hedge with drupaceous nut, which is a polite way of saying nut-shaped drupe.",
+ fix:"That green husk would have to dry out and stay attached, hardening into the shell rather than rotting off it. Do that and a walnut becomes a very large hazelnut."},
+
+{n:"Black walnut", s:"Juglans nigra", f:"Juglandaceae", c:"Drupe (drupaceous nut)", v:"no", sh:"lump", p:"drupe", x:["wrinkle"], t:"NN~YY",
+ eat:"The intensely flavoured kernel",
+ what:"The same architecture as an English walnut, but with a husk that stains everything it touches and a shell notorious for defeating domestic nutcrackers.",
+ why:"Fleshy husk, seed-not-fruit &mdash; a drupe by the same reasoning as its cousin. Shell hardness is not one of the tests, or this would rank first.",
+ fix:"Same as the walnut: the husk must dry hard and stay put instead of rotting away."},
+
+{n:"Pecan", s:"Carya illinoinensis", f:"Juglandaceae", c:"Drupe (dehiscent husk)", v:"no", sh:"slim", p:"drupedry", x:["split"], t:"NYNYY",
+ eat:"The two-lobed kernel",
+ what:"The husk here is dry rather than fleshy &mdash; but it splits neatly into four valves and drops the stone out, which is how pecans harvest themselves.",
+ why:"It gets closer than the walnut by being dry, then fails on the seal: a fruit that opens itself cannot be a nut. And again, the shell is the stone, not the entire fruit wall.",
+ fix:"Weld those four valves shut. A pecan whose husk stayed fused and woody around a single seed would qualify."},
+
+{n:"Shagbark hickory", s:"Carya ovata", f:"Juglandaceae", c:"Drupe (dehiscent husk)", v:"no", sh:"round", p:"drupedry", x:["split"], t:"NYNYY",
+ eat:"The sweet kernel, prised from a stubbornly chambered shell",
+ what:"A pecan's thicker-shelled relative, with a woody husk that springs open along four seams when ripe.",
+ why:"Dehiscent husk, seed-not-fruit. Same verdict as the pecan for the same reasons.",
+ fix:"Fuse the husk valves into one sealed woody wall."},
+
+{n:"Pistachio", s:"Pistacia vera", f:"Anacardiaceae", c:"Drupe (stone fruit)", v:"no", sh:"oval", p:"drupe", x:["split"], t:"NNNYY",
+ eat:"The green seed",
+ what:"A drupe with a pinkish fleshy hull that is stripped at harvest. That famous half-open shell is the stone, and it splits audibly on the tree as the growing seed forces it apart &mdash; growers call it the smile.",
+ why:"It fails three tests: fleshy fruit, seed rather than whole fruit, and a shell that literally opens itself.",
+ fix:"A dry hull, fused to a shell that stayed shut. The pistachio would then also have to give up the split that makes it easy to eat &mdash; being a nut would cost it its signature."},
+
+{n:"Cashew", s:"Anacardium occidentale", f:"Anacardiaceae", c:"Drupe on an accessory fruit", v:"no", sh:"kidney", p:"drupe", t:"NNYYY",
+ eat:"The seed &mdash; and, where it grows, the juicy false fruit above it",
+ what:"The strangest arrangement on the list. The cashew hangs beneath a swollen red-yellow cashew apple, which is not a fruit at all but a bloated flower stalk. The comma-shaped thing is the real fruit: a drupe.",
+ why:"Fleshy-walled fruit, and you eat only its seed. The shell also holds a caustic relative of poison-ivy oil, which is why cashews are never sold in the shell &mdash; the one nut you are never allowed to crack yourself.",
+ fix:"Dry that fruit wall out and hand over the whole thing intact. Also, arguably, stop growing a fake fruit on top of it."},
+
+{n:"Coconut", s:"Cocos nucifera", f:"Arecaceae", c:"Fibrous drupe", v:"no", sh:"round", p:"drupe", x:["fibre","pores"], t:"NNYYY",
+ eat:"The endosperm &mdash; white flesh and water, both part of the seed",
+ what:"The famous near-miss. Coir husk, then that stony shell with three germination pores, then the seed. It is one of the largest seeds in the world, wrapped in a fruit built to float across oceans.",
+ why:"It passes sealed, single-seeded and stony-walled with room to spare. It fails on exactly one thing: the fibrous, once-fleshy mesocarp. Only that layer of pith stands between the coconut and nuthood.",
+ fix:"Delete the coir. A coconut with its outer wall dried straight onto the shell would be a genuine, enormous nut &mdash; and it would also sink."},
+
+{n:"Pili nut", s:"Canarium ovatum", f:"Burseraceae", c:"Drupe (stone fruit)", v:"no", sh:"almond", p:"drupe", t:"NNYYY",
+ eat:"The rich kernel, raw or roasted",
+ what:"A Philippine stone fruit with a purple-black skin, a thin layer of flesh and a very hard three-angled stone containing a single luxurious seed.",
+ why:"Fleshy fruit, and it is the seed that reaches the table.",
+ fix:"Trade the flesh for a dry wall fused to the stone."},
+
+{n:"Candlenut", s:"Aleurites moluccanus", f:"Euphorbiaceae", c:"Drupe (stone fruit)", v:"no", sh:"round", p:"drupe", t:"NNYYY",
+ eat:"The kernel &mdash; always cooked, as it is mildly toxic raw",
+ what:"A waxy drupe so oily its kernels were once threaded onto sticks and burned as candles. Central to Hawaiian (kukui) and Indonesian cooking.",
+ why:"Fleshy drupe, and the edible part is the seed.",
+ fix:"The usual: dry the fruit wall out and keep it sealed around one seed."},
+
+{n:"Shea nut", s:"Vitellaria paradoxa", f:"Sapotaceae", c:"Drupe (stone fruit)", v:"no", sh:"oval", p:"drupe", t:"NNYYY",
+ eat:"Not eaten whole &mdash; the kernel is pressed for shea butter",
+ what:"A sweet-fleshed African drupe whose seed carries so much solid fat that it is the base of most of the world's cosmetic butter.",
+ why:"Fleshy fruit, seed-not-fruit. A drupe on every count.",
+ fix:"Same as every stone fruit: lose the pulp, keep the wall, keep it shut."},
+
+{n:"Argan kernel", s:"Argania spinosa", f:"Sapotaceae", c:"Drupe (stone fruit)", v:"no", sh:"oval", p:"drupe", t:"NNYYY",
+ eat:"The tiny kernels, pressed for oil",
+ what:"A Moroccan drupe with a fleshy hull, an extraordinarily hard stone, and two or three small oil-rich seeds inside it.",
+ why:"Fleshy fruit; the eaten part is a seed; the stone often carries more than one.",
+ fix:"Dry hull, single seed, sealed wall. That would take a very different tree."},
+
+{n:"Marula kernel", s:"Sclerocarya birrea", f:"Anacardiaceae", c:"Drupe (stone fruit)", v:"no", sh:"round", p:"drupe", x:["pores"], t:"NNYYY",
+ eat:"The small nutty kernels behind little plugged doors in the stone",
+ what:"A southern African drupe, better known for the fermented flesh made into liqueur than for the seeds hidden in its stone.",
+ why:"Fleshy drupe. The kernels are seeds, sealed inside the endocarp rather than being fruits of their own.",
+ fix:"Dry the fruit and reduce it to a single seed in a single sealed wall."},
+
+{n:"Mongongo nut", s:"Schinziophyton rautanenii", f:"Euphorbiaceae", c:"Drupe (stone fruit)", v:"no", sh:"round", p:"drupe", t:"NNYYY",
+ eat:"The kernel, steamed then cracked &mdash; a Kalahari staple",
+ what:"A velvety drupe with thin flesh over a stone so tough that it is traditionally cracked on an anvil stone with a hammer stone.",
+ why:"Fleshy fruit wall; the food is the seed.",
+ fix:"Same correction as every drupe on this page."},
+
+{n:"Ogbono", s:"Irvingia gabonensis", f:"Irvingiaceae", c:"Drupe (stone fruit)", v:"no", sh:"almond", p:"drupe", t:"NNYYY",
+ eat:"The kernel, ground into a thickener for West African soups",
+ what:"The seed of the African bush mango &mdash; a mango-like fleshy drupe with a fibrous stone.",
+ why:"Fleshy fruit; the kernel is a seed inside a stone.",
+ fix:"Dry the fruit wall until it becomes the shell."},
+
+{n:"Areca (betel) nut", s:"Areca catechu", f:"Arecaceae", c:"Drupe (stone fruit)", v:"no", sh:"round", p:"drupe", x:["fibre"], t:"NNYYY",
+ eat:"The seed, sliced and chewed with betel leaf &mdash; a known carcinogen",
+ what:"A fibrous orange palm drupe. The chewed part is the marbled seed, sibling in structure to a small coconut.",
+ why:"Fibrous fleshy fruit wall; a seed, not a fruit, reaches the mouth.",
+ fix:"Anatomically, lose the fibrous husk. Medically, nothing recommends it."},
+
+{n:"Breadnut (ramon)", s:"Brosimum alicastrum", f:"Moraceae", c:"Drupe (seed of)", v:"no", sh:"round", p:"drupe", t:"NNYYY",
+ eat:"The boiled or roasted seed, tasting between potato and chocolate",
+ what:"A Maya staple: a small orange fleshy fruit with a single large seed that can be dried and stored for years.",
+ why:"The fruit is fleshy and the eaten part is its seed.",
+ fix:"A dry, hard, sealed wall instead of pulp."},
+
+{n:"Coffee bean", s:"Coffea arabica", f:"Rubiaceae", c:"Drupe (seed of)", v:"no", sh:"seedy", p:"drupe", t:"NNYNY",
+ eat:"The roasted seed &mdash; never the fruit",
+ what:"Included because it is the same anatomy as everything above with a different job. The coffee cherry is a drupe; the beans are its two seeds, pressed flat against each other.",
+ why:"Fleshy fruit, seed rather than fruit, and usually two seeds rather than one. Nothing about it is a nut, but it clarifies the shape of the rule.",
+ fix:"Effectively: become a different plant."},
+
+/* ---------- FOLLICLES: fruits that split along one seam ---------- */
+{n:"Macadamia", s:"Macadamia integrifolia", f:"Proteaceae", c:"Follicle (seed of)", v:"no", sh:"round", p:"follicle", x:["split"], t:"NYNYN",
+ eat:"The seed &mdash; kernel plus that rock-hard brown coat around it",
+ what:"The great impostor. The macadamia fruit is a follicle: a leathery green husk built from one carpel, which dries and splits along a single seam to drop its contents. That legendary brown shell is not fruit tissue at all &mdash; it is the seed coat.",
+ why:"Two independent disqualifications. First, the fruit opens itself, and a nut must stay shut. Second, the hard shell is part of the seed, so the fruit wall &mdash; the only layer that can make a nut &mdash; is the green thing thrown away in the orchard. That shell is the same organ as the papery skin on a peanut; it has just lignified to around 2,000 newtons of crush strength, the toughest of any commercial crop.",
+ fix:"The green husk would have to stop splitting and go woody itself, becoming the shell, while the seed inside relaxed into an ordinary thin brown skin around a loose kernel &mdash; precisely the hazelnut arrangement. The macadamia's problem is not that it lacks a hard shell. It has one shell too many, in the wrong layer."},
+
+{n:"Kola nut", s:"Cola acuminata", f:"Malvaceae", c:"Follicle (seed of)", v:"no", sh:"lump", p:"follicle", x:["split"], t:"NYNNN",
+ eat:"The caffeine-rich seed, chewed fresh",
+ what:"Star-shaped clusters of follicles, each splitting open to reveal several fleshy pink-white seeds. Once the flavouring of the drink named after it.",
+ why:"Splits open, holds many seeds, and the eaten part is a seed with no hardened fruit wall anywhere near it.",
+ fix:"One seed, a sealed fruit, and a woody wall &mdash; three changes, which is another way of saying it would have to be a different fruit."},
+
+/* ---------- LEGUMES: pods, not nuts ---------- */
+{n:"Peanut", s:"Arachis hypogaea", f:"Fabaceae", c:"Legume (pod)", v:"no", sh:"pod", p:"legume", x:["ribs"], t:"YYYNN",
+ eat:"The seeds, and technically you could eat the pod",
+ what:"A pea that buries its own children. After pollination the flower stalk bends down and pushes into the soil, where the pod ripens underground &mdash; which is why it acts like a root crop and tastes like a nut.",
+ why:"Genuinely interesting, because it passes the first three tests: the shell IS the whole fruit, it is dry, and unlike most legumes it never splits. It fails on two seeds or more and on that papery wall. And there is a deeper bar &mdash; a legume comes from a single carpel, while true nuts come from a compound, multi-chambered ovary.",
+ fix:"Drop to one seed and let the pod wall go stony, and you would have something that behaved exactly like a nut. Under the strict Fagales-only definition it still would not count, because of ancestry rather than anatomy &mdash; which is the purest example on this page of how arbitrary the boundary can be."},
+
+{n:"Bambara groundnut", s:"Vigna subterranea", f:"Fabaceae", c:"Legume (pod)", v:"no", sh:"round", p:"legume", t:"YYYYN",
+ eat:"The single seed, boiled",
+ what:"West Africa's other underground legume: like a peanut, but its wrinkled pod usually ripens with just one seed inside.",
+ why:"Four out of five. Whole fruit, dry, sealed, one seed &mdash; it fails only because the pod wall stays thin and papery rather than stony (and, strictly, because it is a single-carpel pod).",
+ fix:"Lignify the pod. This is the closest a legume gets to being a nut on anatomy alone."},
+
+{n:"Baru nut", s:"Dipteryx alata", f:"Fabaceae", c:"Legume (pod)", v:"maybe", sh:"almond", p:"legume", t:"YYYYY",
+ eat:"The roasted seed inside a woody pod",
+ what:"A Brazilian savanna legume whose pod does not split, holds exactly one seed, and hardens into a woody case you need a hammer for.",
+ why:"On the five anatomical tests it passes all five. It is excluded only by the strict rule that a nut must derive from a compound ovary, and a pod is one carpel folded over. Some sources therefore call it a true nut, some an indehiscent woody legume.",
+ fix:"Nothing anatomical &mdash; only its ancestry. If the phrase legume nut sounds like a contradiction, this is the fruit that causes it."},
+
+{n:"Soy nut", s:"Glycine max", f:"Fabaceae", c:"Legume seed", v:"no", sh:"round", p:"seed", t:"N---N",
+ eat:"The roasted seed",
+ what:"Not a fruit in any part. A soybean is a naked seed shelled out of a splitting pod, then roasted until it crunches like a nut.",
+ why:"There is no fruit wall present at all, which fails the first test so completely that the others hardly apply.",
+ fix:"Everything. Soy nut is a marketing term for a texture."},
+
+{n:"Moreton Bay chestnut", s:"Castanospermum australe", f:"Fabaceae", c:"Legume seed", v:"no", sh:"round", p:"legume", x:["split"], t:"NYNNN",
+ eat:"Only after long leaching &mdash; the raw seed is poisonous",
+ what:"An Australian tree with chestnut-sized seeds in a large splitting pod. Called black bean or chestnut; related to neither.",
+ why:"Splitting pod, several seeds, and the shell-like part is a seed coat.",
+ fix:"Sealed pod, one seed, woody wall &mdash; plus a solution to the saponins."},
+
+{n:"Carob", s:"Ceratonia siliqua", f:"Fabaceae", c:"Legume (pod)", v:"no", sh:"pod", p:"legume", t:"YNYNN",
+ eat:"The sweet pod pulp &mdash; here the eaten part IS the fruit wall",
+ what:"An inversion worth noting: with carob you eat the pod and discard the seeds, which are so uniformly heavy they were the original carat weight.",
+ why:"Fleshy-fibrous pod wall, many seeds, no hardening. Not close.",
+ fix:"Not achievable without abandoning what makes carob useful."},
+
+/* ---------- CAPSULE SEEDS: the shell is a seed coat ---------- */
+{n:"Brazil nut", s:"Bertholletia excelsa", f:"Lecythidaceae", c:"Capsule seed", v:"no", sh:"tri", p:"capsule", x:["lid"], t:"NYNNN",
+ eat:"The seed &mdash; the hard triangular shell is its coat",
+ what:"Twelve to twenty-five seeds packed like orange segments inside a woody, coconut-sized pod called a pyxidium, which falls from 50 metres up and is opened by agoutis. The ridged shell you crack is the seed coat.",
+ why:"It fails four of the five. The fruit is the pod, not the nut; the pod has a lid that opens; there are two dozen seeds inside; and the hard shell is testa, not fruit wall. Structurally it is the macadamia's mistake, multiplied.",
+ fix:"The pod would have to shrink to hold one seed, seal permanently, and become the shell itself &mdash; at which point it would no longer be a Brazil nut in any recognisable sense."},
+
+{n:"Paradise nut", s:"Lecythis zabucajo", f:"Lecythidaceae", c:"Capsule seed", v:"no", sh:"almond", p:"capsule", x:["lid"], t:"NYNNN",
+ eat:"The seed, widely rated better than the Brazil nut",
+ what:"The monkey pot: a woody capsule whose lid drops off to release the seeds, supposedly trapping monkeys who grab a fistful and cannot withdraw them.",
+ why:"Same anatomy as the Brazil nut &mdash; many seeds in a lidded capsule.",
+ fix:"As with the Brazil nut, it would have to become a completely different fruit."},
+
+{n:"Sacha inchi", s:"Plukenetia volubilis", f:"Euphorbiaceae", c:"Capsule seed", v:"no", sh:"round", p:"capsule", x:["split"], t:"NYNNN",
+ eat:"The roasted seed, exceptionally rich in omega-3",
+ what:"The Inca peanut, which is neither: a star-shaped capsule with four to seven lobes, each holding a seed.",
+ why:"A splitting capsule with multiple seeds. The shell is a seed coat.",
+ fix:"One seed, one sealed woody wall."},
+
+{n:"Horse chestnut", s:"Aesculus hippocastanum", f:"Sapindaceae", c:"Capsule seed", v:"no", sh:"round", p:"capsule", x:["spines","split"], t:"N~NNN",
+ eat:"Nothing &mdash; conkers are toxic to humans",
+ what:"The great lookalike. A spiny green case, a glossy mahogany sphere inside: visually a chestnut, botanically unrelated and structurally opposite. The case is a capsule that splits, and the shiny brown surface is a seed coat.",
+ why:"It fails on every meaningful count, and it is worth comparing directly with the sweet chestnut, where the spiny case is a cupule and the brown skin is genuine fruit wall.",
+ fix:"Nothing short of becoming a different plant &mdash; and it would still be poisonous."},
+
+{n:"Malabar chestnut", s:"Pachira aquatica", f:"Malvaceae", c:"Capsule seed", v:"no", sh:"round", p:"capsule", x:["split"], t:"NYNNN",
+ eat:"The roasted seeds, tasting of peanut",
+ what:"Seeds from the football-sized splitting pod of the money tree sold as a houseplant with a braided trunk.",
+ why:"Multi-seeded capsule that opens itself.",
+ fix:"The full list: seal it, single it, harden the wall."},
+
+{n:"Sesame seed", s:"Sesamum indicum", f:"Pedaliaceae", c:"Capsule seed", v:"no", sh:"seedy", p:"seed", t:"N---N",
+ eat:"The seed, whole or as tahini",
+ what:"Seeds from a capsule that pops open along its seams when ripe &mdash; the bang that gave open sesame its name.",
+ why:"A bare seed with no fruit wall attached.",
+ fix:"Not applicable; sesame does not pretend to be a nut, but it is a useful contrast."},
+
+{n:"Poppy seed", s:"Papaver somniferum", f:"Papaveraceae", c:"Capsule seed", v:"no", sh:"round", p:"seed", x:["pores"], t:"N---N",
+ eat:"The tiny seeds",
+ what:"Thousands of seeds shaken out of a pepper-pot capsule through pores under its cap.",
+ why:"Seeds, not fruits. Included to show the far end of the spectrum from a nut.",
+ fix:"Not applicable."},
+
+{n:"Linseed / flax", s:"Linum usitatissimum", f:"Linaceae", c:"Capsule seed", v:"no", sh:"almond", p:"seed", t:"N---N",
+ eat:"The seed, whole, ground or pressed for oil",
+ what:"A glossy seed from a small round capsule that splits into ten segments.",
+ why:"No fruit wall present; the capsule is left on the plant.",
+ fix:"Not applicable."},
+
+{n:"Castor bean", s:"Ricinus communis", f:"Euphorbiaceae", c:"Capsule seed", v:"no", sh:"oval", p:"capsule", x:["spines"], t:"NYNNN",
+ eat:"Never. Whole seeds contain ricin; only the pressed, heat-treated oil is safe.",
+ what:"A mottled seed from a spiny exploding capsule, listed because it is neither bean nor nut and is regularly mistaken for both.",
+ why:"Splitting multi-seeded capsule; the eaten oil comes from a seed.",
+ fix:"Not applicable, and not advisable."},
+
+/* ---------- GYMNOSPERM SEEDS: no ovary, therefore no fruit, ever ---------- */
+{n:"Pine nut", s:"Pinus pinea, P. koraiensis, P. edulis", f:"Pinaceae", c:"Gymnosperm seed", v:"no", sh:"slim", p:"gymno", x:["cone"], nofruit:true, t:"N----",
+ eat:"The seed &mdash; the whole thing, once its thin shell is off",
+ what:"Pines are gymnosperms: naked seed. Their seeds sit bare on the upper surface of a cone scale, with no ovary wrapped around them and therefore no fruit anywhere in the life cycle.",
+ why:"It fails the first test in the most absolute way available. A nut is a type of fruit, a fruit is a ripened ovary, and a pine has no ovary at all &mdash; that is what gymnosperm means. The thin shell you crack is the seed coat.",
+ fix:"Nothing less than 200 million years of evolution. Pines would have to become flowering plants first. No conifer seed can ever be a nut, however nut-like it tastes."},
+
+{n:"Bunya nut", s:"Araucaria bidwillii", f:"Araucariaceae", c:"Gymnosperm seed", v:"no", sh:"almond", p:"gymno", x:["cone"], nofruit:true, t:"N----",
+ eat:"The starchy seed, boiled or roasted &mdash; a major Aboriginal Australian food",
+ what:"Large seeds from cones the size of a human head, dropped every few years from a tree older than flowers themselves.",
+ why:"A conifer seed. There is no fruit and no fruit wall to harden.",
+ fix:"Impossible by the same argument as the pine nut."},
+
+{n:"Monkey puzzle pinon", s:"Araucaria araucana", f:"Araucariaceae", c:"Gymnosperm seed", v:"no", sh:"almond", p:"gymno", x:["cone"], nofruit:true, t:"N----",
+ eat:"The long seed, boiled &mdash; a Pehuenche staple",
+ what:"Chile's sacred tree drops finger-length seeds from cones that take two years to ripen.",
+ why:"Naked seed, no ovary, no fruit.",
+ fix:"Impossible."},
+
+{n:"Ginkgo nut", s:"Ginkgo biloba", f:"Ginkgoaceae", c:"Gymnosperm seed", v:"no", sh:"oval", p:"gymnoflesh", nofruit:true, t:"N----",
+ eat:"The green kernel, in small quantities &mdash; more than a handful can cause poisoning",
+ what:"That notoriously foul apricot-like flesh is not fruit: it is a sarcotesta, a fleshy layer of the seed coat itself. Underneath is a cream-coloured stony inner coat, then the kernel.",
+ why:"A seed that mimics a drupe from the inside out, on a tree with no ovaries. Every layer belongs to the seed.",
+ fix:"Impossible &mdash; and a perfect illustration that fleshy or stony layers can be built by a seed just as well as by a fruit."},
+
+{n:"Kaya nut", s:"Torreya nucifera", f:"Taxaceae", c:"Gymnosperm seed", v:"no", sh:"oval", p:"gymnoflesh", nofruit:true, t:"N----",
+ eat:"The roasted seed, and its pressed oil",
+ what:"A Japanese yew relative whose olive-like seed is wrapped in a fleshy aril rather than a fruit.",
+ why:"Conifer seed. No fruit exists.",
+ fix:"Impossible."},
+
+{n:"Cycad seed", s:"Cycas spp.", f:"Cycadaceae", c:"Gymnosperm seed", v:"no", sh:"oval", p:"gymnoflesh", nofruit:true, t:"N----",
+ eat:"Only after extensive washing and fermentation &mdash; raw it is a potent neurotoxin",
+ what:"Brightly coloured seeds borne on the leaf-like structures of a plant lineage older than the dinosaurs.",
+ why:"No ovary, no fruit, and the fleshy coat belongs to the seed.",
+ fix:"Impossible."},
+
+/* ---------- ACHENES AND NUTLETS: nuts that never thickened ---------- */
+{n:"Sunflower seed", s:"Helianthus annuus", f:"Asteraceae", c:"Achene (cypsela)", v:"no", sh:"tri", p:"achene", x:["ribs"], t:"YYYYN",
+ eat:"The kernel, after cracking off the striped hull",
+ what:"The best near-miss of the whole list. That striped hull is not a seed coat &mdash; it is the fruit wall. A sunflower seed is a complete one-seeded dry fruit, exactly like a hazelnut, only smaller and thinner.",
+ why:"It passes four tests cleanly and fails the fifth by degree alone: the wall is leathery and thin rather than thick and stony, which makes it an achene. There is no sharp line here, just a gradient of wall thickness.",
+ fix:"Thicken the hull. That is the entire difference between the achene in your hand and a nut &mdash; which is why some botanists treat nuts as simply large, hard-walled achenes."},
+
+{n:"Hemp seed", s:"Cannabis sativa", f:"Cannabaceae", c:"Achene", v:"no", sh:"oval", p:"achene", t:"YYYYN",
+ eat:"The soft inner kernel (hemp heart)",
+ what:"Another whole one-seeded fruit sold as a seed. The crisp shell removed to make hemp hearts is fruit wall.",
+ why:"Same story as the sunflower: everything right except a wall that stayed thin.",
+ fix:"A thicker, stonier wall, and hemp seeds would be miniature nuts."},
+
+{n:"Chia", s:"Salvia hispanica", f:"Lamiaceae", c:"Nutlet (schizocarp)", v:"maybe", sh:"oval", p:"achene", t:"YYYY~",
+ eat:"The whole nutlet, hull and all",
+ what:"Mint-family fruits split into four one-seeded nutlets, each a dry, sealed, single-seeded fruit in its own hard little wall. Chia seeds are those nutlets.",
+ why:"By anatomy each nutlet ticks the boxes; by scale and by the fact that the parent fruit divides to release them, most botanists file them as nutlets rather than nuts. Definition, again, doing the work that appearance cannot.",
+ fix:"Grow them a thousand times larger and stop the schizocarp from splitting, and the argument would end."},
+
+{n:"Quinoa", s:"Chenopodium quinoa", f:"Amaranthaceae", c:"Achene / utricle", v:"no", sh:"disc", p:"achene", t:"YYYYN",
+ eat:"The whole grain, once its bitter saponin coat is rinsed off",
+ what:"A pseudocereal: each grain is a whole dry one-seeded fruit with a papery wall.",
+ why:"Fails only on the stony-wall test, and by a wide margin &mdash; the wall is a film.",
+ fix:"An enormous amount of thickening. Included to show where the achene end of the spectrum bottoms out."},
+
+{n:"Strawberry pip", s:"Fragaria x ananassa", f:"Rosaceae", c:"Achene", v:"no", sh:"tear", p:"achene", t:"YYYYN",
+ eat:"Unavoidably, along with the strawberry",
+ what:"The classic aside: each pip on a strawberry is a whole fruit, an achene, and the red flesh is a swollen flower base. A strawberry is a bouquet of tiny fruits, not a berry.",
+ why:"Dry, sealed, one-seeded, whole fruit &mdash; and hopelessly thin-walled.",
+ fix:"Nothing realistic. Kept here as the smallest member of the nut's own family of dry fruits."},
+
+/* ---------- SEEDS OF FLESHY FRUITS ---------- */
+{n:"Pumpkin seed", s:"Cucurbita pepo", f:"Cucurbitaceae", c:"Berry seed", v:"no", sh:"tear", p:"berry", t:"N---N",
+ eat:"The green kernel, or the whole seed with its white coat",
+ what:"A seed scooped from a pepo &mdash; botanically a berry with a hard rind. The white shell is a seed coat.",
+ why:"No fruit wall involved at any point.",
+ fix:"Not applicable; a pumpkin is a berry and the pepita is just its seed."},
+
+{n:"Watermelon seed", s:"Citrullus lanatus", f:"Cucurbitaceae", c:"Berry seed", v:"no", sh:"tear", p:"berry", t:"N---N",
+ eat:"Roasted, or hulled as egusi in West African cooking",
+ what:"Another seed from another berry, listed because roasting anything oily makes it sound like a nut.",
+ why:"No fruit wall present.",
+ fix:"Not applicable."},
+
+{n:"Jackfruit seed", s:"Artocarpus heterophyllus", f:"Moraceae", c:"Multiple-fruit seed", v:"no", sh:"oval", p:"berry", t:"N---N",
+ eat:"Boiled or roasted, texture of a chestnut",
+ what:"Seeds pulled from the world's largest tree-borne fruit &mdash; itself not one fruit but hundreds fused together.",
+ why:"A bare seed with only a thin coat.",
+ fix:"Not applicable."},
+
+{n:"Cocoa bean", s:"Theobroma cacao", f:"Malvaceae", c:"Berry seed", v:"no", sh:"almond", p:"berry", t:"N--NN",
+ eat:"The fermented, roasted seed",
+ what:"Thirty to fifty seeds in a sweet white pulp inside an indehiscent pod. Chocolate is a fermented seed, not a nut, though the trade calls it a bean.",
+ why:"Many seeds, fleshy fruit, no hardened fruit wall.",
+ fix:"Not applicable."},
+
+{n:"Foxnut (makhana)", s:"Euryale ferox", f:"Nymphaeaceae", c:"Berry seed", v:"no", sh:"round", p:"berry", t:"N---N",
+ eat:"The kernel, popped like popcorn",
+ what:"Seeds from the spiny fruit of a prickly water lily, harvested from pond mud and puffed over a hot pan.",
+ why:"A seed from a soft fruit; the black shell is a seed coat.",
+ fix:"Not applicable, though it is the only nut on this list you can pop."},
+
+{n:"Nutmeg", s:"Myristica fragrans", f:"Myristicaceae", c:"Seed of a fleshy fruit", v:"no", sh:"oval", p:"gymnoflesh", t:"NNNYN",
+ eat:"The seed, grated; and its scarlet aril, dried as mace",
+ what:"Named a nut, shaped like a nut, and neither. The apricot-like fruit splits in two to reveal a seed wrapped in a lacy red aril; nutmeg is the seed, mace is the aril.",
+ why:"Fleshy fruit that opens itself, and the eaten part is a seed. It fails on three counts while wearing the word in its name.",
+ fix:"Dry the fruit, seal it shut, and let its wall become the shell. The mace would have to go."},
+
+/* ---------- NOT EVEN SEEDS ---------- */
+{n:"Tiger nut (chufa)", s:"Cyperus esculentus", f:"Cyperaceae", c:"Tuber", v:"no", sh:"round", p:"tuber", x:["ribs"], t:"N----",
+ eat:"The whole tuber, or blended into horchata de chufa",
+ what:"Not a nut, not a seed, not a fruit. It is a tuber: a swollen underground stem of a sedge, storing starch for the plant. Humans have eaten them since the Palaeolithic.",
+ why:"It fails before the tests even begin. There is no ovary, no seed and no fruit anywhere in the object.",
+ fix:"Nothing could make it a nut. It is a vegetable that happens to be chewy and sweet."},
+
+{n:"Water chestnut", s:"Eleocharis dulcis", f:"Cyperaceae", c:"Corm", v:"no", sh:"disc", p:"tuber", x:["ribs"], t:"N----",
+ eat:"The crisp white flesh of the corm",
+ what:"A corm &mdash; a compressed underground stem &mdash; from a marsh sedge. Not related to the horned water caltrop that shares its English name, and which IS a nut.",
+ why:"A stem, not a fruit. The crunch that survives cooking comes from ferulic-acid-crosslinked cell walls, not from anything nutty.",
+ fix:"Nothing. Two plants, one name, opposite verdicts &mdash; a fair summary of the whole subject."},
+
+{n:"Earthnut (pignut)", s:"Conopodium majus", f:"Apiaceae", c:"Tuber", v:"no", sh:"round", p:"tuber", t:"N----",
+ eat:"The small sweet tuber, dug up raw",
+ what:"A hedgerow carrot relative with a chestnut-flavoured tuber, hunted by children and pigs for centuries.",
+ why:"A root-like storage organ, with no fruit involved.",
+ fix:"Nothing."},
+
+{n:"Groundnut (hopniss)", s:"Apios americana", f:"Fabaceae", c:"Tuber", v:"no", sh:"pod", p:"tuber", t:"N----",
+ eat:"Strings of protein-rich tubers, boiled",
+ what:"A North American climbing legume grown for the tubers on its roots, not for its pods &mdash; and confusingly sharing the name groundnut with the peanut.",
+ why:"The eaten part is a stem tuber, so no test applies.",
+ fix:"Nothing."}
+];
+
+/* ============================================================
+   APP
+   ============================================================ */
+const TESTS = [
+  "What you crack is the whole fruit, not just a seed",
+  "The fruit wall is dry at maturity, not fleshy",
+  "It stays sealed &mdash; the fruit never splits itself open",
+  "Exactly one seed inside",
+  "That fruit wall is thick and stony"
+];
+const MARK = {Y:["p","✓"], N:["f","✕"], "~":["h","~"], "-":["n","–"]};
+const VERDICT = {yes:["b-yes","True nut"], no:["b-no","Not a nut"], maybe:["b-maybe","Borderline"]};
+const $ = s => document.querySelector(s);
+
+/* ---- stats ---- */
+const cnt = v => NUTS.filter(n => n.v === v).length;
+$("#s1").textContent = NUTS.length;
+$("#s2").textContent = cnt("yes");
+$("#s3").textContent = cnt("no");
+$("#s4").textContent = cnt("maybe");
+$("#statTotal").textContent = NUTS.length;
+$("#q").placeholder = "Search " + NUTS.length + " specimens…";
+
+/* ---- legend ---- */
+$("#legend").innerHTML = Object.keys(LAYER).map(k => {
+  const L = LAYER[k];
+  return `<div class="lg"><span class="sw" style="background:${L.c}"></span><div><b>${L.n}</b><small>${L.d}</small></div></div>`;
+}).join("");
+
+/* ---- macadamia spotlight ---- */
+const pick = name => NUTS.find(n => n.n === name);
+const SPOT = [
+  ["Hazelnut", "The shell is <b style='color:#b8862b'>fruit wall</b>. Whole fruit, sealed. <b style='color:#3d6b3a'>A nut.</b>"],
+  ["Macadamia", "The shell is <b style='color:#6b4a2f'>seed coat</b>; the real fruit is the <b style='color:#6f8f4a'>husk that splits</b>. <b style='color:#a8492a'>Not a nut.</b>"],
+  ["Brazil nut", "Shell is <b style='color:#6b4a2f'>seed coat</b>, inside a <b style='color:#8d8478'>lidded pod</b> of two dozen. <b style='color:#a8492a'>Not a nut.</b>"],
+  ["Almond", "Shell is only the <b style='color:#b0782a'>stone</b>; the hull split off. <b style='color:#a8492a'>Not a nut.</b>"],
+  ["Peanut", "Whole fruit, sealed &mdash; but a <b style='color:#a9a05f'>papery pod</b> with two seeds. <b style='color:#a8492a'>Not a nut.</b>"],
+  ["Coconut", "Sealed, single, stony &mdash; undone by <b style='color:#c9803c'>fibrous flesh</b>. <b style='color:#a8492a'>So close.</b>"]
+];
+$("#spotlight").innerHTML = SPOT.map(([nm, cap]) => {
+  const n = pick(nm);
+  return `<figure>${svgFor(n)}<figcaption><span class="fname">${n.n}</span>${cap}</figcaption></figure>`;
+}).join("");
+
+/* ---- category chips ---- */
+const CATS = [...new Set(NUTS.map(n => n.c))].sort();
+let fCat = null, fVerdict = null, fQ = "";
+$("#cats").innerHTML = CATS.map(c =>
+  `<button class="chip" data-c="${c}" aria-pressed="false">${c.replace(/&mdash;/g,"—")} <span style="opacity:.55">${NUTS.filter(n=>n.c===c).length}</span></button>`).join("");
+
+/* ---- rendering ---- */
+function dots(t){
+  return `<div class="dots">${[...t].map(ch => `<span class="dot ${MARK[ch][0]}"></span>`).join("")}</div>`;
+}
+function card(n, i){
+  const [cls, label] = VERDICT[n.v];
+  return `<button class="nut" data-i="${i}">
+    ${svgFor(n)}
+    <span class="nm">${n.n}</span>
+    <span class="sci">${n.s}</span>
+    <span class="real">Really a: ${n.c}</span>
+    ${dots(n.t)}
+    <span class="badge ${cls}">${label}</span>
+  </button>`;
+}
+function failWhere(n){
+  const f = [...n.t].map((ch, i) => ch === "N" ? i + 1 : (ch === "~" ? i + 1 + "?" : null)).filter(Boolean);
+  return f.length ? "Test " + f.join(", ") : "Passes all five";
+}
+function row(n, i){
+  return `<tr data-i="${i}"><td><b>${n.n}</b><div class="sci">${n.s}</div></td>
+    <td>${n.c}</td><td class="v-${n.v}">${VERDICT[n.v][1]}</td><td>${failWhere(n)}</td></tr>`;
+}
+function matches(n){
+  if(fVerdict && n.v !== fVerdict) return false;
+  if(fCat && n.c !== fCat) return false;
+  if(fQ){
+    const hay = (n.n + " " + n.s + " " + n.f + " " + n.c + " " + n.what + " " + n.eat).toLowerCase();
+    if(!hay.includes(fQ)) return false;
+  }
+  return true;
+}
+function draw(){
+  const list = NUTS.map((n, i) => [n, i]).filter(([n]) => matches(n));
+  $("#grid").innerHTML = list.map(([n, i]) => card(n, i)).join("") ||
+    `<p style="color:var(--ink3);grid-column:1/-1">No specimen matches that. Try <i>drupe</i>, <i>tuber</i>, or <i>macadamia</i>.</p>`;
+  $("#tbody").innerHTML = list.map(([n, i]) => row(n, i)).join("");
+  $("#count").textContent = list.length + " of " + NUTS.length + " shown";
+}
+
+/* ---- filter events ---- */
+$("#cats").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if(!b) return;
+  const on = b.getAttribute("aria-pressed") === "true";
+  $("#cats").querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", "false"));
+  b.setAttribute("aria-pressed", String(!on));
+  fCat = on ? null : b.dataset.c;
+  draw();
+});
+document.querySelectorAll(".chip[data-v]").forEach(b => b.addEventListener("click", () => {
+  const on = b.getAttribute("aria-pressed") === "true";
+  document.querySelectorAll(".chip[data-v]").forEach(x => x.setAttribute("aria-pressed", "false"));
+  b.setAttribute("aria-pressed", String(!on));
+  fVerdict = on ? null : b.dataset.v;
+  draw();
+}));
+$("#q").addEventListener("input", e => { fQ = e.target.value.trim().toLowerCase(); draw(); });
+$("#viewToggle").addEventListener("click", e => {
+  const table = $("#tablewrap").classList.contains("hidden");
+  $("#tablewrap").classList.toggle("hidden", !table);
+  $("#grid").classList.toggle("hidden", table);
+  e.target.textContent = table ? "Card view" : "Table view";
+  e.target.setAttribute("aria-pressed", String(table));
+});
+
+/* ---- modal ---- */
+function open(i){
+  const n = NUTS[i], [cls, label] = VERDICT[n.v];
+  const layers = (n.layers || P[n.p] || P.nutbare).map(L => LAYER[L[0]]);
+  $("#sheet").innerHTML = `<div class="sheet-in">
+    <button class="close" aria-label="Close">&times;</button>
+    <div class="m-top">
+      <div>${svgFor(n, 180)}
+        <div class="m-layers">${layers.map(L =>
+          `<div><span class="sw" style="background:${L.c}"></span>${L.n}</div>`).join("")}</div>
+      </div>
+      <div class="m-head">
+        <span class="badge ${cls}" style="margin:0 0 8px">${label}</span>
+        <h3>${n.n}</h3>
+        <div class="sci">${n.s}</div>
+        <div class="fam">${n.f} &nbsp;&middot;&nbsp; ${n.c}</div>
+        <div class="m-body"><h4>What you eat</h4><p>${n.eat}</p></div>
+      </div>
+    </div>
+    <div class="m-body">
+      <h4>What it actually is</h4><p>${n.what}</p>
+      <h4>The five tests</h4>
+      <ul class="checklist">${TESTS.map((t, k) => {
+        const m = MARK[n.t[k]];
+        return `<li><span class="mark ${m[0]}">${m[1]}</span><span>${t}</span></li>`;
+      }).join("")}</ul>
+      <h4>The verdict</h4><p>${n.why}</p>
+      <h4>What would have to change</h4>
+      <div class="fixbox"><p>${n.fix}</p></div>
+    </div></div>`;
+  $("#modal").hidden = false;
+  document.body.style.overflow = "hidden";
+  $("#sheet").scrollTop = 0;
+  $("#sheet .close").focus();
+}
+function close(){ $("#modal").hidden = true; document.body.style.overflow = ""; }
+$("#grid").addEventListener("click", e => { const c = e.target.closest(".nut"); if(c) open(+c.dataset.i); });
+$("#tbody").addEventListener("click", e => { const r = e.target.closest("tr"); if(r) open(+r.dataset.i); });
+$("#modal").addEventListener("click", e => { if(e.target.id === "modal" || e.target.closest(".close")) close(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("#modal").hidden) close(); });
+
+/* ---- quiz ---- */
+let qOrder = [], qi = 0, score = 0, answered = false;
+function shuffle(a){ for(let i = a.length - 1; i > 0; i--){ const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function newQuiz(){
+  const yes = shuffle(NUTS.map((n, i) => [n, i]).filter(([n]) => n.v === "yes")).slice(0, 4);
+  const no  = shuffle(NUTS.map((n, i) => [n, i]).filter(([n]) => n.v !== "yes")).slice(0, 6);
+  qOrder = shuffle([...yes, ...no]); qi = 0; score = 0; answered = false; renderQ();
+}
+function renderQ(){
+  if(qi >= qOrder.length){
+    $("#quizbox").innerHTML = `<div class="q-score">Final score</div>
+      <p class="q-name" style="font-size:44px">${score} / ${qOrder.length}</p>
+      <p class="q-ask">${score >= 9 ? "Botanist." : score >= 7 ? "Better than the supermarket." : score >= 4 ? "The word nut is doing you no favours. Nobody's fault but the word's." : "In fairness, the category is a mess."}</p>
+      <div class="q-btns"><button class="btn primary" id="again">Play again</button></div>`;
+    $("#again").onclick = newQuiz; return;
+  }
+  const [n] = qOrder[qi];
+  $("#quizbox").innerHTML = `<div class="q-score">Question ${qi + 1} of ${qOrder.length} &nbsp;&middot;&nbsp; score ${score}</div>
+    ${svgFor(n, 130)}
+    <h3 class="q-name">${n.n}</h3><div class="q-sci">${n.s}</div>
+    <p class="q-ask">A true botanical nut?</p>
+    <div class="q-btns"><button class="btn" data-a="yes">Nut</button><button class="btn" data-a="no">Not a nut</button></div>
+    <div id="feed"></div>`;
+  answered = false;
+  $("#quizbox").querySelectorAll("[data-a]").forEach(b => b.onclick = () => answer(b.dataset.a));
+}
+function answer(a){
+  if(answered) return; answered = true;
+  const [n] = qOrder[qi];
+  const truth = n.v === "yes" ? "yes" : "no";
+  const right = a === truth || n.v === "maybe";
+  if(right) score++;
+  const sc = $("#quizbox .q-score");
+  if(sc) sc.textContent = `Question ${qi + 1} of ${qOrder.length} \u00b7 score ${score}`;
+  const note = n.v === "maybe" ? "<b>Borderline &mdash; either answer is defensible.</b> " : (right ? "<b>Correct.</b> " : "<b>Not quite.</b> ");
+  $("#feed").innerHTML = `<div class="q-feed ${right ? "right" : "wrong"}">${note}It is a <b>${n.c.toLowerCase()}</b>. ${n.why}</div>
+    <div class="q-btns" style="margin-top:14px"><button class="btn primary" id="next">${qi + 1 >= qOrder.length ? "See score" : "Next"}</button></div>`;
+  $("#next").onclick = () => { qi++; renderQ(); };
+}
+newQuiz();
+draw();
+</script>
+<script src="/assets/js/back-home.js" defer></script>
+</body>
+</html>

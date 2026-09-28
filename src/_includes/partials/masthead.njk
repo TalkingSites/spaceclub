@@ -1,0 +1,13 @@
+<header class="masthead">
+<div class="container">
+<div class="masthead-inner">
+<a class="wordmark" href="/octopus/" aria-label="{{ site.title }}, home">
+{% include "partials/saturn-mark.njk" %}
+<span class="wordmark-text">sophie<span class="gradient-text">.tech</span></span>
+</a>
+<button class="btn-search" onclick="openSearch()">
+<i class="bi bi-search me-2" aria-hidden="true"></i>{{ site.searchTitle | default("Search") }}
+</button>
+</div>
+</div>
+</header>
