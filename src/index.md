@@ -11,9 +11,9 @@ Located on Dione, one of the largest moon's of Saturn, our club hosts regular ge
 Join us as we share our passion for our space home, whether gathering for meetings, contributing to the wiki and docs, reaching out to other moons, the possibilites are endless!
 
 
-<div>
-{% include "partials/homeCards.njk" %}
-</div>
+{% set feedTitle = "Latest" %}
+{% set feedWhen = "all" %}
+{% include "partials/feed.njk" %}
 
 
 {% set text = "Register Now" %}

@@ -1,0 +1,58 @@
+{# Feed: events and/or posts as one grid of cards. Set before including (all optional):
+     feedTitle    heading above the grid
+     feedEvents   "yes" | "no"        (default "yes")
+     feedPosts    "yes" | "no"        (default "yes")
+     feedFeatured "yes" | "no"        only items marked featured (default "no")
+     feedWhen     "upcoming" | "past" | "all"   events only (default "all")
+     feedLimit    a number or "all"   (default "6")
+     feedColumns  1 to 12 cards per row on wider screens; always 1 on phones (default "3")
+   Spacedash edits these as the Feed block. #}
+{% set feedItems = collections | feed({
+  events: (feedEvents or "yes") == "yes",
+  posts: (feedPosts or "yes") == "yes",
+  featured: feedFeatured == "yes",
+  when: feedWhen or "all",
+  limit: feedLimit or "6"
+}) %}
+{% set cols = (feedColumns or "3") | int %}
+{% if cols < 1 %}{% set cols = 1 %}{% elif cols > 12 %}{% set cols = 12 %}{% endif %}
+<section class="my-4">
+{% if feedTitle %}<h2 class="mb-3">{{ feedTitle }}</h2>{% endif %}
+{% if feedItems | length %}
+<div class="spaceclub-feed" style="--feed-cols: {{ cols }}">
+{% for entry in feedItems %}
+{% set item = entry.item %}
+<div class="card border-primary border-opacity-25 shadow-sm border-primary-hover h-100 overflow-hidden">
+{% if item.data.image %}
+<div class="card-img-top overflow-hidden" style="height: 180px;">
+<img src="{{ item.data.image }}" class="img-fluid w-100 h-100 object-fit-cover" alt="" loading="lazy">
+</div>
+{% endif %}
+<div class="card-body d-flex flex-column">
+<div class="d-flex flex-wrap gap-2 mb-2">
+{% if entry.type == "event" %}
+<span class="badge text-bg-primary"><i class="bi bi-calendar-event me-1" aria-hidden="true"></i>{{ "Upcoming event" if entry.upcoming else "Past event" }}</span>
+{% else %}
+<span class="badge text-bg-secondary"><i class="bi bi-stickies me-1" aria-hidden="true"></i>Post</span>
+{% endif %}
+<span class="badge text-bg-light border">{{ entry.date | formatDate("D MMM YYYY") }}</span>
+</div>
+<h3 class="h5">{{ item.data.title }}</h3>
+{% if item.data.description %}<p class="mb-3">{{ item.data.description }}</p>{% endif %}
+{% if entry.type == "event" and (item.data.startTime or item.data.location) %}
+<div class="small mb-3">
+{% if item.data.startTime %}<div class="d-flex gap-2"><i class="bi bi-clock" aria-hidden="true"></i><span>{{ item.data.startTime }}{% if item.data.endTime %} - {{ item.data.endTime }}{% endif %}</span></div>{% endif %}
+{% if item.data.location %}<div class="d-flex gap-2 text-preline"><i class="bi bi-geo-alt" aria-hidden="true"></i><span>{{ item.data.location }}</span></div>{% endif %}
+</div>
+{% endif %}
+<div class="mt-auto">
+<a href="{{ item.data.permalink or item.url }}" class="btn btn-primary stretched-link">{{ "Learn more" if entry.type == "event" else "Read more" }}</a>
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<p class="text-body-secondary">Nothing here yet.</p>
+{% endif %}
+</section>

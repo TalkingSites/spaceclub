@@ -287,3 +287,9 @@ body {
     width: 300%;
   }
 }
+
+/* Feed block: cards per row from --feed-cols on wider screens, one per row on phones */
+.spaceclub-feed { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+@media (min-width: 768px) {
+  .spaceclub-feed { grid-template-columns: repeat(var(--feed-cols, 3), minmax(0, 1fr)); }
+}

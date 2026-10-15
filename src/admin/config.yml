@@ -29,6 +29,83 @@ media_folder: src/assets/images/uploads
 public_folder: /assets/images/uploads
 
 collections:
+  # Fields that pages need but editors shouldn't change are hidden, so saving keeps them.
+  # Pages open in the visual editor, where partials show as blocks (admin/components.js).
+  - name: pages
+    label: Pages
+    label_singular: Page
+    files:
+      - label: Home
+        name: home
+        file: src/index.md
+        fields:
+          - { name: layout, widget: hidden, default: index.njk }
+          - { name: permalink, widget: hidden, default: "/" }
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text, required: false, hint: "Shown in search results and link previews" }
+          - { label: Body, name: body, widget: markdown, modes: [rich_text, raw] }
+      - label: About
+        name: about
+        file: src/about.md
+        fields:
+          - { name: layout, widget: hidden, default: base.njk }
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Body, name: body, widget: markdown, modes: [rich_text, raw] }
+      - label: Contact
+        name: contact
+        file: src/contact.md
+        fields:
+          - { name: layout, widget: hidden, default: base.njk }
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Form heading, name: formTitle, widget: string, required: false }
+          - { label: Form intro, name: formDescription, widget: text, required: false }
+          - { name: formName, widget: hidden, default: contact }
+          - { label: Form fields, name: formFields, widget: list, required: false, hint: "One field name per line, e.g. name, email, message" }
+          - { label: Body, name: body, widget: markdown, modes: [rich_text, raw] }
+      - label: Page not found (404)
+        name: notfound
+        file: src/404.md
+        fields:
+          - { name: layout, widget: hidden, default: base.njk }
+          - { name: permalink, widget: hidden, default: "/404.html" }
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Body, name: body, widget: markdown, modes: [rich_text, raw] }
+
+  - name: settings
+    label: Settings
+    files:
+      - label: Site
+        name: site
+        file: src/_data/site.json
+        fields:
+          - { label: Site name, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+          - { label: Logo, name: logo, widget: image }
+          - { label: Favicon, name: favicon, widget: image }
+          - { label: Search heading, name: searchTitle, widget: string }
+          - { label: Search placeholder, name: searchPlaceholder, widget: string }
+          - { name: baseUrl, widget: hidden }
+          - { name: timezone, widget: hidden }
+          - { name: dateFormat, widget: hidden }
+          # set by Mission Control when the site was launched
+          - { name: url, widget: hidden }
+          - { name: matomo, widget: hidden }
+      - label: Navigation
+        name: navigation
+        file: src/_data/navbar.json
+        fields:
+          - label: Menu links
+            name: items
+            widget: list
+            summary: "{{fields.title}} → {{fields.href}}"
+            fields:
+              - { label: Label, name: title, widget: string }
+              - { label: Link, name: href, widget: string, hint: "e.g. /about or https://..." }
+              - { label: Also in footer, name: footer, widget: boolean, default: true, required: false }
+
   - name: events
     label: Events
     label_singular: Event
