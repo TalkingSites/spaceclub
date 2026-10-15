@@ -378,6 +378,27 @@ module.exports = function (eleventyConfig) {
   });
 
   // Date formatting filter - uses site.json dateFormat as default
+  // The Feed block: events and/or posts in one list, newest first.
+  //   {{ collections | feed({ events: true, posts: true, when: "upcoming", limit: 6 }) }}
+  // when: "upcoming" | "past" | "all" (events only); limit: a number or "all".
+  // Upcoming events on their own read soonest first; anything mixed reads newest first.
+  eleventyConfig.addFilter("feed", function (collections, opts = {}) {
+    const when = opts.when || "all";
+    const entries = [];
+    if (opts.events) {
+      const events = when === "upcoming" ? collections.upcomingEvents : when === "past" ? collections.pastEvents : collections.events;
+      for (const item of events || []) entries.push({ type: "event", upcoming: (collections.upcomingEvents || []).includes(item), date: new Date(item.data.eventDate), item });
+    }
+    if (opts.posts) {
+      for (const item of collections.posts || []) entries.push({ type: "post", date: new Date(item.data.postDate || item.date), item });
+    }
+    if (opts.featured) entries.splice(0, entries.length, ...entries.filter((e) => e.item.data.featured));
+    const soonestFirst = opts.events && !opts.posts && when === "upcoming";
+    entries.sort((a, b) => (soonestFirst ? a.date - b.date : b.date - a.date));
+    const limit = parseInt(opts.limit, 10);
+    return Number.isFinite(limit) && limit > 0 ? entries.slice(0, limit) : entries;
+  });
+
   eleventyConfig.addFilter("formatDate", function (dateInput, format) {
     if (!dateInput) return '';
     try {

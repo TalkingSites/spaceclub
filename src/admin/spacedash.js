@@ -49,6 +49,68 @@
       button.insertAdjacentElement("afterend", extras());
     });
   }
-  new MutationObserver(relabel).observe(document.documentElement, { childList: true, subtree: true });
+  // Decap's blocks (editor components) have no remove button. Add a ✕ to each one's
+  // top bar: it selects the block in the editor, then deletes it like Backspace does.
+  // React keeps each element's props on the DOM node; walk up to find a prop.
+  function findProp(el, test) {
+    var key = Object.keys(el).find(function (k) { return k.indexOf("__reactFiber$") === 0; });
+    for (var f = key && el[key], i = 0; f && i < 60; f = f.return, i++) {
+      if (f.memoizedProps && test(f.memoizedProps)) return f.memoizedProps;
+    }
+    return null;
+  }
+
+  function pathTo(children, node, path) {
+    for (var i = 0; i < children.length; i++) {
+      if (children[i] === node) return path.concat(i);
+      if (children[i].children) {
+        var found = pathTo(children[i].children, node, path.concat(i));
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  // Removes a block straight from Decap's Slate editor with a "remove_node" operation
+  function removeBlock(block) {
+    var editorEl = block.closest("[data-slate-editor]");
+    var host = editorEl && findProp(editorEl, function (p) { return p.editor && typeof p.editor.apply === "function"; });
+    var own = findProp(block, function (p) { return p.element && p.element.type; });
+    if (!host || !own) return false;
+    var editor = host.editor;
+    var path = pathTo(editor.children, own.element, []);
+    if (!path) return false;
+    editor.apply({ type: "remove_node", path: path, node: own.element });
+    return true;
+  }
+
+  function addRemoveButtons() {
+    document.querySelectorAll('[data-slate-editor] [data-slate-void="true"]').forEach(function (block) {
+      if (block.querySelector(".spacedash-remove")) return;
+      // the card's own top bar (Decap's styled "TopBar"), so the ✕ sits on the card
+      var bar = block.querySelector('[class*="TopBar"]:not([class*="TopBarButton"])') || block;
+      var x = document.createElement("button");
+      x.type = "button";
+      x.className = "spacedash-remove";
+      x.textContent = "✕";
+      x.title = "Remove this block";
+      x.setAttribute("aria-label", "Remove this block");
+      x.setAttribute("contenteditable", "false");
+      // at the right end of the bar, vertically centred
+      x.style.cssText = "position:absolute;top:50%;right:8px;transform:translateY(-50%);z-index:2;border:0;background:none;cursor:pointer;color:#c0392b;font-size:15px;line-height:1;padding:2px 4px";
+      if (getComputedStyle(bar).position === "static") bar.style.position = "relative";
+      x.addEventListener("mousedown", function (e) { e.preventDefault(); e.stopPropagation(); });
+      x.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!window.confirm("Remove this block?")) return;
+        if (!removeBlock(block)) window.alert("Sorry, couldn't remove that block. Click it and press Backspace instead.");
+      });
+      bar.appendChild(x);
+    });
+  }
+
+  new MutationObserver(function () { relabel(); addRemoveButtons(); }).observe(document.documentElement, { childList: true, subtree: true });
   relabel();
+  addRemoveButtons();
 })();

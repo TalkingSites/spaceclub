@@ -22,7 +22,7 @@ aria-label="Toggle navigation">
 </div>
 <div id="nav" class="collapse navbar-collapse">
 <ul class="navbar-nav ms-auto flex-column flex-md-row justify-content-md-end">
-{% for item in navbar %}
+{% for item in navbar.items %}
 <li class="nav-item">
 <a class="nav-link{% if page.url == item.href %} active{% endif %}" href="{{ item.href }}">
 {{ item.title }}
