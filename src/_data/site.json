@@ -7,5 +7,10 @@
   "timezone": "Australia/Sydney",
   "dateFormat": "dddd, Do MMMM YYYY",
   "searchTitle": "Search",
-  "searchPlaceholder": "Search events, posts and pages..."
+  "searchPlaceholder": "Search events, posts and pages...",
+  "url": "",
+  "matomo": {
+    "url": "",
+    "siteId": null
+  }
 }

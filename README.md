@@ -6,3 +6,12 @@ SpaceClub! is built with Eleventy, Markdown, Bootstrap, and Pagefind, making it 
 
 **Documentation, guides, and examples:**
 [https://spaceclubwiki.talkingsites.org](https://spaceclubwiki.talkingsites.org)
+
+## Spacedash (editing in the browser)
+
+Sites launched from SpaceClub Mission Control are edited at `/admin/` with Spacedash (Decap CMS). `server.js` serves the built site and handles sign-in through Authentik, and passes edits to GitHub through the SpaceClub GitHub App, limited to the site's own repo. It needs these environment variables:
+
+- `OIDC_ISSUER`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET`: the site's Authentik provider
+- `GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `GITHUB_INSTALLATION_ID`, `GITHUB_REPO` (owner/name)
+
+Mission Control sets these, plus `url` and `matomo` in `src/_data/site.json`, when it launches a site.
