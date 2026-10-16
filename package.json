@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@11ty/eleventy": "^3.1.2",
-    "dayjs": "^1.11.18"
+    "dayjs": "^1.11.18",
+    "spacedash": "^1.3.0"
   }
 }

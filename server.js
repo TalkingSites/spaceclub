@@ -6,14 +6,19 @@
 //                             Authentik profile and forwards repo calls with a GitHub App
 //                             token limited to this site's repo, so editors need no GitHub
 //                             account and commits come from the SpaceClub bot.
+//   /api/preview              SpaceDash's real preview: renders the entry being edited with
+//                             this site's Eleventy setup (from the spacedash package).
 //
 // Env: OIDC_ISSUER, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET (Authentik provider for this site);
 // GITHUB_APP_ID, GITHUB_APP_PRIVATE_KEY, GITHUB_INSTALLATION_ID, GITHUB_REPO (owner/name).
+// SPACEDASH_LOCAL=1 runs it as the local preview server: previews need no sign-in and the
+// Eleventy dev server's editor (localhost:8090) may call it.
 
 const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
+const { createPreview } = require("spacedash/preview");
 
 const PORT = process.env.PORT || 3000;
 // Changes on every deploy, so the preview-link workflow can tell when a rebuild is live
@@ -153,6 +158,12 @@ function sessionFor(req) {
   return user ? { user } : null;
 }
 
+const preview = createPreview({
+  root: __dirname,
+  authorize: (req) => !!ENV.SPACEDASH_LOCAL || !!sessionFor(req),
+  corsOrigins: ENV.SPACEDASH_LOCAL ? ["http://localhost:8090"] : [],
+});
+
 // --- GitHub App token, limited to this site's repo ---------------------------
 
 let installation = { token: null, expires: 0 };
@@ -260,6 +271,8 @@ http
     try {
       if (url.pathname === "/api/auth" || url.pathname === "/api/callback") return await handleAuth(req, res, url);
       if (url.pathname === "/api/github" || url.pathname.startsWith("/api/github/")) return await handleGithub(req, res, url);
+      // locally the editor runs on Eleventy's dev server, which serves the same assets
+      if (url.pathname === "/api/preview") return await preview(req, res, (ENV.SPACEDASH_LOCAL && req.headers.origin) || origin(req));
     } catch (err) {
       console.error(`[spacedash] ${url.pathname}: ${err.message}`);
       if (url.pathname === "/api/callback") return authResult(res, "error", { message: "Sign-in failed, please try again." }, origin(req));
