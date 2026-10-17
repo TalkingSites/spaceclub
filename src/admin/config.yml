@@ -29,50 +29,28 @@ media_folder: src/assets/images/uploads
 public_folder: /assets/images/uploads
 
 collections:
-  # Fields that pages need but editors shouldn't change are hidden, so saving keeps them.
-  # Pages open in the visual editor, where partials show as blocks (admin/components.js).
+  # Every page is a file in src/pages, so new ones can be made here. A page lives at
+  # /<file name>/ unless its file says otherwise (Home is "/", 404 is "/404.html"); its
+  # layout is base.njk unless its file says otherwise (Home uses index.njk). Those stay in
+  # the files and aren't shown. Pages open in the visual editor, where partials are blocks.
   - name: pages
     label: Pages
     label_singular: Page
-    files:
-      - label: Home
-        name: home
-        file: src/index.md
-        fields:
-          - { name: layout, widget: hidden, default: index.njk }
-          - { name: permalink, widget: hidden, default: "/" }
-          - { label: Title, name: title, widget: string }
-          - { label: Description, name: description, widget: text, required: false, hint: "Shown in search results and link previews" }
-          - { label: Body, name: body, widget: markdown, modes: [rich_text, raw] }
-      - label: About
-        name: about
-        file: src/about.md
-        fields:
-          - { name: layout, widget: hidden, default: base.njk }
-          - { label: Title, name: title, widget: string }
-          - { label: Description, name: description, widget: text, required: false }
-          - { label: Body, name: body, widget: markdown, modes: [rich_text, raw] }
-      - label: Contact
-        name: contact
-        file: src/contact.md
-        fields:
-          - { name: layout, widget: hidden, default: base.njk }
-          - { label: Title, name: title, widget: string }
-          - { label: Description, name: description, widget: text, required: false }
-          - { label: Form heading, name: formTitle, widget: string, required: false }
-          - { label: Form intro, name: formDescription, widget: text, required: false }
-          - { name: formName, widget: hidden, default: contact }
-          - { label: Form fields, name: formFields, widget: list, required: false, hint: "One field name per line, e.g. name, email, message" }
-          - { label: Body, name: body, widget: markdown, modes: [rich_text, raw] }
-      - label: Page not found (404)
-        name: notfound
-        file: src/404.md
-        fields:
-          - { name: layout, widget: hidden, default: base.njk }
-          - { name: permalink, widget: hidden, default: "/404.html" }
-          - { label: Title, name: title, widget: string }
-          - { label: Description, name: description, widget: text, required: false }
-          - { label: Body, name: body, widget: markdown, modes: [rich_text, raw] }
+    folder: src/pages
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    fields:
+      - { name: layout, widget: hidden, default: base.njk }
+      # SpaceDash shows this as the page's Address (/about/); without SpaceDash it stays hidden
+      - { label: Address, name: permalink, widget: hidden, required: false }
+      - { label: Title, name: title, widget: string }
+      - { label: Show in the menu, name: menu, widget: boolean, required: false, default: false, hint: "Lists this page under Pages in the navbar" }
+      - { label: Description, name: description, widget: text, required: false, hint: "Shown in search results and link previews" }
+      - { label: Body, name: body, widget: markdown, modes: [rich_text, raw], required: false }
 
   - name: settings
     label: Settings

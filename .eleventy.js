@@ -435,6 +435,54 @@ module.exports = function (eleventyConfig) {
   });
 
   // Markdown filter for rendering README content
+  // --- content types made in SpaceDash (src/_data/contentTypes.json) ---
+  // the type an entry belongs to, from its tags
+  eleventyConfig.addFilter("contentTypeOf", function (tags, schema) {
+    const names = [].concat(tags || []);
+    return (schema?.items || []).find((t) => names.includes(t.name)) || null;
+  });
+  // one of the current page's own fields, by key (Nunjucks has no other way to look one up)
+  eleventyConfig.addFilter("fieldValue", function (key) {
+    return this.ctx?.[key];
+  });
+  // Each content type's list page: the page in src/pages at /<type>/ (by its file name or
+  // its permalink), or null if there isn't one yet (content-types.njk then makes a plain one)
+  const typePages = () => {
+    const schema = path.join(__dirname, "src/_data/contentTypes.json");
+    const items = fs.existsSync(schema) ? JSON.parse(fs.readFileSync(schema, "utf8")).items || [] : [];
+    const dir = path.join(__dirname, "src/pages");
+    const pages = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith(".md")).map((f) => {
+      const slug = f.replace(/\.md$/, "");
+      const permalink = require("gray-matter")(fs.readFileSync(path.join(dir, f), "utf8")).data.permalink;
+      return { slug, url: permalink || `/${slug}/` };
+    }) : [];
+    return items.filter((t) => t && t.name).map((t) => ({ ...t, page: pages.find((p) => p.url === `/${t.name}/`)?.slug || null }));
+  };
+  eleventyConfig.addGlobalData("contentTypePages", typePages);
+  eleventyConfig.addGlobalData("contentTypeListPages", () => typePages().filter((t) => !t.page));
+  // { type: page file name or null } for SpaceDash
+  eleventyConfig.addFilter("listPagesBySlug", function (types) {
+    return Object.fromEntries((types || []).map((t) => [t.name, t.page]));
+  });
+  // pages ticked "Show in the menu", for the navbar's Pages dropdown
+  eleventyConfig.addCollection("menuPages", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/pages/*.md").filter((p) => p.data.menu)
+      .sort((a, b) => String(a.data.title).localeCompare(String(b.data.title)));
+  });
+  // the first few items of a list
+  eleventyConfig.addFilter("head", function (arr, n) {
+    return (arr || []).slice(0, n);
+  });
+  // the first image field an entry has filled in, for its card
+  eleventyConfig.addFilter("contentImage", function (data, type) {
+    const field = (type?.fields || []).find((f) => f.type === "image" && data[f.name]);
+    return field ? data[field.name] : null;
+  });
+  // the entry a "link to another type" field points at
+  eleventyConfig.addFilter("entryBySlug", function (entries, slug) {
+    return (entries || []).find((e) => e.fileSlug === slug) || null;
+  });
+
   eleventyConfig.addFilter("markdown", function(content) {
     return md.render(content);
   });

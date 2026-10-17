@@ -1,0 +1,34 @@
+{# A content type's entries as a grid of cards (types are made in SpaceDash, see
+   src/_data/contentTypes.json). Set before including:
+     listType     the type's address, e.g. "team" (required)
+     listTitle    heading above the grid (optional)
+     listLimit    a number or "all" (default "all")
+     listColumns  1 to 6 cards per row on wider screens; always 1 on phones (default "3")
+   SpaceDash edits these as the type's block. #}
+{% set listSchema = [listType] | contentTypeOf(contentTypes) %}
+{% set listEntries = collections[listType] or [] %}
+{% if (listLimit or "all") != "all" %}{% set listEntries = listEntries | head(listLimit | int) %}{% endif %}
+{% set cols = (listColumns or "3") | int %}
+{% if cols < 1 %}{% set cols = 1 %}{% elif cols > 6 %}{% set cols = 6 %}{% endif %}
+<section class="my-4">
+{% if listTitle %}<h2 class="mb-3">{{ listTitle }}</h2>{% endif %}
+{% if listEntries | length %}
+<div class="spaceclub-feed" style="--feed-cols: {{ cols }}">
+{% for entry in listEntries %}
+{% set image = entry.data | contentImage(listSchema) %}
+<a href="{{ entry.url }}" class="card border-primary border-opacity-25 shadow-sm border-primary-hover h-100 overflow-hidden text-decoration-none">
+{% if image %}
+<div class="card-img-top overflow-hidden" style="height: 180px;">
+<img src="{{ image }}" class="img-fluid w-100 h-100 object-fit-cover" alt="" loading="lazy">
+</div>
+{% endif %}
+<div class="card-body">
+<h3 class="h5 mb-0">{{ entry.data.title }}</h3>
+</div>
+</a>
+{% endfor %}
+</div>
+{% else %}
+<p class="text-muted">Nothing here yet.</p>
+{% endif %}
+</section>

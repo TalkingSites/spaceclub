@@ -1,0 +1,17 @@
+---
+# A list page for each content type made in SpaceDash that doesn't have its own page yet.
+# Once someone edits the type's list page in SpaceDash (Pages), src/<type>.md takes over.
+layout: base.njk
+pagination:
+  data: contentTypeListPages
+  size: 1
+  alias: type
+permalink: "/{{ type.name }}/"
+eleventyComputed:
+  title: "{{ type.label }}"
+  description: "{{ type.description }}"
+---
+<h1 class="mb-2">{{ type.label }}</h1>
+{% if type.description %}<p class="lead">{{ type.description }}</p>{% endif %}
+{% set listType = type.name %}
+{% include "partials/typeList.njk" %}

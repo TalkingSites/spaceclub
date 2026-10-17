@@ -29,6 +29,17 @@ aria-label="Toggle navigation">
 </a>
 </li>
 {% endfor %}
+{# pages ticked "Show in the menu" in SpaceDash #}
+{% if collections.menuPages | length %}
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
+<ul class="dropdown-menu dropdown-menu-end">
+{% for p in collections.menuPages %}
+<li><a class="dropdown-item{% if page.url == p.url %} active{% endif %}" href="{{ p.url }}">{{ p.data.title }}</a></li>
+{% endfor %}
+</ul>
+</li>
+{% endif %}
 </ul>
 </div>
 </div>
