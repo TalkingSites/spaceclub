@@ -8,7 +8,20 @@
   <link rel="icon" href="/assets/images/favicon.svg" />
 </head>
 <body>
-  <!-- SpaceDash (github.com/TalkingSites/spacedash): Decap plus our widgets and blocks; @1 picks up every 1.x fix -->
-  <script src="https://cdn.jsdelivr.net/npm/spacedash@1/dist/spacedash.min.js"></script>
+  <!-- SpaceDash (github.com/TalkingSites/spacedash): Decap plus our widgets and blocks; @1 picks up every 1.x fix.
+       On localhost it uses SpaceDash's dev build while that's running (pm2 in the spacedash repo), else the CDN. -->
+  <script>
+    (function () {
+      var cdn = "https://cdn.jsdelivr.net/npm/spacedash@1/dist/spacedash.min.js";
+      var local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+      function load(src, fallback) {
+        var s = document.createElement("script");
+        s.src = src;
+        if (fallback) s.onerror = function () { s.remove(); load(fallback); };
+        document.body.appendChild(s);
+      }
+      load(local ? "http://localhost:8093/spacedash.js" : cdn, local ? cdn : null);
+    })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,7 @@
+---
+# The content types schema for SpaceDash, plus each type's list page (its page's file
+# name in src/pages, or null if it doesn't have one yet)
+permalink: /admin/content-types.json
+eleventyExcludeFromCollections: true
+---
+{{ { items: contentTypes.items, pages: contentTypePages | listPagesBySlug } | dump | safe }}

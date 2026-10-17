@@ -1,0 +1,36 @@
+---
+layout: base.njk
+---
+{# One entry of a content type made in SpaceDash. Its type comes from its tag; each of the
+   type's fields is shown by kind (image, date, link...), then the body. #}
+{% set type = tags | contentTypeOf(contentTypes) %}
+<div class="h-100 card card-body p-4 border-primary border-opacity-50">
+<h1>{{ title }}</h1>
+{% if type %}
+{% for field in type.fields %}
+{% set value = field.name | fieldValue %}
+{% if value or value === 0 or field.type == "yesno" %}
+<div class="mb-3">
+<div class="small text-muted fw-semibold">{{ field.label }}</div>
+{% if field.type == "image" %}<img src="{{ value }}" class="img-fluid rounded mt-1" alt="" loading="lazy">
+{% elif field.type == "date" %}<div>{{ value | formatDate("D MMMM YYYY") }}</div>
+{% elif field.type == "yesno" %}<div>{{ "Yes" if value else "No" }}</div>
+{% elif field.type == "link" %}<a href="{{ value }}">{{ value }}</a>
+{% elif field.type == "icon" %}<i class="bi bi-{{ value }} fs-3" aria-hidden="true"></i>
+{% elif field.type == "richtext" %}<div>{{ value | markdown | safe }}</div>
+{% elif field.type == "longtext" %}<div style="white-space: pre-line">{{ value }}</div>
+{% elif field.type == "list" %}<ul class="mb-0">{% for v in value %}<li>{{ v }}</li>{% endfor %}</ul>
+{% elif field.type == "relation" %}{% set linked = collections[field.collection] | entryBySlug(value) %}<a href="/{{ field.collection }}/{{ value }}/">{{ linked.data.title if linked else value }}</a>
+{% else %}<div>{{ value }}</div>
+{% endif %}
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{{ content | safe }}
+{% if type %}
+<div class="d-flex justify-content-center my-4">
+<a href="/{{ type.name }}/" class="btn btn-outline-primary">{% if type.icon %}<i class="bi bi-{{ type.icon }} me-2"></i>{% endif %}All {{ type.label }}</a>
+</div>
+{% endif %}
+</div>
