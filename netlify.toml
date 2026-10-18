@@ -1,0 +1,7 @@
+# Builds the starter against this checkout of the package, as a demo site.
+[build]
+  publish = "starter/_site"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
