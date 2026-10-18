@@ -85,6 +85,7 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
+  eleventyConfig.addPassthroughCopy({ "src/llms.txt": "llms.txt" });
 
   // Gallery images reader
   eleventyConfig.addGlobalData('galleries', function() {
@@ -485,6 +486,37 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter("markdown", function(content) {
     return md.render(content);
+  });
+
+  // Build-time frontmatter validation — warns on missing required fields
+  eleventyConfig.on('eleventy.before', async () => {
+    const POSTS_DIR = path.join(__dirname, 'src', 'posts');
+    const EVENTS_DIR = path.join(__dirname, 'src', 'events');
+
+    const POST_REQUIRED = ['title', 'postDate'];
+    const EVENT_REQUIRED = ['title', 'eventDate'];
+
+    function validateDir(dirPath, required, label) {
+      if (!fs.existsSync(dirPath)) return;
+      const files = fs.readdirSync(dirPath).filter(f => f.endsWith('.md') && f !== 'template.md' && f !== 'posts.njk' && f !== 'events.njk');
+      for (const file of files) {
+        const content = fs.readFileSync(path.join(dirPath, file), 'utf8');
+        const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+        if (!fmMatch) {
+          console.warn(`[SpaceClub] WARNING: ${label} "${file}" has no frontmatter`);
+          continue;
+        }
+        const fm = fmMatch[1];
+        for (const field of required) {
+          if (!new RegExp(`^${field}:`, 'm').test(fm)) {
+            console.warn(`[SpaceClub] WARNING: ${label} "${file}" is missing required field: ${field}`);
+          }
+        }
+      }
+    }
+
+    validateDir(POSTS_DIR, POST_REQUIRED, 'post');
+    validateDir(EVENTS_DIR, EVENT_REQUIRED, 'event');
   });
 
   return {

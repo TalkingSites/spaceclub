@@ -1,0 +1,28 @@
+# SpaceClub!
+
+> SpaceClub! is a free, open-source static website template built with Eleventy (11ty), Bootstrap, and Pagefind. It is fully ownable, easily editable, and deployable anywhere for free.
+
+SpaceClub! is designed for clubs, community groups, and organisations that want a complete web presence without vendor lock-in. Content is written in Markdown and managed through plain files — no CMS login required.
+
+## Pages
+
+/ - Home page with latest posts and upcoming events
+/about/ - About the organisation
+/contact/ - Contact form (Netlify Forms)
+/posts/ - All blog posts
+/events/ - All events (upcoming and past)
+
+## Content types
+
+Posts - Blog articles and updates. Each post has a title, date, author, description, and optional image and photo gallery.
+
+Events - Scheduled events with date, time, location, and optional gallery. Events are automatically classified as upcoming or past based on the current date and time.
+
+## Technology
+
+Built with: Eleventy (11ty) v3, Nunjucks templates, Bootstrap 5, Bootstrap Icons, Pagefind full-text search, Day.js for date handling.
+
+Deployment: Works with Netlify, GitHub Pages, Vercel, or any static host.
+
+Source: https://github.com/TalkingSites/spaceclub-template
+Documentation: https://spaceclubwiki.talkingsites.org
