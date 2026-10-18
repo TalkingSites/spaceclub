@@ -1,23 +1,27 @@
+{#
+An event's date, time and place. The event layout shows it under the title; the Event details
+block puts it anywhere in the text. Optional, from the block: showDate, showTime, showPlace and
+linkPlace ("no" turns each off). The place links to the event's locationLink when it has one.
+#}
 <div class="mb-3">
-{% if eventDate %}
+{% if eventDate and showDate != "no" %}
 <div class="d-flex align-items-center gap-2 mb-2">
 <i class="bi bi-calendar3" aria-hidden="true"></i>
 <span>{{ eventDate | formatDate }}</span>
 </div>
 {% endif %}
 
-{% if startTime or endTime %}
+{% if (startTime or endTime) and showTime != "no" %}
 <div class="d-flex align-items-center gap-2 mb-2">
 <i class="bi bi-clock" aria-hidden="true"></i>
-<span>{% if startTime %}{{ startTime }}{% endif %}{% if startTime and endTime %} - {% endif %} {% if endTime %}{{ endTime }}{% endif %}
-</span>
+<span>{% if startTime %}{{ startTime }}{% endif %}{% if startTime and endTime %} - {% endif %}{% if endTime %}{{ endTime }}{% endif %}</span>
 </div>
 {% endif %}
 
-{% if location %}
+{% if location and showPlace != "no" %}
 <div class="d-flex text-preline gap-2 mb-2">
 <i class="bi bi-geo-alt" aria-hidden="true"></i>
-<span>{{ location }}</span>
+{% if locationLink and linkPlace != "no" %}<a href="{{ locationLink }}" target="_blank" rel="noopener">{{ location }}</a>{% else %}<span>{{ location }}</span>{% endif %}
 </div>
 {% endif %}
 </div>

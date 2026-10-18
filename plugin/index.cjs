@@ -112,6 +112,22 @@ module.exports = function spaceclub(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/admin");
 
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  // While developing, the dev server serves assets straight from src/, so images SpaceDash
+  // uploads show at once. SpaceDash (/admin/) is served without the dev server's live reload:
+  // it's an app rather than a page, and reloading it on every save or upload would throw
+  // away what the editor has open (such as the media library mid-upload).
+  eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
+  eleventyConfig.setServerOptions({
+    middleware: [
+      (req, res, next) => {
+        const url = (req.url || "").split("?")[0];
+        const file = path.join(ROOT, "src", "admin", "index.html");
+        if ((url !== "/admin/" && url !== "/admin/index.html") || !fs.existsSync(file)) return next();
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
+        res.end(fs.readFileSync(file));
+      },
+    ],
+  });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
   eleventyConfig.addPassthroughCopy({ "src/llms.txt": "llms.txt" });
 
@@ -124,7 +140,7 @@ module.exports = function spaceclub(eleventyConfig) {
       
       try {
         if (!fs.existsSync(fullPath)) {
-          console.log(`Gallery directory not found: ${dirPath}`);
+          console.warn(`Gallery directory not found: ${dirPath}`);
           return [];
         }
         
@@ -143,10 +159,9 @@ module.exports = function spaceclub(eleventyConfig) {
         
         images.sort();
         
+        // warnings go to stderr: SpaceDash's preview reads the build's stdout as JSON
         if (images.length === 0) {
-          console.log(`No images found in ${dirPath}${filterPrefix ? ' with prefix "' + filterPrefix + '"' : ''}`);
-        } else {
-          console.log(`Found ${images.length} images in ${dirPath}${filterPrefix ? ' with prefix "' + filterPrefix + '"' : ''}`);
+          console.warn(`No images found in ${dirPath}${filterPrefix ? ' with prefix "' + filterPrefix + '"' : ''}`);
         }
         
         return images;

@@ -9,6 +9,7 @@
 //                             account and commits come from the SpaceClub bot.
 //   /api/preview              SpaceDash's real preview: renders the entry being edited with
 //                             this site's Eleventy setup (from the spacedash package).
+//   /api/media                SpaceDash's media library on disk, only with SPACEDASH_LOCAL.
 //
 // Env: OIDC_ISSUER, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET (Authentik provider for this site);
 // GITHUB_APP_ID, GITHUB_APP_PRIVATE_KEY, GITHUB_INSTALLATION_ID, GITHUB_REPO (owner/name).
@@ -20,6 +21,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { createPreview } = require("spacedash/preview");
+const { createMedia } = require("spacedash/media");
 
 const PORT = process.env.PORT || 3000;
 // Changes on every deploy, so the preview-link workflow can tell when a rebuild is live
@@ -168,6 +170,10 @@ const preview = createPreview({
   corsOrigins: ENV.SPACEDASH_LOCAL ? ["http://localhost:8090"] : [],
 });
 
+// SpaceDash's media library on disk, for local development only: a live site's library
+// reads and writes the repo through /api/github, so its changes are commits
+const media = ENV.SPACEDASH_LOCAL ? createMedia({ root: SITE, corsOrigins: ["http://localhost:8090"] }) : null;
+
 // --- GitHub App token, limited to this site's repo ---------------------------
 
 let installation = { token: null, expires: 0 };
@@ -277,6 +283,7 @@ http
       if (url.pathname === "/api/github" || url.pathname.startsWith("/api/github/")) return await handleGithub(req, res, url);
       // locally the editor runs on Eleventy's dev server, which serves the same assets
       if (url.pathname === "/api/preview") return await preview(req, res, (ENV.SPACEDASH_LOCAL && req.headers.origin) || origin(req));
+      if (url.pathname === "/api/media" && media) return await media(req, res, url);
     } catch (err) {
       console.error(`[spacedash] ${url.pathname}: ${err.message}`);
       if (url.pathname === "/api/callback") return authResult(res, "error", { message: "Sign-in failed, please try again." }, origin(req));

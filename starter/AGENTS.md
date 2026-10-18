@@ -89,14 +89,15 @@ Every `.md` file is processed as **Nunjucks first, then Markdown** (the `spacecl
 |---|---|---|---|
 | `title` | string | ✅ | Displayed in cards, page title, and `<title>` |
 | `postDate` | `YYYY-MM-DD` | ✅ | Used for sorting (newest first) |
-| `description` | string |: | Card summary and meta description |
-| `author` | string |: | Displayed on the post page |
-| `featured` | boolean |: | `true` → appears in Featured section |
-| `image` | path string |: | Card/header image (e.g. `/assets/images/foo.jpg`) |
-| `preview_image` | path or URL |: | Social sharing image |
-| `gallery` | path string |: | Folder path for auto-gallery (e.g. `/assets/images/my-post`) |
-| `permalink` | string |: | Override the auto-generated URL |
-| `layout` | string |: | Defaults to `post.njk` via `posts/posts.json` |
+| `description` | string | | Card summary and meta description |
+| `author` | string | | Displayed on the post page |
+| `featured` | boolean | | `true` → appears in Featured section |
+| `image` | path string | | Card/header image (e.g. `/assets/images/foo.jpg`) |
+| `preview_image` | path or URL | | Social sharing image |
+| `gallery` | path string | | Folder path for auto-gallery (e.g. `/assets/images/my-post`) |
+| `permalink` | string | | Override the auto-generated URL |
+| `layout` | string | | Defaults to `post.njk` via `posts/posts.json` |
+| `eventPage` | event slug or path | | The event this post is about (file name or address), linked after the post |
 
 ### Events (`src/events/*.md`)
 
@@ -104,16 +105,19 @@ Every `.md` file is processed as **Nunjucks first, then Markdown** (the `spacecl
 |---|---|---|---|
 | `title` | string | ✅ | Displayed in cards, page title |
 | `eventDate` | `YYYY-MM-DD` | ✅ | Used for sorting and upcoming/past classification |
-| `description` | string |: | Card summary and meta description |
-| `startTime` | string |: | e.g. `9:00AM` or `14:00`: displayed and used for past cutoff |
-| `endTime` | string |: | e.g. `5:00PM`: event is "past" once this passes |
-| `location` | string |: | Use `\n` for line breaks |
-| `featured` | boolean |: | `true` → appears in Featured section |
-| `image` | path string |: | Card/header image |
-| `preview_image` | path or URL |: | Social sharing image |
-| `gallery` | path string |: | Folder path for auto-gallery |
-| `permalink` | string |: | Override the auto-generated URL |
-| `layout` | string |: | Defaults to `event.njk` via `events/events.json` |
+| `description` | string | | Card summary and meta description |
+| `startTime` | string | | e.g. `9:00AM` or `14:00`: displayed and used for past cutoff |
+| `endTime` | string | | e.g. `5:00PM`: event is "past" once this passes |
+| `location` | string | | Use `\n` for line breaks |
+| `locationLink` | URL | | Makes the place a link (e.g. Google Maps) |
+| `featured` | boolean | | `true` → appears in Featured section |
+| `image` | path string | | Card/header image |
+| `preview_image` | path or URL | | Social sharing image |
+| `gallery` | path string | | Folder path for auto-gallery |
+| `permalink` | string | | Override the auto-generated URL |
+| `layout` | string | | Defaults to `event.njk` via `events/events.json` |
+| `hideEventDetails` | boolean | | `true` hides the date, time and place under the title (put `event-details.njk` in the body to show them elsewhere) |
+| `recapPost` | post slug or path | | A recap post's file name (e.g. `2026-01-01_my-recap`) or address, linked after the event's text |
 
 ### Pages (`src/pages/*.md`)
 
@@ -185,6 +189,9 @@ Images must be in the `src/` tree (Eleventy scans the filesystem at build time).
 | `listTitle` | string | Heading above the grid |
 | `listLimit` | number or `"all"` | Default all |
 | `listColumns` | 1–6 | Default 3 |
+
+### `event-details.njk`: an event's date, time and place
+Reads the event's own `eventDate`, `startTime`, `endTime`, `location` and `locationLink`. Optional: `showDate`, `showTime`, `showPlace`, `linkPlace` (set to `"no"` to leave one out). The event layout shows it under the title unless `hideEventDetails: true`. In SpaceDash it's the **Event details** block.
 
 ### `featured.njk`: Featured posts + events cards
 No variables needed: automatically pulls `collections.featuredEvents` and `collections.featuredPosts`.

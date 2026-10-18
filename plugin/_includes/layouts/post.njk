@@ -10,7 +10,8 @@ layout: base.njk
 {{ content | safe }}
 
 {%- if eventPage %}
-<p class="mt-4">Go to <a href="{{eventPage}}">event page</a></p>
+{%- set event = collections.events | entryBySlug(eventPage) %}
+<p class="mt-4">Go to the <a href="{{ event.url if event else eventPage }}">event page</a></p>
 {%- endif %}
 
 {%- if gallery and not (content | hasGallery) %}
