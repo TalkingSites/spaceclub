@@ -13,3 +13,6 @@ Each release lists what changed for people running a SpaceClub site, newest firs
 - Make your own content types (Team, Projects...) in SpaceDash, each with its own list page and a block for any page.
 - Every page lives in one Pages list, with its own address and a "Show in the menu" switch.
 - See your changes as you type with SpaceDash's real preview.
+- Every site comes with a guide for AI coding assistants (`AGENTS.md`) and an `llms.txt` describing the site, so tools like Claude Code edit it the right way. (Thanks pendashteh.)
+- The post and event templates now show every field you can use, with examples of the blocks. (Thanks pendashteh.)
+- The site warns you when a post or event is missing its title or date, and `npm run list` shows all your content at once. (Thanks pendashteh.)

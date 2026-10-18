@@ -1,4 +1,4 @@
-// /assets/js/search.js — Bootstrap-only Pagefind search with title-first ranking
+// /assets/js/search.js: Bootstrap-only Pagefind search with title-first ranking
 
 let pf, pfReady = false;
 

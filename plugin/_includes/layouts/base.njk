@@ -40,7 +40,7 @@ g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
 {{ description |
 default(site.description) }}
 {% if not description %}
-— {{ content |
+. {{ content |
 striptags | replace("\n", " ") | truncate(240, true, "") }}
 {% endif %}
 </span>

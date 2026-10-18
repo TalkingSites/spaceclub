@@ -1,0 +1,35 @@
+---
+# /llms.txt: what this site is, for AI tools (https://llmstxt.org). Made from the site's own
+# name, description and pages; a site can replace it with its own src/llms.txt.
+permalink: /llms.txt
+eleventyExcludeFromCollections: true
+---
+# {{ site.title }}
+
+> {{ site.description }}
+
+## Pages
+{% for p in collections.all %}{% if "/src/pages/" in p.inputPath and not (".html" in p.url) %}
+{{ p.url }} - {{ p.data.title }}{% if p.data.description %}: {{ p.data.description }}{% endif %}{% endif %}{% endfor %}
+{%- if spaceclub.features.events %}
+/events/ - All events (upcoming and past){% endif %}
+{%- if spaceclub.features.posts %}
+/posts/ - All posts{% endif %}
+{%- for t in contentTypes.items %}
+/{{ t.name }}/ - {{ t.label }}{% if t.description %}: {{ t.description }}{% endif %}{% endfor %}
+
+## Content
+{% if spaceclub.features.posts %}
+Posts - Articles and updates, each with a title, date, author, description, and optional image and photo gallery.
+{% endif %}{% if spaceclub.features.events %}
+Events - Dated events with a time, location and optional gallery, shown as upcoming or past.
+{% endif %}{% for t in contentTypes.items %}
+{{ t.label }} - {{ t.description or ("Entries of the site's " + t.label + " content type.") }}
+{% endfor %}
+## For AI tools
+{% if spaceclub.features.webmcp %}
+WebMCP: in a browser with WebMCP, this site offers tools to search it, list its pages, events and posts, and open pages. The data behind them is at /webmcp-data.json.
+{% endif %}{% if spaceclub.features.rss %}
+Feeds:{% if spaceclub.features.posts %} /feed.xml (posts){% endif %}{% if spaceclub.features.events %} /events/feed.xml (events){% endif %}{% for t in contentTypes.items %} /{{ t.name }}/feed.xml ({{ t.label }}){% endfor %}
+{% endif %}
+Built with SpaceClub (https://github.com/TalkingSites/spaceclub): Eleventy, Nunjucks, Bootstrap and Pagefind.

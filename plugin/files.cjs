@@ -6,8 +6,10 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-// the generated pages, and the feature each one needs
+// the generated pages, and the feature each one needs (null: always), each skipped if the
+// site has its own file of that name (or, for llms.njk, its own src/llms.txt)
 const PAGES = {
+  "llms.njk": null,
   "events.njk": "events",
   "posts.njk": "posts",
   "content-types.njk": "contentTypes",
@@ -46,8 +48,8 @@ function usePackageFiles(eleventyConfig, { root, pkg, settings }) {
 
   // generated pages: only those whose feature is on, and not if the site has its own file
   for (const [f, feature] of Object.entries(PAGES)) {
-    if (!settings.features[feature]) continue;
-    if (fs.existsSync(site(f))) continue;
+    if (feature && !settings.features[feature]) continue;
+    if (fs.existsSync(site(f)) || (f === "llms.njk" && fs.existsSync(site("llms.txt")))) continue;
     eleventyConfig.addTemplate(f, fs.readFileSync(own("pages", f), "utf8"));
   }
 }
