@@ -293,3 +293,6 @@ body {
 @media (min-width: 768px) {
   .spaceclub-feed { grid-template-columns: repeat(var(--feed-cols, 3), minmax(0, 1fr)); }
 }
+
+/* An item's card highlighted by the WebMCP show-item tool */
+.webmcp-highlight { outline: 3px solid var(--bs-primary); outline-offset: 4px; transition: outline-color 0.3s; }

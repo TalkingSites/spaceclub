@@ -17,9 +17,37 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(customParseFormat);
 
-module.exports = function (eleventyConfig) {
+// SpaceClub's Eleventy config. A site's eleventy.config.cjs is one line:
+//   module.exports = require("spaceclub");
+// (or, to add its own filters on top: module.exports = (c) => { const r = require("spaceclub")(c); c.addFilter(...); return r; })
+// The site keeps its content (src/pages, src/events, src/posts, src/_data, its images) and
+// spaceclub.json; the layouts, partials, styles and pages come from here. A site can override
+// any layout, partial or asset by putting its own copy at the same path in src/.
+const PKG = __dirname;
+const { readSettings } = require("./settings.cjs");
+const { usePackageFiles } = require("./files.cjs");
+const { useFeatures } = require("./features.cjs");
+
+module.exports = function spaceclub(eleventyConfig) {
+  // (a config function rather than a plugin: Eleventy only lets the config set the folders)
+  // the site being built (its folder holds spaceclub.json, src/ and node_modules)
+  const ROOT = process.cwd();
+  const settings = readSettings(ROOT);
+  const on = settings.features;
+
+  // spaceclub.json (with the defaults filled in), for templates: spaceclub.features.events…
+  eleventyConfig.addGlobalData("spaceclub", settings);
+  eleventyConfig.addGlobalData("global", require("./global.cjs"));
+  // the package's layouts, partials, assets and pages, unless the site has its own
+  usePackageFiles(eleventyConfig, { root: ROOT, pkg: PKG, settings });
+  // the optional features (RSS, WebMCP)
+  useFeatures(eleventyConfig, { root: ROOT, pkg: PKG, settings });
+  // a feature that's off isn't built, but its content stays in the site
+  if (!on.events) eleventyConfig.ignores.add("src/events/**");
+  if (!on.posts) eleventyConfig.ignores.add("src/posts/**");
+
   // Load site data for timezone and date format
-  const siteData = JSON.parse(fs.readFileSync('./src/_data/site.json', 'utf8'));
+  const siteData = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/_data/site.json'), 'utf8'));
   const SITE_TIMEZONE = siteData.timezone || 'Australia/Sydney';
   const DEFAULT_DATE_FORMAT = siteData.dateFormat || 'dddd, Do MMMM YYYY';
 
@@ -91,7 +119,7 @@ module.exports = function (eleventyConfig) {
     const galleries = {};
     
     function scanGalleryDirectory(dirPath, filterPrefix = null) {
-      const fullPath = path.join(__dirname, 'src', dirPath);
+      const fullPath = path.join(ROOT, 'src', dirPath);
       
       try {
         if (!fs.existsSync(fullPath)) {
@@ -336,7 +364,7 @@ module.exports = function (eleventyConfig) {
 
     function scanDir(dirPath) {
       const cleanPath = dirPath.replace(/^\//, '');
-      const fullPath = path.join(__dirname, 'src', cleanPath);
+      const fullPath = path.join(ROOT, 'src', cleanPath);
       try {
         if (!fs.existsSync(fullPath)) return [];
         return fs.readdirSync(fullPath)
@@ -448,9 +476,9 @@ module.exports = function (eleventyConfig) {
   // Each content type's list page: the page in src/pages at /<type>/ (by its file name or
   // its permalink), or null if there isn't one yet (content-types.njk then makes a plain one)
   const typePages = () => {
-    const schema = path.join(__dirname, "src/_data/contentTypes.json");
+    const schema = path.join(ROOT, "src/_data/contentTypes.json");
     const items = fs.existsSync(schema) ? JSON.parse(fs.readFileSync(schema, "utf8")).items || [] : [];
-    const dir = path.join(__dirname, "src/pages");
+    const dir = path.join(ROOT, "src/pages");
     const pages = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith(".md")).map((f) => {
       const slug = f.replace(/\.md$/, "");
       const permalink = require("gray-matter")(fs.readFileSync(path.join(dir, f), "utf8")).data.permalink;
@@ -488,14 +516,8 @@ module.exports = function (eleventyConfig) {
   });
 
   return {
-    dir: {
-      input: "src",
-      includes: "_includes",
-      layouts: "_includes/layouts",
-      data: "_data",
-      output: "_site"
-    },
+    dir: { input: "src", includes: "_includes", layouts: "_includes/layouts", data: "_data", output: "_site" },
     markdownTemplateEngine: "njk",
-    htmlTemplateEngine: "njk"
+    htmlTemplateEngine: "njk",
   };
 };

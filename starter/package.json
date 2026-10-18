@@ -1,0 +1,14 @@
+{
+  "name": "spaceclub-site",
+  "private": true,
+  "description": "A SpaceClub site. Its content lives in src/ and its settings in spaceclub.json; everything else comes from the spaceclub package.",
+  "scripts": {
+    "build": "npx @11ty/eleventy && npx pagefind --site _site",
+    "start": "npx @11ty/eleventy --serve",
+    "serve": "node node_modules/spaceclub/server/index.cjs"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "spaceclub": "^2.0.0"
+  }
+}

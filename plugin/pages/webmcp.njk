@@ -1,0 +1,6 @@
+---
+# The site's data for the WebMCP tools in /assets/js/webmcp.js
+permalink: /webmcp-data.json
+eleventyExcludeFromCollections: true
+---
+{{ collections | webmcpData(site) | dump | safe }}

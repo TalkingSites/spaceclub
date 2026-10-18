@@ -12,6 +12,9 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
 <link href="/assets/css/styles.css" rel="stylesheet"/>
 <link rel="icon" href="{{ site.favicon }}" type="image/x-icon"/>
+{% if spaceclub.features.rss %}{% for feed in spaceclubFeeds %}
+<link rel="alternate" type="application/atom+xml" href="{{ feed.url }}" title="{{ site.title }}: {{ feed.title }}"/>
+{% endfor %}{% endif %}
 {% if site.matomo and site.matomo.url and site.matomo.siteId %}
 <!-- Matomo: set by Mission Control when the site is launched -->
 <script>
@@ -49,5 +52,6 @@ striptags | replace("\n", " ") | truncate(240, true, "") }}
 {% include "partials/footer.njk" %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/search.js" defer></script>
+{% if spaceclub.features.webmcp %}<script src="/assets/js/webmcp.js" defer></script>{% endif %}
 </body>
 </html>

@@ -1,4 +1,5 @@
-// Serves the built site from _site/ and is the back end for Spacedash (Decap at /admin/):
+// SpaceClub's site server. Serves the built site from _site/ and is the back end for
+// Spacedash (Decap at /admin/):
 //
 //   /api/auth, /api/callback  sign in with Authentik (OIDC). Who may edit is decided in
 //                             Authentik by the app's bindings, so only bound people get in.
@@ -23,7 +24,10 @@ const { createPreview } = require("spacedash/preview");
 const PORT = process.env.PORT || 3000;
 // Changes on every deploy, so the preview-link workflow can tell when a rebuild is live
 const STARTED = Date.now().toString();
-const ROOT = path.join(__dirname, "_site");
+// the site this serves: the folder it's started from (a site's Dockerfile runs it from its
+// own folder, as `node node_modules/spaceclub/server`)
+const SITE = process.cwd();
+const ROOT = path.join(SITE, "_site");
 const ENV = process.env;
 const REPO = ENV.GITHUB_REPO;
 const SESSION_HOURS = 8;
@@ -159,7 +163,7 @@ function sessionFor(req) {
 }
 
 const preview = createPreview({
-  root: __dirname,
+  root: SITE,
   authorize: (req) => !!ENV.SPACEDASH_LOCAL || !!sessionFor(req),
   corsOrigins: ENV.SPACEDASH_LOCAL ? ["http://localhost:8090"] : [],
 });
