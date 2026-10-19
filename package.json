@@ -17,6 +17,9 @@
     "spacedash"
   ],
   "main": "plugin/index.cjs",
+  "bin": {
+    "spaceclub": "bin/spaceclub.cjs"
+  },
   "exports": {
     ".": "./plugin/index.cjs",
     "./server": "./server/index.cjs",
@@ -24,6 +27,7 @@
     "./package.json": "./package.json"
   },
   "files": [
+    "bin",
     "plugin",
     "server",
     "starter",

@@ -11,4 +11,6 @@ npm install
 pm2 start ecosystem.config.cjs   # http://localhost:8090, SpaceDash at http://localhost:8090/admin/
 ```
 
+**Changing a layout, partial or style:** `npx spaceclub customize` lists them, and `npx spaceclub customize partials/navbar.njk` copies one into `src/` for you to edit. `npm update` brings new SpaceClub versions.
+
 **Guides:** [spaceclubwiki.talkingsites.org](https://spaceclubwiki.talkingsites.org)

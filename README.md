@@ -4,6 +4,23 @@ Easy-to-edit community websites on [Eleventy](https://www.11ty.dev). This packag
 
 **Documentation, guides, and examples:** [spaceclubwiki.talkingsites.org](https://spaceclubwiki.talkingsites.org)
 
+## Make a site
+
+```bash
+npx spaceclub new my-site
+cd my-site
+npm start
+```
+
+That's the whole site: your content in `src/` and your settings in `spaceclub.json`. Everything else comes from this package, so `npm update` brings you new features and fixes. There's no need to clone this repo, which is SpaceClub itself (see [Developing this package](#developing-this-package)).
+
+To change a layout, partial or style, copy it into your site and edit the copy:
+
+```bash
+npx spaceclub customize                        # what you can customise
+npx spaceclub customize partials/navbar.njk    # copies it to src/_includes/partials/navbar.njk
+```
+
 ## A site
 
 ```
@@ -20,9 +37,9 @@ my-site/
     └── assets/images/               the site's own images
 ```
 
-New sites start from [`starter/`](starter/). Mission Control copies it into a new repo when it launches a site.
+New sites start from [`starter/`](starter/): `npx spaceclub new` copies it out, and so does Mission Control when it launches a site. A site never has a `starter/` folder of its own.
 
-**Overriding something:** put your own copy at the same path in `src/`, for example `src/_includes/partials/navbar.njk` or `src/assets/css/styles.css`, and it's used instead of the package's. To add your own Eleventy filters, wrap the config:
+**Overriding something:** put your own copy at the same path in `src/` (`npx spaceclub customize` does it for you), for example `src/_includes/partials/navbar.njk` or `src/assets/css/styles.css`, and it's used instead of the package's. To add your own Eleventy filters, wrap the config:
 
 ```js
 module.exports = (eleventyConfig) => {

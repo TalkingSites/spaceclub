@@ -7,6 +7,7 @@ Each release lists what changed for people running a SpaceClub site, newest firs
 ## 2.0.0 (2026-10-18)
 
 - SpaceClub is now a package your site installs, instead of a copy of the template. Fixes and new features reach your site when it updates, and your repo keeps only your content and settings.
+- Make a new site with `npx spaceclub new my-site`, and copy any layout, partial or style into your site to change it with `npx spaceclub customize`.
 - Choose what your site has, and how it looks, in one settings file (`spaceclub.json`). Anything you turn off stays in your site, ready to turn back on.
 - Your site now has news feeds: posts, events and each content type you make have their own feed that people can follow.
 - AI assistants in the browser can now find their way around your site: search it, list your events and posts, and read your pages (WebMCP). It updates itself as you add pages and content types.

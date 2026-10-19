@@ -137,7 +137,7 @@ Every `.md` file is processed as **Nunjucks first, then Markdown** (the `spacecl
 
 ## Partials reference
 
-All partials come from the `spaceclub` package (`node_modules/spaceclub/plugin/_includes/partials/`); a copy in `src/_includes/partials/` overrides one. Use them in any `.md` or `.njk` file with `{% include "partials/name.njk" %}`. Set variables with `{% set varName = value %}` before the include.
+All partials come from the `spaceclub` package (`node_modules/spaceclub/plugin/_includes/partials/`); a copy in `src/_includes/partials/` overrides one (`npx spaceclub customize partials/<name>.njk` makes the copy). Use them in any `.md` or `.njk` file with `{% include "partials/name.njk" %}`. Set variables with `{% set varName = value %}` before the include.
 
 ### `btn.njk`: Bootstrap button
 | Variable | Default | Notes |
