@@ -1,19 +1,57 @@
 {
-  "name": "space-club-template",
-  "version": "1.8.0",
-  "description": "A flexible Eleventy-based static site template that’s easy to edit, easy to deploy, and easy to take anywhere.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx @11ty/eleventy && npx pagefind --site _site",
-    "start": "npx @11ty/eleventy --serve"
+  "name": "spaceclub",
+  "version": "2.0.0",
+  "description": "SpaceClub: easy-to-edit community websites on Eleventy. An Eleventy plugin (layouts, partials, styles, pages) plus a starter for new sites.",
+  "license": "GPL-3.0",
+  "author": "TalkingSites",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TalkingSites/spaceclub.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "homepage": "https://github.com/TalkingSites/spaceclub",
+  "keywords": [
+    "spaceclub",
+    "eleventy",
+    "eleventy-plugin",
+    "static-site",
+    "spacedash"
+  ],
+  "main": "plugin/index.cjs",
+  "bin": {
+    "spaceclub": "bin/spaceclub.cjs"
+  },
+  "exports": {
+    ".": "./plugin/index.cjs",
+    "./server": "./server/index.cjs",
+    "./settings": "./plugin/settings.cjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "plugin",
+    "server",
+    "starter",
+    "!starter/_site",
+    "!starter/node_modules",
+    "!starter/.cache",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prepare": "node -e \"require('fs').mkdirSync('node_modules',{recursive:true}); try{require('fs').symlinkSync('..','node_modules/spaceclub','dir')}catch{}\"",
+    "dev": "cd starter && node ../node_modules/@11ty/eleventy/cmd.cjs --serve --port 8090",
+    "build": "cd starter && node ../node_modules/@11ty/eleventy/cmd.cjs && npx pagefind --site _site"
+  },
+  "peerDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  },
   "dependencies": {
-    "@11ty/eleventy": "^3.1.2",
+    "@11ty/eleventy-plugin-rss": "^2.0.4",
     "dayjs": "^1.11.18",
-    "spacedash": "^1.3.0"
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0",
+    "spacedash": "^1.4.0"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
   }
 }

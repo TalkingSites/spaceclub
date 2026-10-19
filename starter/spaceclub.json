@@ -1,0 +1,19 @@
+{
+  "preset": "community",
+  "features": {
+    "events": true,
+    "posts": true,
+    "contentTypes": true,
+    "search": true,
+    "gallery": true,
+    "forms": true,
+    "rss": true,
+    "webmcp": true
+  },
+  "look": {
+    "modes": "light",
+    "colours": { "light": {}, "dark": {} },
+    "navbar": { "layout": "classic", "show": { "logo": true, "title": true, "search": true } },
+    "footer": { "divider": "stars", "dividerSvg": null, "colours": {} }
+  }
+}

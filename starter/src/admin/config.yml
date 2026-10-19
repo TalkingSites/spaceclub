@@ -1,0 +1,133 @@
+backend:
+  name: github
+  # Spacedash: server.js fills in this site's repo and points sign-in (Authentik) and
+  # GitHub calls at itself, using whichever address the CMS is opened on
+  repo: TalkingSites/spaceclub-template
+  branch: main
+  base_url: http://localhost:3000
+  auth_endpoint: api/auth
+  # Set by .github/workflows/preview-status.yml, shown as the "View preview" link
+  preview_context: deploy/preview
+  commit_messages:
+    create: "Adds {{collection}} {{slug}} ({{author-name}})"
+    update: "Updates {{collection}} {{slug}} ({{author-name}})"
+    delete: "Deletes {{collection}} {{slug}} ({{author-name}})"
+    uploadMedia: "Uploads {{path}} ({{author-name}})"
+    deleteMedia: "Deletes {{path}} ({{author-name}})"
+
+# Every edit becomes a pull request, nothing goes live until it's merged
+publish_mode: editorial_workflow
+
+# `npx decap-server` + the Eleventy dev server edits local files without signing in
+# (server.js leaves this out, so the built site always signs in with Authentik)
+local_backend: true
+
+site_url: http://localhost:8090
+display_url: http://localhost:8090
+
+media_folder: src/assets/images/uploads
+public_folder: /assets/images/uploads
+
+collections:
+  # Every page is a file in src/pages, so new ones can be made here. A page lives at
+  # /<file name>/ unless its file says otherwise (Home is "/", 404 is "/404.html"); its
+  # layout is base.njk unless its file says otherwise (Home uses index.njk). Those stay in
+  # the files and aren't shown. Pages open in the visual editor, where partials are blocks.
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: src/pages
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: [title]
+    fields:
+      - { name: layout, widget: hidden, default: base.njk }
+      # SpaceDash shows this as the page's Address (/about/); without SpaceDash it stays hidden
+      - { label: Address, name: permalink, widget: hidden, required: false }
+      - { label: Title, name: title, widget: string }
+      - { label: Show in the menu, name: menu, widget: boolean, required: false, default: false, hint: "Lists this page under Pages in the navbar" }
+      - { label: Description, name: description, widget: text, required: false, hint: "Shown in search results and link previews" }
+      - { label: Body, name: body, widget: markdown, modes: [rich_text, raw], required: false }
+
+  - name: settings
+    label: Settings
+    files:
+      - label: Site
+        name: site
+        file: src/_data/site.json
+        fields:
+          - { label: Site name, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+          - { label: Logo, name: logo, widget: image }
+          - { label: Favicon, name: favicon, widget: image }
+          - { label: Search heading, name: searchTitle, widget: string }
+          - { label: Search placeholder, name: searchPlaceholder, widget: string }
+          - { name: baseUrl, widget: hidden }
+          - { name: timezone, widget: hidden }
+          - { name: dateFormat, widget: hidden }
+          # set by Mission Control when the site was launched
+          - { name: url, widget: hidden }
+          - { name: matomo, widget: hidden }
+      - label: Navigation
+        name: navigation
+        file: src/_data/navbar.json
+        fields:
+          - label: Menu links
+            name: items
+            widget: list
+            summary: "{{fields.title}} → {{fields.href}}"
+            fields:
+              - { label: Label, name: title, widget: string }
+              - { label: Link, name: href, widget: string, hint: "e.g. /about or https://..." }
+              - { label: Also in footer, name: footer, widget: boolean, default: true, required: false }
+
+  - name: events
+    label: Events
+    label_singular: Event
+    folder: src/events
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{eventDate | date('YYYY-MM-DD')}}_{{slug}}"
+    sortable_fields: [eventDate, title]
+    summary: "{{eventDate | date('YYYY-MM-DD')}}: {{title}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: Event date, name: eventDate, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Start time, name: startTime, widget: string, required: false, hint: "e.g. 6:30 PM" }
+      - { label: End time, name: endTime, widget: string, required: false, hint: "e.g. 9:00 PM" }
+      - { label: Location, name: location, widget: text, required: false }
+      - { label: Map link, name: locationLink, widget: string, required: false, hint: "Paste a Google Maps (or any) link and the place becomes clickable" }
+      - { label: "Hide the date, time and place at the top", name: hideEventDetails, widget: boolean, required: false, default: false, hint: "Then add the Event details block (+) wherever you want them in the text" }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Social preview image URL, name: preview_image, widget: string, required: false }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Gallery folder, name: gallery, widget: sd-folder, leading_slash: true, required: false, hint: "Its photos show at the end of the page" }
+      - { label: Recap post, name: recapPost, widget: relation, collection: posts, value_field: "{{slug}}", search_fields: [title], display_fields: [title], required: false, hint: "A post about how it went, linked at the end of the event" }
+      - { label: Body, name: body, widget: markdown, modes: [raw, rich_text] }
+
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: src/posts
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{postDate | date('YYYY-MM-DD')}}_{{slug}}"
+    sortable_fields: [postDate, title]
+    summary: "{{postDate | date('YYYY-MM-DD')}}: {{title}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: Post date, name: postDate, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Author, name: author, widget: string, required: false }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Social preview image URL, name: preview_image, widget: string, required: false }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Gallery folder, name: gallery, widget: sd-folder, leading_slash: true, required: false, hint: "Its photos show at the end of the page" }
+      - { label: Event, name: eventPage, widget: relation, collection: events, value_field: "{{slug}}", search_fields: [title], display_fields: [title], required: false, hint: "The event this post is about, linked at the end of the post" }
+      - { label: Body, name: body, widget: markdown, modes: [raw, rich_text] }
