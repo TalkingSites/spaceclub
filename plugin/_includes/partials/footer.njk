@@ -1,18 +1,19 @@
-<div class="footer-wrapper">
-<div class="divider" aria-hidden="true"></div>
+<div class="footer-wrapper{% if spaceclubLook.footer.gradient %} sc-footer-gradient{% endif %}">
+{# look.footer.divider in spaceclub.json: stars (the default), none, or custom (dividerSvg) #}
+{% if spaceclubLook.footer.divider != "none" %}<div class="divider" aria-hidden="true"></div>{% endif %}
 
-<footer class="border-top py-4 mt-auto bg-black" id="footer-main">
+<footer class="border-top py-4 mt-auto" id="footer-main">
 <br>
 <br>
-<div class="container d-flex flex-wrap justify-content-between align-items-center gap-4 text-light fs-5 fw-semibold">
+<div class="container d-flex flex-wrap justify-content-between align-items-center gap-4 fs-5 fw-semibold">
 <div class="">
 © {{ global.currentYear }}
-<a href="/" class="text-decoration-none text-light">{{ site.title }}</a>
+<a href="/" class="text-decoration-none">{{ site.title }}</a>
 </div>
 <div class="d-flex gap-3 flex-wrap">
 {% for item in navbar.items %}
 {% if item.footer %}
-<a href="{{ item.href }}" class="text-decoration-none text-light nav-link">
+<a href="{{ item.href }}" class="text-decoration-none nav-link">
 {{ item.title }}
 </a>
 {% endif %}

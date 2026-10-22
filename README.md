@@ -67,11 +67,25 @@ Anything left out uses the default, and the defaults are shown here. Turning a f
     "webmcp": true         // /webmcp-data.json and tools for AI agents in the browser (WebMCP)
   },
   "look": {
-    "modes": "light",      // light | dark | both
+    "modes": "light",      // light | dark | both (follows the visitor's device, with a switch in the navbar)
     "colours": { "light": {}, "dark": {} },
     "navbar": { "layout": "classic", "show": { "logo": true, "title": true, "search": true } },
     "footer": { "divider": "stars", "dividerSvg": null, "colours": {} }
   }
+}
+```
+
+### look
+
+- **colours:** hex colours for `primary`, `secondary`, `success`, `info`, `warning`, `danger`, `light`, `dark`, plus `body` (background), `text`, `link` and `border`, each for `light` and `dark` mode. Only what you give changes. Dark mode keeps the light brand colours unless it has its own, and uses lighter shades of them for headings and links. Links follow `primary` unless `link` is set.
+- **navbar.layout:** `classic` (name left, menu button right), `centred` (name centred, links in a row under it) or `split` (links left, name in the middle, search right). `show` hides the logo, the name or search.
+- **footer:** `divider` is `stars`, `none` or `custom` (then `dividerSvg` is its path, e.g. `/assets/images/divider.svg`). `colours.background` and `colours.text` replace the black footer and its gradient.
+
+```json
+"look": {
+  "modes": "both",
+  "colours": { "light": { "primary": "#0b7a75", "secondary": "#f2a541" }, "dark": { "body": "#10201f" } },
+  "navbar": { "layout": "split" }
 }
 ```
 

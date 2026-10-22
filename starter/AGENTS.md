@@ -53,8 +53,14 @@ Anything left out uses the default. Turning a feature off stops it being built, 
 | `features.search` | `true` | Pagefind search |
 | `features.rss` | `true` | Atom feeds: `/feed.xml` (posts), `/events/feed.xml`, `/<type>/feed.xml` |
 | `features.webmcp` | `true` | `/webmcp-data.json` and tools for AI agents in the browser |
-| `look.modes` | `"light"` | `light`, `dark` or `both` |
-| `look.colours` | `{}` | Bootstrap colours for light and dark (`primary`, `secondary`, `success`...) |
+| `look.modes` | `"light"` | `light`, `dark` or `both` (follows the visitor's device, with a switch in the navbar) |
+| `look.colours.light` / `.dark` | `{}` | Hex colours: `primary`, `secondary`, `success`, `info`, `warning`, `danger`, `light`, `dark`, `body`, `text`, `link`, `border`. Only these change; dark keeps the light brand colours unless given its own |
+| `look.navbar.layout` | `"classic"` | `classic`, `centred` or `split` |
+| `look.navbar.show` | all `true` | `logo`, `title`, `search` |
+| `look.footer.divider` | `"stars"` | `stars`, `none` or `custom` (with `look.footer.dividerSvg`, a path like `/assets/images/divider.svg`) |
+| `look.footer.colours` | `{}` | `background` and `text`; a background replaces the black footer and its gradient |
+
+Change colours and layout here, not by copying `styles.css` or the navbar into `src/`. A colour that isn't a hex value stops the build with a message saying which one.
 
 The site also gets `/llms.txt`, made from its name, description and pages (put your own in `src/llms.txt` to replace it).
 
