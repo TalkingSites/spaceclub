@@ -1,6 +1,6 @@
 <div class="footer-wrapper{% if spaceclubLook.footer.gradient %} sc-footer-gradient{% endif %}">
-{# look.footer.divider in spaceclub.json: stars (the default), none, or custom (dividerSvg) #}
-{% if spaceclubLook.footer.divider != "none" %}<div class="divider" aria-hidden="true"></div>{% endif %}
+{# look.footer.divider in spaceclub.json: an SVG's path (stars by default), or none #}
+{% if spaceclubLook.footer.divider %}<div class="divider" aria-hidden="true"></div>{% endif %}
 
 <footer class="border-top py-4 mt-auto" id="footer-main">
 <br>

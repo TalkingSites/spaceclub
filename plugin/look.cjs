@@ -5,7 +5,7 @@
 const THEME = ["primary", "secondary", "success", "info", "warning", "danger", "light", "dark"];
 const MODES = ["light", "dark", "both"];
 const LAYOUTS = ["classic", "centred", "split"];
-const DIVIDERS = ["stars", "none", "custom"];
+const STARS = "/assets/stars.svg";
 
 function rgb(hex, where) {
   const m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(String(hex).trim());
@@ -75,10 +75,15 @@ function pick(value, allowed, fallback, where) {
 function resolveLook(look) {
   const navbar = look.navbar || {};
   const footer = look.footer || {};
-  let divider = pick(footer.divider, DIVIDERS, "stars", "look.footer.divider");
-  if (divider === "custom" && !footer.dividerSvg) {
-    console.warn('[spaceclub] spaceclub.json: look.footer.divider is "custom" but look.footer.dividerSvg is empty; using "stars"');
-    divider = "stars";
+  // the divider above the footer: an SVG's path, or none
+  let divider = footer.divider;
+  if (divider === false || divider === "none") divider = null;
+  else if (divider === "stars") divider = STARS;
+  else if (typeof divider !== "string" || !divider.trim()) {
+    if (divider !== undefined && divider !== null) {
+      console.warn(`[spaceclub] spaceclub.json: look.footer.divider should be an SVG's path or "none", not ${JSON.stringify(divider)}; using ${STARS}`);
+    }
+    divider = STARS;
   }
   return {
     modes: pick(look.modes, MODES, "light", "look.modes"),
@@ -86,8 +91,11 @@ function resolveLook(look) {
       layout: pick(navbar.layout, LAYOUTS, "classic", "look.navbar.layout"),
       show: { logo: true, title: true, search: true, ...(navbar.show || {}) },
     },
-    // the gradient footer, unless the site gives its own background
-    footer: { divider, dividerSvg: footer.dividerSvg || null, gradient: !(footer.colours && footer.colours.background) },
+    // the gradient footer, unless the site turns it off or gives its own background
+    footer: {
+      divider,
+      gradient: footer.gradient !== false && !(footer.colours && footer.colours.background),
+    },
   };
 }
 
@@ -111,8 +119,21 @@ function lookCss(look) {
 
   const footerVars = [];
   if (fc.background) footerVars.push(`--sc-footer-bg: ${toHex(rgb(fc.background, "look.footer.colours.background"))};`, "--sc-footer-gradient: none;");
+  else if (footer.gradient === false) footerVars.push("--sc-footer-gradient: none;");
+  else if (footer.gradient !== undefined && footer.gradient !== null && footer.gradient !== true) {
+    const stops = Array.isArray(footer.gradient) ? footer.gradient : [];
+    if (stops.length < 2) throw new Error(`spaceclub.json: look.footer.gradient should be two or more colours like ["#3bc7f6", "#ef4444"], or false, not ${JSON.stringify(footer.gradient)}`);
+    const hexes = stops.map((c, i) => toHex(rgb(c, `look.footer.gradient[${i}]`)));
+    footerVars.push(`--sc-footer-gradient: linear-gradient(135deg, ${hexes.join(", ")});`);
+  }
   if (fc.text) footerVars.push(`--sc-footer-text: ${toHex(rgb(fc.text, "look.footer.colours.text"))};`);
-  if (footer.divider === "custom" && footer.dividerSvg) footerVars.push(`--divider-url: url(${JSON.stringify(footer.dividerSvg)});`);
+  const divider = resolveLook(look).footer.divider;
+  if (footer.dividerLift !== undefined && footer.dividerLift !== null && footer.dividerLift !== 0) {
+    const lift = Number(footer.dividerLift);
+    if (!Number.isFinite(lift)) throw new Error(`spaceclub.json: look.footer.dividerLift should be a number like 20, not ${JSON.stringify(footer.dividerLift)}`);
+    footerVars.push(`--divider-lift: ${lift}%;`);
+  }
+  if (divider && divider !== STARS) footerVars.push(`--divider-url: url(${JSON.stringify(divider.trim())});`);
   if (footerVars.length) rules.push(`:root { ${footerVars.join(" ")} }`);
 
   return rules.join("\n");

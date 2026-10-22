@@ -9,7 +9,7 @@
   --bs-secondary-rgb: 130, 0, 216;
   --bs-secondary-text-emphasis: #4a0f72;
   --bs-heading-color: var(--bs-primary);
-  --divider-url: url('/assets/space-divider.svg');
+  --divider-url: url('/assets/stars.svg');
   --gradient: linear-gradient(135deg, #3BC7F6 0%, #A855F7 29.8%, #CC4D9E 69.3%, #EF4444 100%);
   /* the footer: black under the gradient, unless look.footer.colours gives a background */
   --sc-footer-bg: #000;
@@ -219,7 +219,8 @@ body {
   background-image: var(--divider-url);
   background-position: center top;
   background-size: auto 100%;
-  transform: translate(-50%, 50%);
+  /* look.footer.dividerLift moves it up, as a share of its height */
+  transform: translate(-50%, calc(50% - var(--divider-lift, 0%)));
   pointer-events: none;
 }
 
