@@ -27,6 +27,7 @@ const PKG = __dirname;
 const { readSettings } = require("./settings.cjs");
 const { usePackageFiles } = require("./files.cjs");
 const { useFeatures } = require("./features.cjs");
+const { lookCss, resolveLook } = require("./look.cjs");
 
 module.exports = function spaceclub(eleventyConfig) {
   // (a config function rather than a plugin: Eleventy only lets the config set the folders)
@@ -37,6 +38,11 @@ module.exports = function spaceclub(eleventyConfig) {
 
   // spaceclub.json (with the defaults filled in), for templates: spaceclub.features.events…
   eleventyConfig.addGlobalData("spaceclub", settings);
+  // the look, checked (spaceclubLook.modes, .navbar.layout...), and its colours as CSS. Read on
+  // every build, so a change to spaceclub.json's look shows without restarting
+  eleventyConfig.addWatchTarget(path.join(ROOT, "spaceclub.json"));
+  eleventyConfig.addGlobalData("spaceclubLook", () => resolveLook(readSettings(ROOT).look));
+  eleventyConfig.addGlobalData("spaceclubLookCss", () => lookCss(readSettings(ROOT).look));
   eleventyConfig.addGlobalData("global", require("./global.cjs"));
   // the package's layouts, partials, assets and pages, unless the site has its own
   usePackageFiles(eleventyConfig, { root: ROOT, pkg: PKG, settings });
@@ -116,7 +122,11 @@ module.exports = function spaceclub(eleventyConfig) {
   // uploads show at once. SpaceDash (/admin/) is served without the dev server's live reload:
   // it's an app rather than a page, and reloading it on every save or upload would throw
   // away what the editor has open (such as the media library mid-upload).
-  eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
+  // The dev server won't serve files from outside the site's folder (it hangs on them), so
+  // when the package isn't inside the site (developing this package, or npm link) its
+  // assets are copied into _site instead, as a build does.
+  const pkgInSite = !path.relative(ROOT, PKG).startsWith("..");
+  eleventyConfig.setServerPassthroughCopyBehavior(pkgInSite ? "passthrough" : "copy");
   eleventyConfig.setServerOptions({
     middleware: [
       (req, res, next) => {

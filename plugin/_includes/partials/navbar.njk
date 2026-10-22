@@ -1,14 +1,30 @@
-<nav class="navbar shadow-sm sticky-top bg-body" id="navbar-main">
-<div class="container">
-<a class="navbar-brand d-flex align-items-center gap-2" href="/">
-<img
-src="{{ site.logo }}" alt="{{ site.title }}" width="132" height="56" class="rounded"/>
-<span class="fw-semibold text-primary fs-3">{{ site.title }}</span>
+{# The navbar's layout and what it shows come from spaceclub.json's look.navbar:
+   classic: logo and title left, search and the menu button right, the menu opens below
+   centred: logo and title centred, the menu links in a row under them
+   split:   the menu links left, logo and title in the middle, search right #}
+{% set nav = spaceclubLook.navbar %}
+{% set showSearch = nav.show.search and spaceclub.features.search %}
+{% set brand %}
+<a class="navbar-brand d-flex align-items-center gap-2{% if nav.layout != 'classic' %} mx-auto mx-md-0{% endif %}" href="/">
+{% if nav.show.logo %}<img
+src="{{ site.logo }}" alt="{{ site.title }}" width="132" height="56" class="rounded"/>{% endif %}
+{% if nav.show.title %}<span class="fw-semibold fs-3 sc-site-title">{{ site.title }}</span>{% endif %}
+{% if not nav.show.logo and not nav.show.title %}<span class="visually-hidden">{{ site.title }}</span>{% endif %}
 </a>
-<div>
-<button class="btn btn-outline-primary border-0 rounded-3 fs-5 fw-bold" onclick="openSearch()">
+{% endset %}
+{% set tools %}
+{% if spaceclubLook.modes == "both" %}
+<button class="btn btn-outline-primary border-0 rounded-3 fs-5 sc-mode-toggle" type="button" onclick="spaceclubToggleMode()" aria-label="Switch between light and dark">
+<i class="bi bi-moon-stars sc-mode-to-dark"></i><i class="bi bi-sun sc-mode-to-light"></i>
+</button>
+{% endif %}
+{% if showSearch %}
+<button class="btn btn-outline-primary border-0 rounded-3 fs-5 fw-bold" type="button" onclick="openSearch()">
 <i class="bi bi-search me-2"></i>Search
 </button>
+{% endif %}
+{% endset %}
+{% set toggler %}
 <button
 class="navbar-toggler"
 type="button"
@@ -19,9 +35,8 @@ aria-expanded="false"
 aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"></span>
 </button>
-</div>
-<div id="nav" class="collapse navbar-collapse">
-<ul class="navbar-nav ms-auto flex-column flex-md-row justify-content-md-end">
+{% endset %}
+{% set links %}
 {% for item in navbar.items %}
 <li class="nav-item">
 <a class="nav-link{% if page.url == item.href %} active{% endif %}" href="{{ item.href }}">
@@ -33,17 +48,52 @@ aria-label="Toggle navigation">
 {% if collections.menuPages | length %}
 <li class="nav-item dropdown">
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
-<ul class="dropdown-menu dropdown-menu-end">
+<ul class="dropdown-menu{% if nav.layout != 'split' %} dropdown-menu-end{% endif %}">
 {% for p in collections.menuPages %}
 <li><a class="dropdown-item{% if page.url == p.url %} active{% endif %}" href="{{ p.url }}">{{ p.data.title }}</a></li>
 {% endfor %}
 </ul>
 </li>
 {% endif %}
-</ul>
+{% endset %}
+
+{% if nav.layout == "centred" %}
+<nav class="navbar navbar-expand-md shadow-sm sticky-top bg-body sc-navbar-centred" id="navbar-main">
+<div class="container flex-wrap">
+<div class="w-100 d-flex flex-wrap align-items-center justify-content-center gap-2 position-relative">
+{{ brand | safe }}
+<div class="d-flex align-items-center gap-1 sc-navbar-tools">{{ tools | safe }}{{ toggler | safe }}</div>
+</div>
+<div id="nav" class="collapse navbar-collapse">
+<ul class="navbar-nav mx-auto">{{ links | safe }}</ul>
 </div>
 </div>
 </nav>
+{% elif nav.layout == "split" %}
+<nav class="navbar navbar-expand-md shadow-sm sticky-top bg-body sc-navbar-split" id="navbar-main">
+<div class="container">
+{{ toggler | safe }}
+<div id="nav" class="collapse navbar-collapse order-last order-md-0 sc-navbar-side">
+<ul class="navbar-nav">{{ links | safe }}</ul>
+</div>
+{{ brand | safe }}
+<div class="d-flex align-items-center justify-content-end gap-1 sc-navbar-side">{{ tools | safe }}</div>
+</div>
+</nav>
+{% else %}
+<nav class="navbar shadow-sm sticky-top bg-body" id="navbar-main">
+<div class="container">
+{{ brand | safe }}
+<div>
+{{ tools | safe }}
+{{ toggler | safe }}
+</div>
+<div id="nav" class="collapse navbar-collapse">
+<ul class="navbar-nav ms-auto flex-column flex-md-row justify-content-md-end">{{ links | safe }}</ul>
+</div>
+</div>
+</nav>
+{% endif %}
 <!-- Search Modal -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered">

@@ -1,4 +1,5 @@
-/* Customise the colors on your website here! */
+/* SpaceClub's default colours. A site sets its own in spaceclub.json (look.colours), which
+   the layout adds after this file, so only the colours it gives change. */
 
 :root {
   --bs-primary: #d4204d;
@@ -10,6 +11,49 @@
   --bs-heading-color: var(--bs-primary);
   --divider-url: url('/assets/space-divider.svg');
   --gradient: linear-gradient(135deg, #3BC7F6 0%, #A855F7 29.8%, #CC4D9E 69.3%, #EF4444 100%);
+  /* the footer: black under the gradient, unless look.footer.colours gives a background */
+  --sc-footer-bg: #000;
+  --sc-footer-text: var(--bs-light);
+  --sc-footer-gradient: var(--gradient);
+}
+
+/* dark mode: lighter shades of the brand colours, so text in them stays readable */
+[data-bs-theme=dark] {
+  --bs-primary-text-emphasis: #e57994;
+  --bs-secondary-text-emphasis: #b466e8;
+  --bs-heading-color: var(--bs-primary-text-emphasis);
+}
+
+/* the site's name in the navbar, in the heading colour */
+#navbar-main .sc-site-title {
+  color: var(--bs-heading-color);
+}
+
+/* dark mode, gradient footer: the gradient "lightens" over a light page, which would turn a
+   dark page's strip above the footer into gradient too. So on a dark page the divider is
+   inverted, the footer drawn white, and the gradient "darkens" instead: the art's outlines
+   and the footer still take the gradient, and the page around them stays dark. The footer's
+   text sits above the gradient, so it stays light. */
+[data-bs-theme=dark] .sc-footer-gradient::after { mix-blend-mode: darken; }
+[data-bs-theme=dark] .sc-footer-gradient .divider::after { filter: invert(1); }
+[data-bs-theme=dark] .sc-footer-gradient #footer-main { background: #fff; border-top: 0 !important; }
+[data-bs-theme=dark] .sc-footer-gradient #footer-main .container { position: relative; z-index: 11; }
+
+/* look.modes "both": the navbar button shows the mode it switches to */
+[data-bs-theme=dark] .sc-mode-to-dark,
+:root:not([data-bs-theme=dark]) .sc-mode-to-light {
+  display: none;
+}
+
+/* look.navbar.layout "centred" and "split" (classic needs nothing extra) */
+@media (min-width: 768px) {
+  .sc-navbar-centred .sc-navbar-tools {
+    position: absolute;
+    right: 0;
+  }
+  .sc-navbar-split .sc-navbar-side {
+    flex: 1 1 0;
+  }
 }
 
 /* Customise your Font, change "Ubuntu" to another font */
@@ -91,6 +135,15 @@ body {
   color: var(--bs-primary);
 }
 
+#footer-main {
+  background: var(--sc-footer-bg);
+  color: var(--sc-footer-text);
+}
+
+#footer-main a {
+  color: inherit;
+}
+
 #footer-main .nav-link {
   transition: all 0.2s ease-in-out;
   border-bottom: 2px var(--bs-border-style) transparent !important;
@@ -132,7 +185,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--gradient);
+  background: var(--sc-footer-gradient);
   opacity: 1;
   pointer-events: none;
   z-index: 10;

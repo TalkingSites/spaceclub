@@ -35,7 +35,7 @@
 {% else %}
 <span class="badge text-bg-secondary"><i class="bi bi-stickies me-1" aria-hidden="true"></i>Post</span>
 {% endif %}
-<span class="badge text-bg-light border">{{ entry.date | formatDate("D MMM YYYY") }}</span>
+<span class="badge bg-body-tertiary text-body-emphasis border">{{ entry.date | formatDate("D MMM YYYY") }}</span>
 </div>
 <h3 class="h5">{{ item.data.title }}</h3>
 {% if item.data.description %}<p class="mb-3">{{ item.data.description }}</p>{% endif %}

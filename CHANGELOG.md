@@ -4,6 +4,9 @@ Each release lists what changed for people running a SpaceClub site, newest firs
 
 ## Unreleased
 
+- Set your site's colours, light or dark mode (or both, with a switch for visitors), the navbar layout and the footer in `spaceclub.json`.
+- Fixes the local dev server hanging on SpaceClub's own styles and scripts when the package is linked rather than installed.
+
 ## 2.0.0 (2026-10-18)
 
 - SpaceClub is now a package your site installs, instead of a copy of the template. Fixes and new features reach your site when it updates, and your repo keeps only your content and settings.
