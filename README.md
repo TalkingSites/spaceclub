@@ -70,7 +70,7 @@ Anything left out uses the default, and the defaults are shown here. Turning a f
     "modes": "light",      // light | dark | both (follows the visitor's device, with a switch in the navbar)
     "colours": { "light": {}, "dark": {} },
     "navbar": { "layout": "classic", "show": { "logo": true, "title": true, "search": true } },
-    "footer": { "divider": "stars", "dividerSvg": null, "colours": {} }
+    "footer": { "divider": "/assets/stars.svg", "colours": {} }
   }
 }
 ```
@@ -79,15 +79,20 @@ Anything left out uses the default, and the defaults are shown here. Turning a f
 
 - **colours:** hex colours for `primary`, `secondary`, `success`, `info`, `warning`, `danger`, `light`, `dark`, plus `body` (background), `text`, `link` and `border`, each for `light` and `dark` mode. Only what you give changes. Dark mode keeps the light brand colours unless it has its own, and uses lighter shades of them for headings and links. Links follow `primary` unless `link` is set.
 - **navbar.layout:** `classic` (name left, menu button right), `centred` (name centred, links in a row under it) or `split` (links left, name in the middle, search right). `show` hides the logo, the name or search.
-- **footer:** `divider` is `stars`, `none` or `custom` (then `dividerSvg` is its path, e.g. `/assets/images/divider.svg`). `colours.background` and `colours.text` replace the black footer and its gradient.
+- **footer.divider:** the SVG drawn above the footer, SpaceClub's stars by default. Put your own in `src/assets/images/` and give its path, e.g. `/assets/images/divider.svg`, or set `"none"` for no divider. `dividerLift` moves it up (or down, if negative) by a share of its height, e.g. `30`, for art that sits too low or too high.
+- **footer.gradient:** the colours of the gradient over the black footer, two or more, running from top left to bottom right. Leave it out for SpaceClub's blue to red, or set `false` for a plain black footer.
+- **footer.colours:** `background` gives the footer a plain colour of its own (instead of black and the gradient), `text` its text and links.
 
 ```json
 "look": {
   "modes": "both",
   "colours": { "light": { "primary": "#0b7a75", "secondary": "#f2a541" }, "dark": { "body": "#10201f" } },
-  "navbar": { "layout": "split" }
+  "navbar": { "layout": "split" },
+  "footer": { "gradient": ["#0b7a75", "#f2a541"] }
 }
 ```
+
+A plain footer instead: `"footer": { "colours": { "background": "#10201f", "text": "#f5f5f5" } }`.
 
 ## The server
 

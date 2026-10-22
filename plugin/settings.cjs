@@ -21,7 +21,7 @@ const DEFAULTS = {
     // every Bootstrap colour, plus body, text, link and border; null uses Bootstrap's own
     colours: { light: {}, dark: {} },
     navbar: { layout: "classic", show: { logo: true, title: true, search: true } },
-    footer: { divider: "stars", dividerSvg: null, colours: {} },
+    footer: { divider: "/assets/stars.svg", colours: {} },
   },
 };
 

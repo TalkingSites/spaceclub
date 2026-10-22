@@ -2,7 +2,10 @@
 
 Each release lists what changed for people running a SpaceClub site, newest first.
 
-## Unreleased
+## 2.2.0 (2026-10-22)
+
+- Choose the footer gradient's colours, or turn it off, with `look.footer.gradient` in `spaceclub.json`.
+- `look.footer.divider` is now just the divider SVG's path (stars by default) or `"none"`; `dividerSvg` is gone. `look.footer.dividerLift` moves it up or down to fit your art.
 
 ## 2.1.0 (2026-10-22)
 

@@ -57,7 +57,9 @@ Anything left out uses the default. Turning a feature off stops it being built, 
 | `look.colours.light` / `.dark` | `{}` | Hex colours: `primary`, `secondary`, `success`, `info`, `warning`, `danger`, `light`, `dark`, `body`, `text`, `link`, `border`. Only these change; dark keeps the light brand colours unless given its own |
 | `look.navbar.layout` | `"classic"` | `classic`, `centred` or `split` |
 | `look.navbar.show` | all `true` | `logo`, `title`, `search` |
-| `look.footer.divider` | `"stars"` | `stars`, `none` or `custom` (with `look.footer.dividerSvg`, a path like `/assets/images/divider.svg`) |
+| `look.footer.divider` | `"/assets/stars.svg"` | the SVG above the footer: a path like `/assets/images/divider.svg`, or `"none"` |
+| `look.footer.dividerLift` | `0` | moves the divider up by a share of its height, e.g. `30` (negative moves it down) |
+| `look.footer.gradient` | blue to red | two or more colours for the gradient over the black footer, or `false` for none |
 | `look.footer.colours` | `{}` | `background` and `text`; a background replaces the black footer and its gradient |
 
 Change colours and layout here, not by copying `styles.css` or the navbar into `src/`. A colour that isn't a hex value stops the build with a message saying which one.
