@@ -14,7 +14,7 @@
 // Env: OIDC_ISSUER, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET (Authentik provider for this site);
 // GITHUB_APP_ID, GITHUB_APP_PRIVATE_KEY, GITHUB_INSTALLATION_ID, GITHUB_REPO (owner/name).
 // SPACEDASH_LOCAL=1 runs it as the local preview server: previews need no sign-in and the
-// Eleventy dev server's editor (localhost:8090) may call it.
+// Eleventy dev server's editor may call it, at SPACEDASH_ORIGIN (http://localhost:8090 if unset).
 
 const http = require("node:http");
 const fs = require("node:fs");
@@ -164,15 +164,18 @@ function sessionFor(req) {
   return user ? { user } : null;
 }
 
+// the local editor's address, so a site on any port can have its preview
+const LOCAL_ORIGINS = [ENV.SPACEDASH_ORIGIN || "http://localhost:8090"];
+
 const preview = createPreview({
   root: SITE,
   authorize: (req) => !!ENV.SPACEDASH_LOCAL || !!sessionFor(req),
-  corsOrigins: ENV.SPACEDASH_LOCAL ? ["http://localhost:8090"] : [],
+  corsOrigins: ENV.SPACEDASH_LOCAL ? LOCAL_ORIGINS : [],
 });
 
 // SpaceDash's media library on disk, for local development only: a live site's library
 // reads and writes the repo through /api/github, so its changes are commits
-const media = ENV.SPACEDASH_LOCAL ? createMedia({ root: SITE, corsOrigins: ["http://localhost:8090"] }) : null;
+const media = ENV.SPACEDASH_LOCAL ? createMedia({ root: SITE, corsOrigins: LOCAL_ORIGINS }) : null;
 
 // --- GitHub App token, limited to this site's repo ---------------------------
 

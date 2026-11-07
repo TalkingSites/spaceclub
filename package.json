@@ -1,6 +1,6 @@
 {
   "name": "spaceclub",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "SpaceClub: easy-to-edit community websites on Eleventy. An Eleventy plugin (layouts, partials, styles, pages) plus a starter for new sites.",
   "license": "GPL-3.0",
   "author": "TalkingSites",
@@ -39,7 +39,7 @@
   "scripts": {
     "prepare": "node -e \"require('fs').mkdirSync('node_modules',{recursive:true}); try{require('fs').symlinkSync('..','node_modules/spaceclub','dir')}catch{}\"",
     "dev": "cd starter && node ../node_modules/@11ty/eleventy/cmd.cjs --serve --port 8090",
-    "build": "cd starter && node ../node_modules/@11ty/eleventy/cmd.cjs && npx pagefind --site _site"
+    "build": "cd starter && node ../node_modules/@11ty/eleventy/cmd.cjs && (npx pagefind --site _site --verbose || echo \"Search index failed\")"
   },
   "peerDependencies": {
     "@11ty/eleventy": "^3.1.2"
@@ -52,6 +52,7 @@
     "spacedash": "^1.4.0"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.2"
+    "@11ty/eleventy": "^3.1.2",
+    "pagefind": "1.5.2"
   }
 }
