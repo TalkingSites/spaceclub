@@ -4,6 +4,11 @@ Each release lists what changed for people running a SpaceClub site, newest firs
 
 ## Unreleased
 
+## 2.2.0 (2026-11-07)
+
+- New sites build on servers where the latest Pagefind fails: Pagefind is now pinned in the starter, and a search index problem no longer stops the site going live.
+- SpaceDash's local preview works for a site on any port: set `SPACEDASH_ORIGIN` to the site's address.
+
 ## 2.1.0 (2026-10-22)
 
 - Set your site's colours, light or dark mode (or both, with a switch for visitors), the navbar layout and the footer in `spaceclub.json`.
